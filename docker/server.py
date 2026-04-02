@@ -7,9 +7,10 @@ from flask import Flask, request, send_file, jsonify
 app = Flask(__name__)
 
 @app.route("/render", methods=["POST"])
+#get code, render, and return video
 def render():
     data = request.get_json()
-    code = data.get("code", "")
+    code = data.get("code", "") 
     scene_name = data.get("scene", None)
 
     if not code:
