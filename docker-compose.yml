@@ -1,0 +1,16 @@
+services:
+  manim:
+    build: ./docker
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - MANIM_API_URL=http://manim:5000
+    depends_on:
+      - manim
+    restart: unless-stopped
