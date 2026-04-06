@@ -17,6 +17,11 @@ export default function Home() {
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const [analyzing, setAnalyzing] = useState(false);
+  const [analysis, setAnalysis] = useState<any>(null);
+  const [videoPath, setVideoPath] = useState<string | null>(null);
+
   const videoRef = useRef<HTMLVideoElement>(null);
 
   async function handleRender() {
@@ -37,14 +42,50 @@ export default function Home() {
         return;
       }
 
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      setVideoUrl(url);
+      // const blob = await res.blob();
+      // const url = URL.createObjectURL(blob);
+      // setVideoUrl(url);
+      const data = await res.json();
+      setVideoUrl(data.videoUrl);   // used by <video src="">
+      setVideoPath(data.videoPath); // used by analyze
+
       setTimeout(() => videoRef.current?.play(), 100);
     } catch (e) {
       setError("Network error — is the container running?");
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function handleAnalyze() {
+    if (!videoPath) return;
+
+    setAnalyzing(true);
+    setAnalysis(null);
+    setError(null); 
+
+    try {
+      const res = await fetch("http://localhost:8000/analyze_video", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        // NOTE: replace videoUrl with a publicly accessible URL in production
+        // Local blob URLs won't work with TwelveLabs — they can't reach your machine
+        // body: JSON.stringify({ video_url: videoUrl }),
+        body: JSON.stringify({ video_path: videoPath }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        setError(err.detail || "Analysis failed");
+        return;
+      }
+
+      const data = await res.json();
+      setAnalysis(data);
+    } catch (e) {
+      setError("Analysis request failed — is FastAPI running?");
+    } finally {
+      setAnalyzing(false);
     }
   }
 
@@ -92,6 +133,58 @@ export default function Home() {
             controls
             className="w-full rounded border bg-black"
           />
+
+        <button
+          onClick={handleAnalyze}
+          disabled={analyzing}
+          className="rounded bg-blue-600 px-6 py-2 font-semibold text-white hover:bg-blue-700 disabled:opacity-40"
+        >
+          {analyzing ? "Analyzing…" : "Analyze with TwelveLabs"}
+        </button>
+          </div>
+      )}
+
+      {/* Analysis results */}
+      {analysis && (
+        <div className="space-y-3 rounded border border-gray-700 p-4">
+          <div className="flex items-center gap-3">
+            <span
+              className={`rounded px-2 py-1 text-xs font-bold ${
+                analysis.passed
+                  ? "bg-green-900 text-green-300"
+                  : "bg-red-900 text-red-300"
+              }`}
+            >
+              {analysis.passed ? "PASSED" : "FAILED"}
+            </span>
+            <p className="text-sm text-gray-300">{analysis.overall_summary}</p>
+          </div>
+
+          {analysis.errors?.length > 0 && (
+            <div className="space-y-2">
+              <p className="text-sm font-semibold text-red-400">Errors</p>
+              {analysis.errors.map((err: any, i: number) => (
+                <div key={i} className="rounded border border-gray-700 p-3 text-xs space-y-1">
+                  <div className="flex gap-2">
+                    <span className={`font-bold uppercase ${
+                      err.severity === "critical" ? "text-red-400" :
+                      err.severity === "major" ? "text-orange-400" : "text-yellow-400"
+                    }`}>
+                      {err.severity}
+                    </span>
+                    <span className="text-gray-400">{err.category}</span>
+                    <span className="text-gray-500">{err.timestamp}</span>
+                  </div>
+                  <p className="text-gray-300">{err.description}</p>
+                  <p className="text-blue-400">Fix: {err.suggested_fix}</p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <p className="text-xs text-gray-500">
+            Recommendation: <span className="font-bold text-white">{analysis.iteration_recommendation}</span>
+          </p>
         </div>
       )}
     </div>

@@ -1,0 +1,8 @@
+{"contents": [{"role": "user", "parts": [{"text": "Write manim code for fade out animation"}]}, {"role": "model", "parts": [{"text": "from manim import *\nclass FadeOutExample(Scene):\n    def construct(self):\n        dot = Dot(UP * 2 + LEFT)\n        self.add(dot)\n        tex = Tex(\n            \"FadeOut with \", \"shift \", r\" or target_position\", \" and scale\"\n        ).scale(1)\n        animations = [\n            FadeOut(tex[0]),\n            FadeOut(tex[1], shift=DOWN),\n            FadeOut(tex[2], target_position=dot),\n            FadeOut(tex[3], scale=0.5),\n        ]\n        self.play(AnimationGroup(*animations, lag_ratio=0.5))"}]}]}
+
+
+
+
+
+
+
