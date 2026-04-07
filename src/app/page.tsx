@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+// import json from "json";
 
 const DEFAULT_CODE = `from manim import *
 
@@ -65,7 +66,7 @@ export default function Home() {
     setError(null); 
 
     try {
-      const res = await fetch("http://localhost:8000/analyze_video", {
+      const res = await fetch("http://localhost:8000/video_analysis", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         // NOTE: replace videoUrl with a publicly accessible URL in production
@@ -131,7 +132,7 @@ export default function Home() {
             ref={videoRef}
             src={videoUrl}
             controls
-            className="w-full rounded border bg-black"
+            className="w-full max-h-[50vh] object-contain rounded border bg-black"
           />
 
         <button
@@ -149,15 +150,17 @@ export default function Home() {
         <div className="space-y-3 rounded border border-gray-700 p-4">
           <div className="flex items-center gap-3">
             <span
-              className={`rounded px-2 py-1 text-xs font-bold ${
-                analysis.passed
+              className={`rounded px-2 py-1 text-xs font-bold bg-green-900 text-green-300 ${
+                JSON.parse(analysis.data).passed
                   ? "bg-green-900 text-green-300"
                   : "bg-red-900 text-red-300"
               }`}
             >
-              {analysis.passed ? "PASSED" : "FAILED"}
+              {JSON.parse(analysis.data).passed ? "PASSED" : "FAILED"}
             </span>
-            <p className="text-sm text-gray-300">{analysis.overall_summary}</p>
+            <pre className="text-sm text-gray-300">{JSON.stringify({ ...analysis, data: JSON.parse(analysis.data) }, null, 2)}</pre>
+            {/* <p className="text-white text-xs">{typeof JSON.parse(analysis.data).passed} — {JSON.parse(analysis.data).passed.toString()}</p> */}
+            <p className="text-sm text-black">{JSON.parse(analysis.data).passed.toString()}</p>
           </div>
 
           {analysis.errors?.length > 0 && (

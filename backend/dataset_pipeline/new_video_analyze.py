@@ -106,7 +106,7 @@ analysis_prompt = '''
 class AnalyzeRequest(BaseModel):
     video_path: str
 
-@app.post("/analyze_video")
+@app.post("/analyze_video_old")
 def analyze_video(body: AnalyzeRequest):
     
     print(f"Received video_path: {body.video_path}")
