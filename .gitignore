@@ -41,3 +41,6 @@ next-env.d.ts
 __pycache__
 public/renders
 package-lock.json
+credentials.json
+quickstart.py
+token.json

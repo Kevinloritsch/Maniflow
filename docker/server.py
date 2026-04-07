@@ -2,7 +2,9 @@ import os
 import uuid
 import subprocess
 import tempfile
+import drive
 from flask import Flask, request, send_file, jsonify
+
 
 app = Flask(__name__)
 
@@ -16,8 +18,13 @@ def render():
     if not code:
         return jsonify({"error": "No code provided"}), 400
 
+    # job_id = str(uuid.uuid4())
+    # work_dir = f"/tmp/manim_{job_id}"
+    # os.makedirs(work_dir, exist_ok=True)
+    
     job_id = str(uuid.uuid4())
-    work_dir = f"/tmp/manim_{job_id}"
+    base_tmp_dir = tempfile.gettempdir() 
+    work_dir = os.path.join(base_tmp_dir, f"manim_{job_id}")
     os.makedirs(work_dir, exist_ok=True)
 
     script_path = os.path.join(work_dir, "scene.py")
@@ -39,6 +46,9 @@ def render():
     for root, dirs, files in os.walk(work_dir):
         for f in files:
             if f.endswith(".mp4"):
+                
+                # drive.upload_file(os.path.join(root, f), f)
+                
                 return send_file(
                     os.path.join(root, f),
                     mimetype="video/mp4",
