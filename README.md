@@ -16,3 +16,5 @@ To run backend
 The following env variables are required for this project.
 
 - `MANIM_API_URL=`
+
+- test pr
