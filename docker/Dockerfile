@@ -10,12 +10,25 @@ RUN apt-get update && apt-get install -y \
     texlive-full \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip install manim flask 
-# google-api-python-client google-auth-httplib2 google-auth-oauthlib
+COPY requirements.txt ./
+
+RUN --mount=type=cache, target=/root/.cache/pip \
+    pip install --no-cache-dir -r requirements.txt
+
+RUN --mount=type=cache, target=/root/.cache/ms-playwright \
+    playwright install chromium
 
 WORKDIR /app
+
 COPY server.py ./
-# drive.py credentials.json token.json ./
+#driver.py
+# Files needed for scraping and rag compilation. Uncomment during development.
+#COPY backend/ai_pipeline/rag/rag.py        ./
+#COPY backend/ai_pipeline/rag/scraping      ./
+
+
+# Google Drive credentials. Uncomment during development.
+#COPY credentials/credentials.json token.json ./
 
 EXPOSE 5000
 CMD ["python", "server.py"]

@@ -1,12 +1,16 @@
 services:
   manim:
-    build: ./docker
+    build: 
+      context: .
+      dockerfile: docker/Dockerfile
     ports:
       - "5000:5000"
     restart: unless-stopped
 
   web:
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
     environment:
