@@ -15,8 +15,8 @@ COPY requirements.txt ./
 RUN --mount=type=cache, target=/root/.cache/pip \
     pip install --no-cache-dir -r requirements.txt
 
-RUN --mount=type=cache, target=/root/.cache/ms-playwright \
-    playwright install chromium
+# RUN --mount=type=cache, target=/root/.cache/ms-playwright \
+#     playwright install chromium
 
 WORKDIR /app
 

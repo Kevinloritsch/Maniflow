@@ -42,3 +42,87 @@ class RateLimiter:
         self._last[domain] = time.monotonic()
 
 LIMITER = RateLimiter(min_gap_sec=2.5, jitter_sec=1.5)
+
+def retry(max_attempts: int = 3, base_delay: float = 2.0):
+    # backoff decorator
+    def decorator(fn: Callable) -> Callable:
+        @wraps(fn)
+        def wrapper(*args, **kwargs):
+            for attempt in range(1, max_attempts + 1):
+                try:
+                    return fn(*args, **kwargs)
+                except Exception as exc:
+                    if attempt == max_attempts:
+                        logger.error(
+                            f"{fn.__name__} failed after {max_attempts} attempts: {exc}"
+                        )
+                        raise
+                    delay = base_delay ** attempt + random.uniform(0, 1)
+                    logger.warning(
+                        f"{fn.__name__} attempt {attempt} failed ({exc}), "
+                        f"retrying in {delay:.1f}s"
+                    )
+                    time.sleep(delay)
+        return wrapper
+    return decorator
+ 
+ 
+# ── Output unit ───────────────────────────────────────────────────────────────
+ 
+@dataclass
+class RawChunk:
+    source:      str
+    category:    str
+    topic:       str
+    subchapter:  str
+    url:         str
+    title:       str
+    text:        str
+    code_blocks: list[str]        = field(default_factory=list)
+    approved:    bool | None      = None
+ 
+    def to_dict(self) -> dict:
+        return {
+            "source":      self.source,
+            "category":    self.category,
+            "topic":       self.topic,
+            "subchapter":  self.subchapter,
+            "url":         self.url,
+            "title":       self.title,
+            "text":        self.text,
+            "code_blocks": self.code_blocks,
+            "approved":    self.approved,
+        }
+ 
+    @classmethod
+    def from_dict(cls, d: dict) -> "RawChunk":
+        return cls(**d)
+ 
+    def embedding_text(self) -> str:
+        # stored in vector database
+        # prose is stored in metadata
+        return f"{self.category} > {self.topic} > {self.subchapter}\n\n{self.text}"
+ 
+ 
+# ── Abstract base ─────────────────────────────────────────────────────────────
+ 
+class ScraperBase(ABC):
+ 
+    SOURCE: str = "base"
+ 
+    def scrape_topic(self, category: str, topic, subchapter: str) -> list[RawChunk]:
+        raise NotImplementedError
+ 
+    def _validate(self, chunk: RawChunk) -> bool:
+        # validating chunks 
+        if len(chunk.text.strip()) < 80:
+            logger.debug(f"  dropped short chunk: {chunk.topic}/{chunk.subchapter}")
+            return False
+        if chunk.text.count(" ") < 10:
+            logger.debug(f"  dropped non-prose chunk: {chunk.topic}/{chunk.subchapter}")
+            return False
+        return True
+ 
+    def _log(self, msg: str) -> None:
+        logger.info(f"[{self.SOURCE}] {msg}")
+ 
