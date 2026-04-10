@@ -1,14 +1,6 @@
-FROM python:3.11-slim
+FROM manimcommunity/manim:v0.18.0
 
-RUN apt-get update && apt-get install -y \
-    ffmpeg \
-    libcairo2-dev \
-    libpango1.0-dev \
-    pkg-config \
-    python3-dev \
-    gcc \
-    texlive-full \
-    && rm -rf /var/lib/apt/lists/*
+USER root
 
 COPY requirements.txt ./
 
@@ -31,4 +23,5 @@ COPY server.py ./
 #COPY credentials/credentials.json token.json ./
 
 EXPOSE 5000
+
 CMD ["python", "server.py"]
