@@ -2,7 +2,7 @@ import os
 import uuid
 import subprocess
 import tempfile
-import drive
+# import drive          #undo later
 from flask import Flask, request, send_file, jsonify
 
 
@@ -36,7 +36,7 @@ def render():
         cmd.append(scene_name)
 
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
         if result.returncode != 0:
             return jsonify({"error": result.stderr}), 500
     except subprocess.TimeoutExpired:
