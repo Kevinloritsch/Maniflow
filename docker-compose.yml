@@ -3,6 +3,8 @@ services:
     build: ./docker
     ports:
       - "5000:5000"
+    volumes:
+      - ./docker/server.py:/app/server.py
     restart: unless-stopped
 
   web:
