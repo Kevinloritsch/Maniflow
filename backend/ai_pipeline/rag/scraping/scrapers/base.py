@@ -66,9 +66,6 @@ def retry(max_attempts: int = 3, base_delay: float = 2.0):
         return wrapper
     return decorator
  
- 
-# ── Output unit ───────────────────────────────────────────────────────────────
- 
 @dataclass
 class RawChunk:
     source:      str
@@ -102,9 +99,6 @@ class RawChunk:
         # stored in vector database
         # prose is stored in metadata
         return f"{self.category} > {self.topic} > {self.subchapter}\n\n{self.text}"
- 
- 
-# ── Abstract base ─────────────────────────────────────────────────────────────
  
 class ScraperBase(ABC):
  
