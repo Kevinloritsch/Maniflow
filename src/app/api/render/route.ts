@@ -38,25 +38,19 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(err, { status: res.status });
   }
 
+  const renderDurationMs = Number(res.headers.get("x-render-duration-ms") ?? 0);
   const videoBuffer = await res.arrayBuffer();
 
-  try {
-    const filename = `output_${Date.now()}.mp4`;
-    const rendersDir = path.join(process.cwd(), "public", "renders");
-    const filepath = path.join(rendersDir, filename);
+  const filename = `output_${Date.now()}.mp4`;
+  const rendersDir = path.join(process.cwd(), "public", "renders");
+  const filepath = path.join(rendersDir, filename);
 
-    fs.mkdirSync(rendersDir, { recursive: true });
-    fs.writeFileSync(filepath, Buffer.from(videoBuffer));
+  fs.mkdirSync(rendersDir, { recursive: true });
+  fs.writeFileSync(filepath, Buffer.from(videoBuffer));
 
-    return NextResponse.json({
-      videoUrl: `/renders/${filename}`,  // relative URL for <video src="">
-      videoPath: filepath,               // absolute path for FastAPI
-    });
-  } catch (err) {
-    console.error("File save error:", err);
-    return NextResponse.json(
-      { error: `Failed to save video: ${err}` },
-      { status: 500 }
-    );
-  }
+  return NextResponse.json({
+    videoUrl: `/renders/${filename}`,
+    videoPath: filepath,
+    renderDurationMs, // ← flows through cleanly
+  });
 }

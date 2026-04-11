@@ -1,0 +1,298 @@
+from manim import *
+
+
+# ── Helpers ────────────────────────────────────────────────────────────────────
+
+def make_node(val: int, fill: str = "#1a1a2e", border: str = BLUE):
+    """Returns (VGroup, val_label, next_label) for a single linked-list node."""
+    box = RoundedRectangle(
+        corner_radius=0.15,
+        width=1.2,
+        height=0.8,
+        fill_color=fill,
+        fill_opacity=1,
+        stroke_color=border,
+        stroke_width=2.5,
+    )
+    divider = Line(
+        box.get_left() + RIGHT * 0.82,
+        box.get_left() + RIGHT * 0.82 + UP * 0.8,
+        stroke_color=border,
+        stroke_width=1.5,
+    ).shift(DOWN * 0.4)
+    val_tex = MathTex(str(val), color=WHITE).scale(0.6).move_to(
+        box.get_left() + RIGHT * 0.41
+    )
+    nxt_dot = Dot(
+        box.get_left() + RIGHT * 1.02,
+        radius=0.07,
+        color=TEAL,
+    )
+    node = VGroup(box, divider, val_tex, nxt_dot)
+    return node, val_tex, nxt_dot
+
+
+def make_arrow(start_mob, end_mob, color=TEAL):
+    return Arrow(
+        start_mob.get_right() + LEFT * 0.18,
+        end_mob.get_left() + RIGHT * 0.05,
+        buff=0.08,
+        stroke_width=2.5,
+        max_tip_length_to_length_ratio=0.18,
+        color=color,
+    )
+
+
+def make_null(position):
+    t = MathTex(r"\text{NULL}", color=MAROON).scale(0.55).move_to(position)
+    box = SurroundingRectangle(t, color=MAROON, stroke_width=1.5, buff=0.1, corner_radius=0.08)
+    return VGroup(t, box)
+
+
+# ── Scene ──────────────────────────────────────────────────────────────────────
+
+class ManimScene(MovingCameraScene):
+    def construct(self):
+        self.camera.background_color = "#000000"
+
+        # ── Title ──────────────────────────────────────────────────────────────
+        title = Tex(r"Linked List — Remove Element", color=WHITE).scale(0.95)
+        subtitle = MathTex(
+            r"\text{Remove all nodes where } \texttt{val} = target",
+            color=GREY,
+        ).scale(0.55).next_to(title, DOWN, buff=0.2)
+        title_group = VGroup(title, subtitle)
+        self.play(Write(title), run_time=1.0)
+        self.play(FadeIn(subtitle, shift=UP * 0.1), run_time=0.6)
+        self.wait(0.4)
+        self.play(FadeOut(title_group), run_time=0.6)
+
+        # ── Build initial list:  1 → 2 → 6 → 3 → 6 → NULL ────────────────────
+        values = [1, 2, 6, 3, 6]
+        target_val = 6
+
+        SPACING = 1.9
+        START_X = -4.2
+
+        nodes, val_labels, nxt_dots = [], [], []
+        for i, v in enumerate(values):
+            nd, vl, nd_dot = make_node(v)
+            nd.move_to(RIGHT * (START_X + i * SPACING))
+            nodes.append(nd)
+            val_labels.append(vl)
+            nxt_dots.append(nd_dot)
+
+        null_mob = make_null(RIGHT * (START_X + len(values) * SPACING))
+
+        arrows = []
+        for i in range(len(nodes) - 1):
+            arrows.append(make_arrow(nodes[i], nodes[i + 1]))
+        arrows.append(make_arrow(nodes[-1], null_mob))
+
+        # Index labels below nodes
+        idx_labels = VGroup(*[
+            MathTex(str(i), color=GREY).scale(0.45).next_to(nodes[i], DOWN, buff=0.18)
+            for i in range(len(nodes))
+        ])
+
+        list_group = VGroup(*nodes, *arrows, null_mob, idx_labels)
+
+        # Static add — no Create cost
+        self.add(idx_labels)
+        self.play(
+            LaggedStart(*[FadeIn(nd, shift=UP * 0.12) for nd in nodes], lag_ratio=0.12),
+            run_time=1.0,
+        )
+        self.play(
+            LaggedStart(*[GrowArrow(a) for a in arrows], lag_ratio=0.1),
+            FadeIn(null_mob),
+            run_time=0.9,
+        )
+
+        # Target label top-right (fixed)
+        target_label = MathTex(r"\text{target} = 6", color=YELLOW).scale(0.65).to_corner(UR).shift(LEFT * 0.3 + DOWN * 0.3)
+        self.add(target_label)
+
+        # Algo label
+        algo_label = MathTex(
+            r"\text{prev} \rightarrow \text{curr} \rightarrow \text{next}",
+            color=TEAL,
+        ).scale(0.58).to_corner(UL).shift(RIGHT * 0.2 + DOWN * 0.3)
+        self.add(algo_label)
+
+        self.wait(0.3)
+
+        # ── Sentinel / dummy head ──────────────────────────────────────────────
+        dummy_nd, _, _ = make_node(0, fill="#0d0d1a", border=GREEN)
+        dummy_nd.next_to(nodes[0], LEFT, buff=0.7)
+        dummy_label = MathTex(r"\text{dummy}", color=GREEN).scale(0.5).next_to(dummy_nd, UP, buff=0.15)
+        dummy_arrow = make_arrow(dummy_nd, nodes[0], color=GREEN)
+
+        self.play(
+            FadeIn(dummy_nd, shift=RIGHT * 0.15),
+            FadeIn(dummy_label),
+            GrowArrow(dummy_arrow),
+            run_time=0.9,
+        )
+
+        # Camera: frame the whole list
+        self.play(
+            self.camera.frame.animate.move_to(list_group.get_center() + LEFT * 0.5).scale(1.0),
+            run_time=0.6,
+        )
+
+        # ── Pointer indicators ─────────────────────────────────────────────────
+        prev_ptr = MathTex(r"\text{prev}", color=GREEN).scale(0.52)
+        curr_ptr = MathTex(r"\text{curr}", color=YELLOW).scale(0.52)
+
+        def place_ptr(ptr_tex, node, direction=UP):
+            ptr_tex.next_to(node, direction, buff=0.32)
+
+        place_ptr(prev_ptr, dummy_nd)
+        place_ptr(curr_ptr, nodes[0])
+        self.play(FadeIn(prev_ptr), FadeIn(curr_ptr), run_time=0.6)
+
+        # ── Traversal loop ─────────────────────────────────────────────────────
+        #   prev_idx tracks which mob prev points at (-1 = dummy)
+        #   We animate step-by-step for indices where value == target
+
+        prev_mob = dummy_nd  # actual mobject prev points at
+        removed_indices = []  # track which node indices are removed
+
+        step_label = MathTex(r"\text{Traversing\ldots}", color=GREY).scale(0.55).to_edge(DOWN, buff=0.35)
+        self.add(step_label)
+
+        for i, v in enumerate(values):
+            curr_mob = nodes[i]
+
+            # Move curr pointer
+            self.play(
+                curr_ptr.animate.next_to(curr_mob, UP, buff=0.32),
+                run_time=0.5,
+            )
+
+            # Highlight current node
+            highlight = SurroundingRectangle(curr_mob, color=YELLOW, stroke_width=2, buff=0.06, corner_radius=0.12)
+            self.play(Create(highlight), run_time=0.4)
+
+            if v == target_val:
+                # ── REMOVE node i ──────────────────────────────────────────
+                remove_step = MathTex(
+                    r"\text{val}=6=\text{target} \Rightarrow \text{skip}",
+                    color=MAROON,
+                ).scale(0.55).to_edge(DOWN, buff=0.35)
+                self.play(ReplacementTransform(step_label, remove_step), run_time=0.5)
+                step_label = remove_step
+
+                # Cross out node
+                cross = Cross(curr_mob, stroke_color=MAROON, stroke_width=3)
+                self.play(Create(cross), run_time=0.4)
+
+                # Determine next mob
+                if i + 1 < len(nodes):
+                    next_mob = nodes[i + 1]
+                else:
+                    next_mob = null_mob
+
+                # New arrow: prev → next (bypass)
+                bypass_arrow = make_arrow(prev_mob, next_mob, color=GREEN)
+                self.play(
+                    GrowArrow(bypass_arrow),
+                    run_time=0.7,
+                )
+
+                # Fade out node + old arrows + cross
+                old_arrow_in  = arrows[i - 1] if i > 0 else dummy_arrow
+                old_arrow_out = arrows[i]
+
+                self.play(
+                    FadeOut(curr_mob),
+                    FadeOut(cross),
+                    FadeOut(old_arrow_in),
+                    FadeOut(old_arrow_out),
+                    run_time=0.7,
+                )
+
+                # Update arrow bookkeeping
+                if i > 0:
+                    arrows[i - 1] = bypass_arrow
+                else:
+                    dummy_arrow = bypass_arrow
+
+                removed_indices.append(i)
+                # prev stays at prev_mob — do NOT advance
+
+            else:
+                # ── KEEP node i ────────────────────────────────────────────
+                keep_step = MathTex(
+                    r"\text{val} \neq \text{target} \Rightarrow \text{keep}",
+                    color=GREEN,
+                ).scale(0.55).to_edge(DOWN, buff=0.35)
+                self.play(ReplacementTransform(step_label, keep_step), run_time=0.5)
+                step_label = keep_step
+
+                # Pulse green border
+                self.play(
+                    curr_mob[0].animate.set_stroke(color=GREEN, width=3.5),
+                    run_time=0.4,
+                )
+                self.play(
+                    curr_mob[0].animate.set_stroke(color=BLUE, width=2.5),
+                    run_time=0.3,
+                )
+
+                # Advance prev
+                self.play(
+                    prev_ptr.animate.next_to(curr_mob, UP, buff=0.32),
+                    run_time=0.5,
+                )
+                prev_mob = curr_mob
+
+            self.play(FadeOut(highlight), run_time=0.3)
+            self.wait(0.15)
+
+        # ── Final state label ──────────────────────────────────────────────────
+        final_label = MathTex(
+            r"\text{Result: } 1 \to 2 \to 3 \to \text{NULL}",
+            color=TEAL,
+        ).scale(0.7).to_edge(DOWN, buff=0.35)
+        self.play(ReplacementTransform(step_label, final_label), run_time=0.8)
+
+        # Fade out pointers
+        self.play(FadeOut(prev_ptr), FadeOut(curr_ptr), run_time=0.5)
+
+        # Camera zoom to surviving nodes
+        surviving = VGroup(*[nodes[i] for i in range(len(nodes)) if i not in removed_indices])
+        self.play(
+            self.camera.frame.animate.move_to(surviving.get_center()).scale(0.85),
+            run_time=0.9,
+        )
+
+        # Pulse surviving nodes GREEN
+        self.play(
+            LaggedStart(
+                *[nd[0].animate.set_stroke(color=GREEN, width=3.5) for nd in surviving],
+                lag_ratio=0.15,
+            ),
+            run_time=0.7,
+        )
+        self.wait(0.4)
+        self.play(
+            LaggedStart(
+                *[nd[0].animate.set_stroke(color=BLUE, width=2.5) for nd in surviving],
+                lag_ratio=0.15,
+            ),
+            run_time=0.5,
+        )
+
+        # ── Complexity footnote ────────────────────────────────────────────────
+        complexity = MathTex(
+            r"\mathcal{O}(n) \text{ time} \quad \mathcal{O}(1) \text{ space}",
+            color=GREY,
+        ).scale(0.55).to_corner(DR).shift(UP * 0.2 + LEFT * 0.2)
+        self.add(complexity)
+        self.play(FadeIn(complexity, shift=UP * 0.08), run_time=0.6)
+        self.wait(1.2)
+
+        # ── Fade everything out ────────────────────────────────────────────────
+        self.play(FadeOut(Group(*self.mobjects)), run_time=1.0)

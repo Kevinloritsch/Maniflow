@@ -5,7 +5,7 @@ import { useState, useRef } from "react";
 
 const DEFAULT_CODE = `from manim import *
 
-class HelloWorld(Scene):
+class ManimScene (Scene):
     def construct(self):
         text = Text("Hello, Manim!")
         self.play(Write(text))
@@ -14,7 +14,7 @@ class HelloWorld(Scene):
 
 export default function Home() {
   const [code, setCode] = useState(DEFAULT_CODE);
-  const [scene, setScene] = useState("HelloWorld");
+  const [scene, setScene] = useState("ManimScene");
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -22,19 +22,23 @@ export default function Home() {
   const [analyzing, setAnalyzing] = useState(false);
   const [analysis, setAnalysis] = useState<any>(null);
   const [videoPath, setVideoPath] = useState<string | null>(null);
+  const [renderDurationMs, setRenderDurationMs] = useState<number | null>(null);
+
+  const [chunks, setChunks] = useState(4);
 
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  async function handleRender() {
+  async function handleRender(fast = false) {
     setLoading(true);
     setError(null);
     setVideoUrl(null);
+    setRenderDurationMs(null);
 
     try {
-      const res = await fetch("/api/render", {
+      const res = await fetch(fast ? "/api/render_fast" : "/api/render", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code, scene }),
+        body: JSON.stringify({ code, scene, chunks }),
       });
 
       if (!res.ok) {
@@ -47,8 +51,9 @@ export default function Home() {
       // const url = URL.createObjectURL(blob);
       // setVideoUrl(url);
       const data = await res.json();
-      setVideoUrl(data.videoUrl);   // used by <video src="">
+      setVideoUrl(data.videoUrl); // used by <video src="">
       setVideoPath(data.videoPath); // used by analyze
+      setRenderDurationMs(data.renderDurationMs);
 
       setTimeout(() => videoRef.current?.play(), 100);
     } catch (e) {
@@ -63,7 +68,7 @@ export default function Home() {
 
     setAnalyzing(true);
     setAnalysis(null);
-    setError(null); 
+    setError(null);
 
     try {
       const res = await fetch("http://localhost:8000/video_analysis", {
@@ -112,12 +117,40 @@ export default function Home() {
       </div>
 
       <button
-        onClick={handleRender}
+        onClick={() => handleRender()}
         disabled={loading}
         className="rounded bg-white px-6 py-2 font-semibold text-black transition hover:bg-gray-200 disabled:opacity-40"
       >
         {loading ? "Rendering…" : "Render"}
       </button>
+
+      <input
+        type="number"
+        min={1}
+        max={16}
+        value={chunks}
+        onChange={(e) => setChunks(Number(e.target.value))}
+        className="w-16 rounded border border-gray-600 bg-black px-2 py-1 font-mono text-sm text-white"
+      />
+
+      <button
+        onClick={() => handleRender(true)}
+        disabled={loading}
+        className="rounded bg-purple-700 px-6 py-2 font-semibold text-white hover:bg-purple-800 disabled:opacity-40"
+      >
+        {loading ? "Rendering…" : "Render Fast"}
+      </button>
+
+      {renderDurationMs !== null && (
+        <p className="text-xs text-gray-400">
+          Rendered in{" "}
+          <span className="font-mono text-white">
+            {renderDurationMs >= 1000
+              ? `${(renderDurationMs / 1000).toFixed(2)}s`
+              : `${renderDurationMs}ms`}
+          </span>
+        </p>
+      )}
 
       {error && (
         <pre className="overflow-auto rounded border border-red-700 bg-red-950 p-4 text-xs text-red-300">
@@ -132,17 +165,17 @@ export default function Home() {
             ref={videoRef}
             src={videoUrl}
             controls
-            className="w-full max-h-[50vh] object-contain rounded border bg-black"
+            className="max-h-[50vh] w-full rounded border bg-black object-contain"
           />
 
-        <button
-          onClick={handleAnalyze}
-          disabled={analyzing}
-          className="rounded bg-blue-600 px-6 py-2 font-semibold text-white hover:bg-blue-700 disabled:opacity-40"
-        >
-          {analyzing ? "Analyzing…" : "Analyze with TwelveLabs"}
-        </button>
-          </div>
+          <button
+            onClick={handleAnalyze}
+            disabled={analyzing}
+            className="rounded bg-blue-600 px-6 py-2 font-semibold text-white hover:bg-blue-700 disabled:opacity-40"
+          >
+            {analyzing ? "Analyzing…" : "Analyze with TwelveLabs"}
+          </button>
+        </div>
       )}
 
       {/* Analysis results */}
@@ -150,7 +183,7 @@ export default function Home() {
         <div className="space-y-3 rounded border border-gray-700 p-4">
           <div className="flex items-center gap-3">
             <span
-              className={`rounded px-2 py-1 text-xs font-bold bg-green-900 text-green-300 ${
+              className={`rounded bg-green-900 px-2 py-1 text-xs font-bold text-green-300 ${
                 JSON.parse(analysis.data).passed
                   ? "bg-green-900 text-green-300"
                   : "bg-red-900 text-red-300"
@@ -158,21 +191,37 @@ export default function Home() {
             >
               {JSON.parse(analysis.data).passed ? "PASSED" : "FAILED"}
             </span>
-            <pre className="text-sm text-gray-300">{JSON.stringify({ ...analysis, data: JSON.parse(analysis.data) }, null, 2)}</pre>
+            <pre className="text-sm text-gray-300">
+              {JSON.stringify(
+                { ...analysis, data: JSON.parse(analysis.data) },
+                null,
+                2,
+              )}
+            </pre>
             {/* <p className="text-white text-xs">{typeof JSON.parse(analysis.data).passed} — {JSON.parse(analysis.data).passed.toString()}</p> */}
-            <p className="text-sm text-black">{JSON.parse(analysis.data).passed.toString()}</p>
+            <p className="text-sm text-black">
+              {JSON.parse(analysis.data).passed.toString()}
+            </p>
           </div>
 
           {analysis.errors?.length > 0 && (
             <div className="space-y-2">
               <p className="text-sm font-semibold text-red-400">Errors</p>
               {analysis.errors.map((err: any, i: number) => (
-                <div key={i} className="rounded border border-gray-700 p-3 text-xs space-y-1">
+                <div
+                  key={i}
+                  className="space-y-1 rounded border border-gray-700 p-3 text-xs"
+                >
                   <div className="flex gap-2">
-                    <span className={`font-bold uppercase ${
-                      err.severity === "critical" ? "text-red-400" :
-                      err.severity === "major" ? "text-orange-400" : "text-yellow-400"
-                    }`}>
+                    <span
+                      className={`font-bold uppercase ${
+                        err.severity === "critical"
+                          ? "text-red-400"
+                          : err.severity === "major"
+                            ? "text-orange-400"
+                            : "text-yellow-400"
+                      }`}
+                    >
                       {err.severity}
                     </span>
                     <span className="text-gray-400">{err.category}</span>
@@ -186,7 +235,10 @@ export default function Home() {
           )}
 
           <p className="text-xs text-gray-500">
-            Recommendation: <span className="font-bold text-white">{analysis.iteration_recommendation}</span>
+            Recommendation:{" "}
+            <span className="font-bold text-white">
+              {analysis.iteration_recommendation}
+            </span>
           </p>
         </div>
       )}
