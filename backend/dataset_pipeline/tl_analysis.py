@@ -1,0 +1,157 @@
+
+analysis_prompt_1 = '''
+
+You are a visual quality inspector for educational animation videos. Analyze this video purely on its visual presentation and clarity — your goal is to determine whether a student watching this video could learn from it effectively.
+
+Evaluate the following visual aspects:
+
+1. **Layout & Bounds** — Are any elements cut off, overflowing off screen, or overlapping each other in a way that obscures content?
+2. **Text & Labels** — Is all text legible? Is font size large enough to read comfortably? Are any labels hidden behind shapes, lines, or other elements? Are the labels in a position that is easy to read and understand along with the visual?
+3. **Color & Contrast** — Are colors distinguishable from each other and from the background? Is there enough contrast to clearly see what's being highlighted?
+4. **Animation & Timing** — Do elements appear or disappear too quickly to follow? Are transitions smooth enough to track visually?
+5. **Visual Clutter** — Is the screen ever too busy or crowded, making it hard to know where to focus?
+6. **Pointers & Indicators** — Are arrows, highlights, or indicators clearly visible and pointing to the right things?
+7. **Overall Cleanliness** — Does the video look polished and professional, or are there visual artifacts, glitches, or jarring transitions?
+
+Return your response as JSON in this exact format:
+{
+  "passed": true or false,
+  "overall_summary": "one sentence summary",
+  "errors": [
+    {
+      "severity": "critical" | "major" | "minor",
+      "category": "Layout & Bounds" | "Text & Labels" | "Color & Contrast" | "Animation & Timing" | "Visual Clutter" | "Pointers & Indicators" | "Overall Cleanliness",
+      "timestamp": "approximate time in video e.g. 0:03",
+      "description": "what is wrong visually. BE VERY SPECIFIC AND DETAILED ABOUT WHAT EXACTLY ABOUT THE VIDEO IS WRONG",
+      "suggested_fix": "how to fix it. BE VERY SPECIFIC AND DETAILED ABOUT HOW TO FIX IT."
+    }
+  ],
+  "passed_checks": ["list of categories that passed"],
+  "iteration_recommendation": "approve" | "revise" | "reject"
+}
+
+passed should be true only if a student could watch this video and learn from it without being hindered by any visual issue. Be strict — minor annoyances that distract from learning should still be flagged.
+'''
+
+
+import time
+from twelvelabs import TwelveLabs
+from dotenv import load_dotenv
+import os
+import json
+# import drive
+from twelvelabs.types import ResponseFormat
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+load_dotenv()
+client = TwelveLabs(api_key=os.getenv("TWELVE_LABS_API_KEY"))
+
+INDEX_NAME = "maniflow-analysis"
+
+# 1. Fetch all your existing indexes
+existing_indexes = client.indexes.list()
+
+# 2. Check if one matches our name
+my_index = next((idx for idx in existing_indexes if idx.index_name == INDEX_NAME), None)
+
+if my_index:
+    # If it exists, just grab its ID!
+    INDEX_ID = my_index.id
+    print(f"Found existing index: {INDEX_ID}")
+else:
+    # If it doesn't exist, create it!
+    new_index = client.indexes.create(
+        index_name=INDEX_NAME,
+        models=[{"model_name": "pegasus1.2", "model_options": ["visual", "audio"]}]
+    )
+    INDEX_ID = new_index.id
+    print(f"Created new index: {INDEX_ID}")
+    
+
+class AnalyzeRequest(BaseModel):
+    video_path: str
+
+@app.post("/tl_analysis")
+def analyze_video(request: AnalyzeRequest):
+    
+    with open(request.video_path, "rb") as video_file:
+        asset = client.assets.create(
+            method="direct",
+            file=video_file
+        )
+            
+    print(f"Upload successful! Task ID: {asset.id}")
+    
+    # video_url = drive.download_recent_file()
+
+    # asset = client.assets.create(
+    #     method="url",
+    #     url=video_url
+    # )
+    print(f"Created asset: {asset.id}")
+
+    indexed_asset = client.indexes.indexed_assets.create(
+        index_id=INDEX_ID,
+        asset_id=asset.id,
+    )
+    print(f"Indexing asset: {indexed_asset.id}")
+
+    print("Waiting for indexing...")
+    while True:
+        indexed_asset = client.indexes.indexed_assets.retrieve(
+            index_id=INDEX_ID,
+            indexed_asset_id=indexed_asset.id
+        )
+        print(f"  Status: {indexed_asset.status}")
+        if indexed_asset.status == "ready":
+            print("Indexing complete!")
+            break
+        elif indexed_asset.status == "failed":
+            raise RuntimeError("Indexing failed")
+        time.sleep(5)
+
+    text = client.analyze(
+        video_id=indexed_asset.id,
+        prompt=analysis_prompt_1,
+        response_format=ResponseFormat(
+            type="json_schema",
+            json_schema={
+                "type": "object",
+                "properties": {
+                    "passed": {"type": "boolean"},
+                    "overall_summary": {"type": "string"},
+                    "errors": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "category": {"type": "string"},
+                                "severity": {"type": "string"},
+                                "description": {"type": "string"},
+                                "timestamp": {"type": "string"},
+                                "suggested_fix": {"type": "string"}
+                            }
+                        }
+                    },
+                    "passed_checks": {"type": "array", "items": {"type": "string"}},
+                    "iteration_recommendation": {"type": "string"}
+                }
+            }
+        ),
+    )
+    
+    print(text.model_dump())
+
+    return text.model_dump()
