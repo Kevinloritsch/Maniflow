@@ -1,0 +1,2775 @@
+DSA KNOWLEDGE BASE — REVIEW FILE
+Total chunks: 101
+
+INSTRUCTIONS
+────────────
+  • Change APPROVED: null  →  APPROVED: YES   to include a chunk
+  • Change APPROVED: null  →  APPROVED: NO    to reject a chunk
+  • Do NOT edit CHUNK / URL / TITLE lines
+  • Save as UTF-8 before running: python run.py ingest
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0001 | arrays > arrays_basics > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/51346136
+TITLE: SO: Given an array of integers, find the first missing positive integer in linear time and constant space
+CHARS: 1446  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Assuming the array can be modified, We divide the array into 2 parts such that the first part consists of only positive numbers. Say we have the starting index as and the ending index as (exclusive). We traverse the array from index to . We take the absolute value of the element at that index - say the value is . If we do nothing. If not, we make the sign of the element at index negative. ( Clarification : We do not toggle the sign. If the value is positive, it becomes negative. If it is negative, it remains negative. In pseudo code, this would be something like and not .) Finally, we traverse the array once more from index to . In case we encounter a positive element at some index, we output . This is the answer. However, if we do not encounter any positive element, it means that integers to occur in the array. We output . It can also be the case that all the numbers are non-positive making . The output remains correct. All the steps can be done in time and using space. Example: In step 2 we change the signs of the positive numbers to keep track of which integers have already occurred. For example, here , it suggests that has already occurred in the array. Basically, we change the value of the element having index to negative if is in the array. In step 3, if some value is positive, it means that we did not find any integer of value in step 2.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/51346136 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0002 | arrays > arrays_basics > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/12683749
+TITLE: SO: Given an array [a1b2c3d4] convert to [abcd1234]
+CHARS: 868  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+What is ? Assuming that is the size of the input: This is called the convolution of a list. In essence, you have to convert a list of pairs to a pair of lists . It's the same operation as the transpose of a matrix. Anyway, you have to think of the structure as a k-dimensional array, where k = lg n. The convolution of the array is what you get when you "move" the value at an index i to index i bitwise rotated. In this case, we want to rotate the indices rightward 1 bit. This means that the convolution is a permutation with a maximum cycle length of k. The trick is then selecting one index from each cycle – this will always include 0 and n-1. EDIT: Actually, what you probably want is to decompose the permutation into a product of transpositions. Then, all you need to do is swaps.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/12683749 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0003 | arrays > arrays_basics > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/27257896
+TITLE: SO: Finding overlapping data in arrays
+CHARS: 356  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+This is not optimized solution for minimal number of arrays left. make the abundance dictionary for the member of arrays. for example: Check each of arrays and if abundance of all members are greater than 1, remove array and reduce the count of each number in your dictionary.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/27257896 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0004 | arrays > arrays_basics > introduction | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Array_(data_structure)
+TITLE: Wikipedia: Array (data structure) — introduction
+CHARS: 3091  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+In computer science, an array is a data structure consisting of a collection of elements (values or variables), of same memory size, each identified by at least one array index or key, a collection of which may be a tuple, known as an index tuple. In general, an array is a mutable and linear collection of elements with the same data type. An array is stored such that the position (memory address) of each element can be computed from its index tuple by a mathematical formula. The simplest type of data structure is a linear array, also called a one-dimensional array.
+For example, an array of ten 32-bit (4-byte) integer variables, with indices 0 through 9, may be stored as ten words at memory addresses 2000, 2004, 2008, ..., 2036, (in hexadecimal: 0x7D0, 0x7D4, 0x7D8, ..., 0x7F4) so that the element with index i has the address 2000 + (i × 4).
+The memory address of the first element of an array is called first address, foundation address, or base address.
+Because the mathematical concept of a matrix can be represented as a two-dimensional grid, two-dimensional arrays are also sometimes called "matrices". In some cases the term "vector" is used in computing to refer to an array, although tuples rather than vectors are the more mathematically correct equivalent. Tables are often implemented in the form of arrays, especially lookup tables; the word "table" is sometimes used as a synonym of array.
+Arrays are among the oldest and most important data structures, and are used by almost every program. They are also used to implement many other data structures, such as lists and strings. They effectively exploit the addressing logic of computers. In most modern computers and many external storage devices, the memory is a one-dimensional array of words, whose indices are their addresses. Processors, especially vector processors, are often optimized for array operations.
+Arrays are useful mostly because the element indices can be computed at run time. Among other things, this feature allows a single iterative statement to process arbitrarily many elements of an array. For that reason, the elements of an array data structure are required to have the same size and should use the same data representation. The set of valid index tuples and the addresses of the elements (and hence the element addressing formula) are usually, but not always, fixed while the array is in use.
+The term "array" may also refer to an array data type, a kind of data type provided by most high-level programming languages that consists of a collection of values or variables that can be selected by one or more indices computed at run-time. Array types are often implemented by array structures; however, in some languages they may be implemented by hash tables, linked lists, search trees, or other data structures.
+The term is also used, especially in the description of algorithms, to mean associative array or "abstract array", a theoretical computer science model (an abstract data type or ADT) 
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Array_(data_structure) — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0005 | arrays > arrays_basics > searching | openstax
+APPROVED: null
+URL: https://openstax.org/books/introduction-computer-science/pages/3-2-algorithm-design-and-discovery
+TITLE: OpenStax (introduction-computer-science): arrays_basics — searching
+CHARS: 848  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+In Algorithms of Oppression , Safiya Noble describes how search engines can amplify sexist, racist, and misogynistic ideas. While searching for âBlack girls,â âLatina girls,â and âAsian girlsâ circa 2013, Safiya was startled by how many of the top search results and advertisements that appeared on the first page of Google Search led to pornographic results when her input query did not at all suggest anything pornographic. In contrast, searching for âWhite girlsâ did not include pornographic results. As algorithms become more commonplace in our daily lives, they also become a more potent force for determining certain social futures. Algorithms are immensely powerful in their ability to affect not only how we act, but also what we see, what we hear, what we believe about the world, and even what we believe about ourselves.
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0006 | arrays > arrays_basics > searching | openstax
+APPROVED: null
+URL: https://openstax.org/books/introduction-computer-science/pages/3-5-sample-algorithms-by-problem
+TITLE: OpenStax (introduction-computer-science): arrays_basics — searching
+CHARS: 2739  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Searching is the problem of retrieving a target element from a collection of elements. Searching in a linear data structure, such as an array list , can be done using either sequential search or binary search . Sequential Search Algorithm A sequential search algorithm is a searching algorithm that sequentially checks the collection element-by-element for the target. The runtime of sequential search is in O( N ) with respect to N , the number of elements in the list ( Figure 3.22 ). Figure 3.22 Sequential search is a search algorithm that checks the collection element by element to find a target element. (attribution: Copyright Rice University, OpenStax, under CC BY 4.0 license) Binary Search Algorithm A binary search algorithm recursively narrows down the possible locations for the target in the sorted list. Initially, the algorithm has no informationâthe target can be anywhere in the entire range of the sorted list. By comparing the target to the middle element of the range, we can rule-out half of the elements in the range. This process can be repeated until we have found the expected location of the target in the sorted list. The runtime of binary search is in O(log N ) with respect to N , the number of elements in the sorted list, so long as indexing is a constant-time operation (see Figure 3.11 ). Although the sequential search algorithm works with any collection type such as lists, sets, dictionaries, and priority queues, the binary search algorithm relies on a sorted list with access to elements by index . Consequently, binary search is efficient on array lists that provide constant-time access to the element at any index and inefficient on linked lists, which do not enable constant-time access to elements by index. Binary search relies on the structure of the sorted list to repeatedly rule-out half of the remaining elements. Binary search trees represent the concept of binary search in a tree data structure by arranging elements in the tree in sorted order from left to right. Ideally, the root node represents the middle element in the sorted tree and each child roughly divides each subtree in half. But, in the worst case, a binary search tree can look exactly like a linked list where each node contains either zero children or one child. Although such a tree still arranges its elements in sorted order from left to right, comparing the target to each node only reduces the size of the problem by one element rather than ruling out half of the remaining elementsâthe worst-case binary search tree degrades to sequential search. Balanced binary search trees, such as AVL tree s, addressed this worst-case scenario by maintaining the AVL property of balance between left and right subtrees.
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0007 | arrays > arrays_basics > sorting | openstax
+APPROVED: null
+URL: https://openstax.org/books/introduction-computer-science/pages/3-5-sample-algorithms-by-problem
+TITLE: OpenStax (introduction-computer-science): arrays_basics — sorting
+CHARS: 5537  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Sorting is the problem of rearranging elements into a logical order, typically from least-valued (smallest) to greatest-valued (largest). Sorting is a fundamental problem not only because of the tasks that it directly solves, but also because it is a foundation for many other algorithms such as the binary search algorithm or Kruskalâs algorithm for the minimum spanning tree problem . The most common type of sorting algorithm solves the problem of comparison sorting , or sorting a list of elements where elements are not assigned numeric values but rather defined in relation to other elements. For simplicity, the data are typically assumed to be stored in an array list for indexed access, and the sorting algorithm can either return a new sorted list or rearrange the elements in the array list so that they appear in sorted order. Merge Sort Algorithm A merge sort algorithm recursively divides the data into sublists until sublists are one element longâwhich we know are sortedâand then merges adjacent sorted sublists to eventually return the sorted list. The merge operation combines two sorted sublists to produce a new, larger sorted sublist containing all the elements in sorted order. The actual rearranging of elements occurs by repeatedly applying the merge operation on pairs of adjacent sorted sublists, starting with the smallest single-element sublists, to larger two-element sublists, and eventually reaching the two halves of the entire list of elements. The runtime of merge sort is in O( N log N ) with respect to N , the number of elements (see Figure 3.17 ). Quicksort Algorithm A quicksort algorithm recursively sorts data by applying the binary search tree algorithm design pattern to partition data around pivot elements. Whereas the merge sort algorithm rearranges elements by repeatedly merging sorted sublists after each recursive subproblem, the quicksort algorithm rearranges elements by partitioning data before each recursive subproblem. The partition operation takes a pivot and rearranges the elements into three sections, from left to right: the sublist of all elements less than the pivot, the pivot element, and the sublist of all elements greater than (or equal to) the pivot. Each of the two sublists resulting from the partition operation is a recursive quicksort subproblem; when both of the sublists are sorted, the entire list will be sorted. The runtime of quicksort depends on the choice of each pivot element during the execution of the recursive algorithm, but in practice, for most of the inputs, the runtime is in O( N log N ) with respect to N , the number of elements ( Figure 3.23 ). Figure 3.23 Quicksort is a divide and conquer sorting algorithm that sorts elements by recursively partitioning elements around a pivot. (attribution: Copyright Rice University, OpenStax, under CC BY 4.0 license) Heapsort Algorithm A heapsort algorithm adds all elements to a binary heap priority queue data structure using the comparison operation to determine priority value, and returns the sorted list by repeatedly removing from the priority queue element by element. The runtime of heapsort is in O( N log N ) with respect to N , the number of elements. The logarithmic time factor is due to the time it takes to add or remove each element from the binary heap ( Figure 3.24 ). Figure 3.24 Heapsort uses the binary heap data structure to sort elements by adding and then removing all elements from the heap. (attribution: Copyright Rice University, OpenStax, under CC BY 4.0 license) Many comparison sorting algorithms share the same O( N log N ) runtime bound with respect to N , the number of elements. Computer scientists have shown with a combinatorial proof that, in the worst case, a comparison sorting algorithm cannot do better than O( N log N ) comparisons. It is impossible to design a worst-case O( N ) runtime comparison sorting algorithm. In fact, a commonly used version of heapsort (which is also asymptotically faster) is to first build a binary heap (i.e., first arrange the input numbers in an array, then repeatedly call a function to turn the original array into a binary heap; one can show that the running time of this part is linear in N , which is why this is faster than constructing the heap by adding numbers one by one), then remove elements one by one from the end of the heap. But not all sorting problems are comparison sorting problems. In fact, a commonly used version of heapsort (which is also asymptotically faster) is to first build a binary heap (i.e., first arrange the input numbers in an array, then repeatedly call a function to turn the original array into a binary heap. One can show that the running time of this part is linear in N , which is why this is faster than constructing the heap by adding numbers one by one), then remove elements one by one from the end of the heap as explained previously. Another type of sorting problem that is not restricted to pairwise comparisons is known as count sorting , or sorting a list of elements by organizing elements into categories and rearranging the categories into a logical order. For example, the problem of sorting a deck of cards can be seen as a count sorting problem if we put the cards into numeric stacks and then rearrange the stacks into a logical order. By changing the assumptions of the problem, count sorting algorithms can run in O( N ) time by first assigning each element to its respective category and then unpacking each category so that elements appear in sorted order.
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0008 | linked_lists > singly_linked_list > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/322715
+TITLE: SO: When to use LinkedList over ArrayList in Java?
+CHARS: 5097  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Summary with are preferable in many more use-cases than . If you're not sure — just start with . TLDR, in accessing an element takes constant time [O(1)] and adding an element takes O(n) time [worst case]. In inserting an element takes O(n) time and accessing also takes O(n) time but uses more memory than . and are two different implementations of the interface. implements it with a doubly-linked list. implements it with a dynamically re-sizing array. As with standard linked list and array operations, the various methods will have different algorithmic runtimes. For is O(n) (with n/4 steps on average), but O(1) when or (in this case, you can also use and ). One of the main benefits of is O(n) (with n/4 steps on average), but O(1) when or (in this case, you can also use and / ). One of the main benefits of is O(n) (with n/4 steps on average), but O(1) when or (in this case, you can also use and ). One of the main benefits of is O(1) . One of the main benefits of is O(1) . One of the main benefits of Note: Many of the operations need n/4 steps on average, constant number of steps in the best case (e.g. index = 0), and n/2 steps in worst case (middle of list) For is O(1) . Main benefit of is O(1) amortized, but O(n) worst-case since the array must be resized and copied is O(n) (with n/2 steps on average) is O(n) (with n/2 steps on average) is O(n) (with n/2 steps on average) is O(n) (with n/2 steps on average) Note: Many of the operations need n/2 steps on average, constant number of steps in the best case (end of list), n steps in the worst case (start of list) allows for constant-time insertions or removals using iterators , but only sequential access of elements. In other words, you can walk the list forwards or backwards, but finding a position in the list takes time proportional to the size of the list. Javadoc says "operations that index into the list will traverse the list from the beginning or the end, whichever is closer" , so those methods are O(n) ( n/4 steps) on average, though O(1) for . , on the other hand, allow fast random read access, so you can grab any element in constant time. But adding or removing from anywhere but the end requires shifting all the latter elements over, either to make an opening or fill the gap. Also, if you add more elements than the capacity of the underlying array, a new array (1.5 times the size) is allocated, and the old array is copied to the new one, so adding to an is O(n) in the worst case but constant on average. So depending on the operations you intend to do, you should choose the implementations accordingly. Iterating over either kind of List is practically equally cheap. (Iterating over an is technically faster, but unless you're doing something really performance-sensitive, you shouldn't worry about this -- they're both constants.) The main benefits of using a arise when you re-use existing iterators to insert and remove elements. These operations can then be done in O(1) by changing the list locally only. In an array list, the remainder of the array needs to be moved (i.e. copied). On the other side, seeking in a means following the links in O(n) ( n/2 steps) for worst case, whereas in an the desired position can be computed mathematically and accessed in O(1) . Another benefit of using a arises when you add or remove from the head of the list, since those operations are O(1) , while they are O(n) for . Note that may be a good alternative to for adding and removing from the head, but it is not a . Also, if you have large lists, keep in mind that memory usage is also different. Each element of a has more overhead since pointers to the next and previous elements are also stored. don't have this overhead. However, take up as much memory as is allocated for the capacity, regardless of whether elements have actually been added. The default initial capacity of an is pretty small (10 from Java 1.4 - 1.8). But since the underlying implementation is an array, the array must be resized if you add a lot of elements. To avoid the high cost of resizing when you know you're going to add a lot of elements, construct the with a higher initial capacity. If the data structures perspective is used to understand the two structures, a LinkedList is basically a sequential data structure which contains a head Node. The Node is a wrapper for two components : a value of type T [accepted through generics] and another reference to the Node linked to it. So, we can assert it is a recursive data structure (a Node contains another Node which has another Node and so on...). Addition of elements takes linear time in LinkedList as stated above. An ArrayList is a growable array. It is just like a regular array. Under the hood, when an element is added, and the ArrayList is already full to capacity, it creates another array with a size which is greater than previous size. The elements are then copied from previous array to new one and the elements that are to be added are also placed at the specified indices.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/322715 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0009 | linked_lists > singly_linked_list > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/2663115
+TITLE: SO: How to detect a loop in a linked list?
+CHARS: 466  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+You can make use of Floyd's cycle-finding algorithm , also known as tortoise and hare algorithm . The idea is to have two references to the list and move them at different speeds . Move one forward by node and the other by nodes. If the linked list has a loop they
+will definitely meet. Else either of
+the two references(or their )
+will become . Java function implementing the algorithm:
+
+[Source: Stack Overflow — https://stackoverflow.com/q/2663115 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0010 | linked_lists > singly_linked_list > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/169973
+TITLE: SO: When should I use a List vs a LinkedList
+CHARS: 987  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Edit Please read the comments to this answer. People claim I did not do
+ proper tests. I agree this should not be an accepted answer. As I was
+ learning I did some tests and felt like sharing them. Original answer... I found interesting results: Linked list (3.9 seconds) List (2.4 seconds) Even if you only access data essentially it is much slower!! I say never use a linkedList. Here is another comparison performing a lot of inserts (we plan on inserting an item at the middle of the list) Linked List (51 seconds) List (7.26 seconds) Linked List having reference of location where to insert (.04 seconds) So only if you plan on inserting several items and you also somewhere have the reference of where you plan to insert the item then use a linked list. Just because you have to insert a lot of items it does not make it faster because searching the location where you will like to insert it takes time.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/169973 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0011 | linked_lists > singly_linked_list > introduction | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Linked_list
+TITLE: Wikipedia: Linked list — introduction
+CHARS: 2368  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+In computer science, a linked list is a linear collection of data elements whose order is not given by their physical placement in memory. Instead, each element points to the next. It is a data structure consisting of a collection of nodes which together represent a sequence. In its most basic form, each node contains data, and a reference (in other words, a link) to the next node in the sequence. This structure allows for efficient insertion or removal of elements from any position in the sequence during iteration. More complex variants add additional links, allowing more efficient insertion or removal of nodes at arbitrary positions. A drawback of linked lists is that data access time is linear in respect to the number of nodes in the list. Because nodes are serially linked, accessing any node requires that the prior node be accessed beforehand (which introduces difficulties in pipelining). Faster access, such as random access, is not feasible. Arrays have better cache locality compared to linked lists.
+Linked lists are among the simplest and most common data structures. They can be used to implement several other common abstract data types, including lists, stacks, queues, associative arrays, and S-expressions, though it is not uncommon to implement those data structures directly without using a linked list as the basis.
+The principal benefit of a linked list over a conventional array is that the list elements can be easily inserted or removed without reallocation or reorganization of the entire structure because the data items do not need to be stored contiguously in memory or on disk, while restructuring an array at run-time is a much more expensive operation. Linked lists allow insertion and removal of nodes at any point in the list, and allow doing so with a constant number of operations by keeping the link previous to the link being added or removed in memory during list traversal.
+On the other hand, since simple linked lists by themselves do not allow random access to the data or any form of efficient indexing, many basic operations—such as obtaining the last node of the list, finding a node that contains a given datum, or locating the place where a new node should be inserted—may require iterating through most or all of the list elements.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Linked_list — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0012 | linked_lists > singly_linked_list > search | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Linked_list
+TITLE: Wikipedia: Linked list — search
+CHARS: 1098  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Finding a specific element in a linked list, even if it is sorted, normally requires O(n) time (linear search). This is one of the primary disadvantages of linked lists over other data structures. In addition to the variants discussed above, below are two simple ways to improve search time.
+In an unordered list, one simple heuristic for decreasing average search time is the move-to-front heuristic, which simply moves an element to the beginning of the list once it is found. This scheme, handy for creating simple caches, ensures that the most recently used items are also the quickest to find again.
+Another common approach is to "index" a linked list using a more efficient external data structure. For example, one can build a red–black tree or hash table whose elements are references to the linked list nodes. Multiple such indexes can be built on a single list. The disadvantage is that these indexes may need to be updated each time a node is added or removed (or at least, before that index is used again).
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Linked_list — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0013 | linked_lists > doubly_linked_list > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/10656471
+TITLE: SO: Performance differences between ArrayList and LinkedList
+CHARS: 1238  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+ArrayList is faster than LinkedList if I randomly access its elements. I think random access means "give me the nth element". Why ArrayList is faster? has direct references to every element in the list, so it can get the n-th element in constant time. has to traverse the list from the beginning to get to the n-th element. LinkedList is faster than ArrayList for deletion. I understand this one. ArrayList's slower since the internal backing-up array needs to be reallocated. is slower because it needs to copy part of the array in order to remove the slot that has become free. If the deletion is done using the API, just has to manipulate a couple of references; if the deletion is done by value or by index, has to potentially scan the entire list first to find the element(s) to be deleted. If it means move some elements back and then put the element in the middle empty spot, ArrayList should be slower. Yes, this is what it means. is indeed slower than because it has to free up a slot in the middle of the array. This involves moving some references around and in the worst case reallocating the entire array. just has to manipulate some references.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/10656471 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0014 | linked_lists > doubly_linked_list > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/10386616
+TITLE: SO: how to implement doubly linked lists
+CHARS: 1683  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+It isn't really practical to have a doubly linked list in Haskell, because you have to construct it all at once. For example, imagine that you have a list that you want to make doubly linked. Now, let's imagine how the list is represented: (I use two different constructors for the two ends for simplicity) To build the list above, you have to first construct the first element: But to construct the first element, you already need to have the second element: And for the second element, you need the third, etc: This is possible to do in Haskell due to lazy evaluation; this strategy is called "tying the knot" (And you don't have to literally put it all in one block; you can divide up the construction into functions) But, in other words, to make a doubly-linked list, you need to construct it all at once, and if you ever want to change any part of it, you either need to use a Zipper or just make a complete copy of it every time. I would recommend to instead use , which is an optimized finger-tree based sequential storage implementation. It supports very fast insertion, deletion and iteration while still being a purely functional data structure. Otherwise, you might want to just use Zippers, but use them for Trees instead of for Lists. More information about Zippers can be found on the Haskell Wiki . Zippers would fit very well in this situation, because they offer the exact functionality that you're after: if you visit a tree with a Zipper, you gain access to the "parents" of the part of the tree that you're visiting, but the tree itself doesn't have to contain the parent references.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/10386616 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0015 | linked_lists > doubly_linked_list > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/1895769
+TITLE: SO: Time complexity of node deletion in singly- and doubly-linked lists
+CHARS: 866  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+The problem assumes that the node to be deleted is known and a pointer to that node is available. In order to delete a node and connect the previous and the next node together, you need to know their pointers. In a doubly-linked list, both pointers are available in the node that is to be deleted. The time complexity is constant in this case, i.e., O(1). Whereas in a singly-linked list, the pointer to the previous node is unknown and can be found only by traversing the list from head until it reaches the node that has a next node pointer to the node that is to be deleted. The time complexity in this case is O(n). In cases where the node to be deleted is known only by value, the list has to be searched and the time complexity becomes O(n) in both singly- and doubly-linked lists.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/1895769 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0016 | linked_lists > doubly_linked_list > introduction | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Doubly_linked_list
+TITLE: Wikipedia: Doubly linked list — introduction
+CHARS: 1225  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+In computer science, a doubly linked list is a linked data structure that consists of a set of sequentially linked records called nodes. Each node contains three fields: two link fields (references to the previous and to the next node in the sequence of nodes) and one data field. The beginning and ending nodes' previous and next links, respectively, point to some kind of terminator, typically a sentinel node or null, to facilitate traversal of the list. If there is only one sentinel node, then the list is circularly linked via the sentinel node. It can be conceptualized as two singly linked lists formed from the same data items, but in opposite sequential orders.
+
+The two node links allow traversal of the list in either direction. While adding or removing a node in a doubly linked list requires changing more links than the same operations on a singly linked list, the operations are simpler and potentially more efficient (for nodes other than first nodes) because there is no need to keep track of the previous node during traversal or no need to traverse the list to find the previous node, so that its link can be modified.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Doubly_linked_list — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0017 | stacks_queues > stack > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/1386275
+TITLE: SO: Why is Java Vector (and Stack) class considered obsolete or deprecated?
+CHARS: 1043  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+synchronizes on each individual operation. That's almost never what you want to do. Generally you want to synchronize a whole sequence of operations. Synchronizing individual operations is both less safe (if you iterate over a , for instance, you still need to take out a lock to avoid anyone else changing the collection at the same time, which would cause a in the iterating thread) but also slower (why take out a lock repeatedly when once will be enough)? Of course, it also has the overhead of locking even when you don't need to. Basically, it's a very flawed approach to synchronization in most situations. As Mr Brian Henk pointed out, you can decorate a collection using the calls such as - the fact that combines both the "resized array" collection implementation with the "synchronize every operation" bit is another example of poor design; the decoration approach gives cleaner separation of concerns. As for a equivalent - I'd look at / to start with.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/1386275 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0018 | stacks_queues > stack > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/161053
+TITLE: SO: Which is faster: Stack allocation or Heap allocation
+CHARS: 436  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Stack allocation is much faster since all it really does is move the stack pointer. 
+Using memory pools, you can get comparable performance out of heap allocation, but that comes with a slight added complexity and its own headaches. Also, stack vs. heap is not only a performance consideration; it also tells you a lot about the expected lifetime of objects.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/161053 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0019 | stacks_queues > stack > introduction | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Stack_(abstract_data_type)
+TITLE: Wikipedia: Stack (abstract data type) — introduction
+CHARS: 1381  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+In computer science, a stack is an abstract data type that serves as a collection of elements with two main operations:
+
+Push, which adds an element to the collection, and
+Pop, which removes the most recently added element.
+Additionally, a peek operation can, without modifying the stack, return the value of the last element added (the item at the top of the stack). The name stack is an analogy to a set of physical items stacked one atop another, such as a stack of plates. 
+The order in which elements are added to or removed from a stack is described as last in, first out, referred to by the acronym LIFO. As with a stack of physical objects, this structure makes it easy to take an item off the top of the stack, but accessing a datum deeper in the stack may require removing multiple other items first.
+Considered a sequential collection, a stack has one end which is the only position at which the push and pop operations may occur, the top of the stack, and is fixed at the other end, the bottom. A stack may be implemented as, for example, a singly linked list with a pointer to the top element.
+A stack may be implemented to have a bounded capacity. If the stack is full and does not contain enough space to accept another element, the stack is in a state of stack overflow.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Stack_(abstract_data_type) — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0020 | stacks_queues > stack > implementation | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Stack_(abstract_data_type)
+TITLE: Wikipedia: Stack (abstract data type) — implementation
+CHARS: 500  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+A stack can be easily implemented either through an array or a linked list, as it is merely a special case of a list. In either case, what identifies the data structure as a stack is not the implementation but the interface: the user is only allowed to pop or push items onto the array or linked list, with few other helper operations. The following will demonstrate both implementations using pseudocode.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Stack_(abstract_data_type) — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0021 | stacks_queues > queue > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/69192
+TITLE: SO: How can I implement a queue using two stacks?
+CHARS: 474  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Keep 2 stacks, let's call them and . Enqueue : Push the new element onto Dequeue : If is empty, refill it by popping each element from and pushing it onto Pop and return the top element from Using this method, each element will be in each stack exactly once - meaning each element will be pushed twice and popped twice, giving amortized constant time operations. Here's an implementation in java :
+
+[Source: Stack Overflow — https://stackoverflow.com/q/69192 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0022 | stacks_queues > queue > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/717148
+TITLE: SO: queue.Queue vs. collections.deque
+CHARS: 731  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+and serve different purposes. is intended for allowing different threads to communicate using queued messages/data, whereas is simply intended as a data structure. That's why has methods like , , and , whereas doesn't. isn't intended to be used as a collection, which is why it lacks the likes of the operator. It boils down to this: if you have multiple threads and you want them to be able to communicate without the need for locks, you're looking for ; if you just want a queue or a double-ended queue as a datastructure, use . Finally, accessing and manipulating the internal deque of a is playing with fire - you really don't want to be doing that.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/717148 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0023 | stacks_queues > queue > introduction | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Queue_(abstract_data_type)
+TITLE: Wikipedia: Queue (abstract data type) — introduction
+CHARS: 1860  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+In computer science, a queue is an abstract data type that serves as an ordered collection of entities. By convention, the end of the queue where elements are added, is called the back, tail, or rear of the queue. The end of the queue where elements are removed is called the head or front of the queue. The name queue is an analogy to the words used to describe people in line to wait for goods or services. It supports two main operations. 
+
+Enqueue, which adds one element to the rear of the queue
+Dequeue, which removes one element from the front of the queue.
+Other operations may also be allowed, often including a peek or front operation that returns the value of the next element to be dequeued without dequeuing it.
+The operations of a queue make it a first-in-first-out (FIFO) data structure as the first element added to the queue is the first one removed. This is equivalent to the requirement that once a new element is added, all elements that were added before have to be removed before the new element can be removed. A queue is an example of a linear data structure, or more abstractly a sequential collection.
+Queues are common in computer programs, where they are implemented as data structures coupled with access routines, as an abstract data structure or in object-oriented languages as classes. A queue may be implemented as circular buffers and linked lists, or by using both the stack pointer and the base pointer.
+Queues provide services in computer science, transport, and operations research where various entities such as data, objects, persons, or events are stored and held to be processed later. In these contexts, the queue performs the function of a buffer.
+Another usage of queues is in the implementation of breadth-first search.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Queue_(abstract_data_type) — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0024 | trees > binary_tree > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/2130416
+TITLE: SO: What are the applications of binary trees?
+CHARS: 2870  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+To squabble about the performance of binary-trees is meaningless - they are not a data structure, but a family of data structures, all with different performance characteristics. While it is true that unbalanced binary trees perform much worse than self-balancing binary trees for searching, there are many binary trees (such as binary tries) for which "balancing" has no meaning. Applications of binary trees Binary Search Tree - Used in many search applications where data is constantly entering/leaving, such as the and objects in many languages' libraries. Binary Space Partition - Used in almost every 3D video game to determine what objects need to be rendered. Binary Tries - Used in almost every high-bandwidth router for storing router-tables. Hash Trees - Used in torrents and specialized image-signatures in which a hash needs to be verified, but the whole file is not available. Also used in blockchains for eg. Bitcoin. Heaps - Used in implementing efficient priority-queues, which in turn are used for scheduling processes in many operating systems, Quality-of-Service in routers, and A* (path-finding algorithm used in AI applications, including robotics and video games) . Also used in heap-sort. Huffman Coding Tree ( Chip Uni ) - Used in compression algorithms, such as those used by the .jpeg and .mp3 file-formats. GGM Trees - Used in cryptographic applications to generate a tree of pseudo-random numbers. Syntax Tree - Constructed by compilers and (implicitly) calculators to parse expressions. Treap - Randomized data structure used in wireless networking and memory allocation. T-tree - Though most databases use some form of B-tree to store data on the drive, databases which keep all (most) their data in memory often use T-trees to do so. The reason that binary trees are used more often than n-ary trees for searching is that n-ary trees are more complex, but usually provide no real speed advantage. In a (balanced) binary tree with nodes, moving from one level to the next requires one comparison, and there are levels, for a total of comparisons. In contrast, an n-ary tree will require comparisons (using a binary search) to move to the next level. Since there are total levels, the search will require = comparisons total. So, though n-ary trees are more complex, they provide no advantage in terms of total comparisons necessary. (However, n-ary trees are still useful in niche-situations. The examples that come immediately to mind are quad-trees and other space-partitioning trees, where divisioning space using only two nodes per level would make the logic unnecessarily complex; and B-trees used in many databases, where the limiting factor is not how many comparisons are done at each level but how many nodes can be loaded from the hard-drive at once)
+
+[Source: Stack Overflow — https://stackoverflow.com/q/2130416 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0025 | trees > binary_tree > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/6380231
+TITLE: SO: Difference between binary tree and binary search tree
+CHARS: 363  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Binary tree: Tree where each node has up to two leaves Binary search tree: Used for searching . A binary tree where the left child contains only nodes with values less than the parent node, and where the right child only contains nodes with values greater than or equal to the parent.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/6380231 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0026 | trees > binary_tree > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/256511
+TITLE: SO: Skip List vs. Binary Search Tree
+CHARS: 2909  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Skip lists are more amenable to concurrent access/modification. Herb Sutter wrote an article about data structure in concurrent environments. It has more indepth information. The most frequently used implementation of a binary search tree is a red-black tree . The concurrent problems come in when the tree is modified it often needs to rebalance. The rebalance operation can affect large portions of the tree, which would require a mutex lock on many of the tree nodes. Inserting a node into a skip list is far more localized, only nodes directly linked to the affected node need to be locked. Update from Jon Harrops comments I read Fraser and Harris's latest paper Concurrent programming without locks . Really good stuff if you're interested in lock-free data structures. The paper focuses on Transactional Memory and a theoretical operation multiword-compare-and-swap MCAS. Both of these are simulated in software as no hardware supports them yet. I'm fairly impressed that they were able to build MCAS in software at all. I didn't find the transactional memory stuff particularly compelling as it requires a garbage collector. Also software transactional memory is plagued with performance issues. However, I'd be very excited if hardware transactional memory ever becomes common. In the end it's still research and won't be of use for production code for another decade or so. In section 8.2 they compare the performance of several concurrent tree implementations. I'll summarize their findings. It's worth it to download the pdf as it has some very informative graphs on pages 50, 53, and 54. Locking skip lists is insanely fast. They scale incredibly well with the number of concurrent accesses. This is what makes skip lists special, other lock based data structures tend to croak under pressure. Lock-free skip lists are consistently faster than locking skip lists but only barely. transactional skip lists are consistently 2-3 times slower than the locking and non-locking versions. locking red-black trees croak under concurrent access. Their performance degrades linearly with each new concurrent user. Of the two known locking red-black tree implementations, one essentially has a global lock during tree rebalancing. The other uses fancy (and complicated) lock escalation but still doesn't significantly outperform the global lock version. lock-free red-black trees don't exist (no longer true, see Update). transactional red-black trees are comparable with transactional skip-lists. That was very surprising and very promising. Transactional memory, though slower if far easier to write. It can be as easy as quick search and replace on the non-concurrent version. Update Here is paper about lock-free trees: Lock-Free Red-Black Trees Using CAS . I haven't looked into it deeply, but on the surface it seems solid.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/256511 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0027 | trees > binary_tree > introduction | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Binary_tree
+TITLE: Wikipedia: Binary tree — introduction
+CHARS: 2584  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+In computer science, a binary tree is a tree data structure in which each node has at most two children, referred to as the left child and the right child. That is, it is a k-ary tree where k = 2. A recursive definition using set theory is that a binary tree is a triple (L, S, R), where L and R are binary trees or the empty set and S is a singleton (a single–element set) containing the root.
+From a graph theory perspective, binary trees as defined here are arborescences. A binary tree may thus be also called a bifurcating arborescence, a term which appears in some early programming books before the modern computer science terminology prevailed. It is also possible to interpret a binary tree as an undirected, rather than directed graph, in which case a binary tree is an ordered, rooted tree. Some authors use rooted binary tree instead of binary tree to emphasize the fact that the tree is rooted, but as defined above, a binary tree is always rooted.
+In mathematics, what is termed binary tree can vary significantly from author to author. Some use the definition commonly used in computer science, but others define it as every non-leaf having exactly two children and don't necessarily label the children as left and right either.
+In computing, binary trees can be used in two very different ways:
+
+First, as a means of accessing nodes based on some value or label associated with each node. Binary trees labelled this way are used to implement binary search trees and binary heaps, and are used for efficient searching and sorting. The designation of non-root nodes as left or right child even when there is only one child present matters in some of these applications, in particular, it is significant in binary search trees. However, the arrangement of particular nodes into the tree is not part of the conceptual information. For example, in a normal binary search tree the placement of nodes depends almost entirely on the order in which they were added, and can be re-arranged (for example by balancing) without changing the meaning.
+Second, as a representation of data with a relevant bifurcating structure. In such cases, the particular arrangement of nodes under and/or to the left or right of other nodes is part of the information (that is, changing it would change the meaning). Common examples occur with Huffman coding and cladograms. The everyday division of documents into chapters, sections, paragraphs, and so on is an analogous example with n-ary rather than binary trees.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Binary_tree — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0028 | trees > binary_tree > insertion | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Binary_tree
+TITLE: Wikipedia: Binary tree — insertion
+CHARS: 258  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Nodes can be inserted into binary trees in between two other nodes or added after a leaf node. In binary trees, a node that is inserted is specified as to whose child it will be.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Binary_tree — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0029 | trees > binary_tree > deletion | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Binary_tree
+TITLE: Wikipedia: Binary tree — deletion
+CHARS: 210  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Deletion is the process whereby a node is removed from the tree. Only certain nodes in a binary tree can be removed unambiguously.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Binary_tree — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0030 | trees > binary_tree > search | openstax
+APPROVED: null
+URL: https://openstax.org/books/introduction-computer-science/pages/3-2-algorithm-design-and-discovery
+TITLE: OpenStax (introduction-computer-science): binary_tree — search
+CHARS: 2745  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+In computer science, searching is the problem of retrieving a target element from a collection that contains many elements. There are many ways to understand search algorithms; depending on the exact context of the problem and the input data, the expected output might differ. For example, suppose we want to find the target term in a dictionary that contains thousands or millions of terms and their associated definitions. If we represent this dictionary as a list, the search algorithm would return the index of the term in the dictionary. If we represent this dictionary as a set, the search algorithm would return whether the target is in the dictionary. If we represent this dictionary as a map, the search algorithm would return the definition associated with the term. The dictionary data structure has implications on the output of the search algorithm. Algorithmic problem-solving tends to be iterative because we might sometime later realize that our data structures need to change. Changing the data structures, in turn, often also requires changing the algorithm design. Despite these differences in output, the underlying canonical searching algorithm can still follow the same general procedure. The two most well-known canonical searching algorithms are known as sequential search and binary search , which are conducted on linear data structures, such as array lists. Sequential search ( Figure 3.9 ). Open the dictionary to the first term. If that term happens to be the target, then greatâwe have found the target. If not, then repeat the process by reading the next term in the dictionary until we have checked all the terms in the dictionary. Binary search ( Figure 3.10 ). Open the dictionary to a term in the middle of the dictionary. If that term happens to be the target, then greatâwe have found the target. If not, then determine whether the target comes before or after the term we just checked. If it comes before, then repeat the process except on the first half of the dictionary. Otherwise, repeat the process on the second half of the dictionary. Each time, we can ignore half of the remaining terms based on the place where we would expect to find the target in the dictionary. Figure 3.9 A sequential search can find the number 47 in an array by checking each number in order. (attribution: Copyright Rice University, OpenStax, under CC BY 4.0 license) Figure 3.10 A binary search can find the number 47 in an array by determining whether the desired number comes before or after a chosen number. It eliminates half of existing data points and then searches in the remaining half, repeating the pattern, until the number is found. (attribution: Copyright Rice University, OpenStax, under CC BY 4.0 license)
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0031 | trees > binary_search_tree > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/5288320
+TITLE: SO: Why is std::map implemented as a red-black tree?
+CHARS: 783  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Probably the two most common self balancing tree algorithms are Red-Black trees and AVL trees . To balance the tree after an insertion/update both algorithms use the notion of rotations where the nodes of the tree are rotated to perform the re-balancing. While in both algorithms the insert/delete operations are O(log n), in the case of Red-Black tree re-balancing rotation is an O(1) operation while with AVL this is a O(log n) operation, making the Red-Black tree more efficient in this aspect of the re-balancing stage and one of the possible reasons that it is more commonly used. Red-Black trees are used in most collection libraries, including the offerings from Java and Microsoft .NET Framework.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/5288320 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0032 | trees > binary_search_tree > introduction | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Binary_search_tree
+TITLE: Wikipedia: Binary search tree — introduction
+CHARS: 2139  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+In computer science, a binary search tree (BST), also called an ordered or sorted binary tree, is a rooted binary tree data structure with the key of each internal node being greater than all the keys in the respective node's left subtree and less than the ones in its right subtree. The time complexity of operations on the binary search tree is linear with respect to the height of the tree.
+Binary search trees allow binary search for fast lookup, addition, and removal of data items. Since the nodes in a BST are laid out so that each comparison skips about half of the remaining tree, the lookup performance is proportional to that of binary logarithm. BSTs were devised in the 1960s for the problem of efficient storage of labeled data and are attributed to Conway Berners-Lee and David Wheeler.
+The performance of a binary search tree is dependent on the order of insertion of the nodes into the tree since arbitrary insertions may lead to degeneracy; several variations of the binary search tree can be built with guaranteed worst-case performance. The basic operations include: search, traversal, insert and delete. BSTs with guaranteed worst-case complexities perform better than an unsorted array, which would require linear search time.
+The complexity analysis of BST shows that, on average, the insert, delete and search takes 
+
+
+ Θ
+ (
+ log
+ ⁡
+ n
+ )
+
+
+ {\displaystyle \Theta (\log n)}
+
+ for 
+
+
+ n
+
+
+ {\displaystyle n}
+
+ nodes. In the worst case, they degrade to that of a singly linked list: 
+
+
+ O
+ (
+ n
+ )
+
+
+ {\displaystyle O(n)}
+
+. To address the boundless increase of the tree height with arbitrary insertions and deletions, self-balancing variants of BSTs are introduced to bound the worst lookup complexity to that of the binary logarithm. AVL trees were the first self-balancing binary search trees, invented in 1962 by Georgy Adelson-Velsky and Evgenii Landis.
+Binary search trees can be used to implement abstract data types such as dynamic sets, lookup tables and priority queues, and used in sorting algorithms such as tree sort.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Binary_search_tree — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0033 | trees > binary_search_tree > insertion | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Binary_search_tree
+TITLE: Wikipedia: Binary search tree — insertion
+CHARS: 1075  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Operations such as insertion and deletion cause the BST representation to change dynamically. The data structure must be modified in such a way that the properties of BST continue to hold. New nodes are inserted as leaf nodes in the BST. Following is an iterative implementation of the insertion operation.
+
+The procedure maintains a "trailing pointer" 
+
+
+ y
+
+
+ {\displaystyle {\text{y}}}
+
+ as a parent of 
+
+
+ x
+
+
+ {\displaystyle {\text{x}}}
+
+. After initialization on line 2, the while loop along lines 4-11 causes the pointers to be updated. If 
+
+
+ y
+
+
+ {\displaystyle {\text{y}}}
+
+ is 
+
+
+ nil
+
+
+ {\displaystyle {\text{nil}}}
+
+, the BST is empty, thus 
+
+
+ z
+
+
+ {\displaystyle {\text{z}}}
+
+ is inserted as the root node of the binary search tree 
+
+
+ T
+
+
+ {\displaystyle {\text{T}}}
+
+, if it is not 
+
+
+ nil
+
+
+ {\displaystyle {\text{nil}}}
+
+, insertion proceeds by comparing the keys to that of 
+
+
+ y
+
+
+ {\displaystyle {\text{y}}}
+
+ on the lines 15-19 and the node is inserted accordingly.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Binary_search_tree — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0034 | trees > binary_search_tree > deletion | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Binary_search_tree
+TITLE: Wikipedia: Binary search tree — deletion
+CHARS: 1822  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+The deletion of a node, say 
+
+
+ Z
+
+
+ {\displaystyle {\text{Z}}}
+
+, from the binary search tree 
+
+
+ BST
+
+
+ {\displaystyle {\text{BST}}}
+
+ has three cases:
+
+If 
+
+
+ Z
+
+
+ {\displaystyle {\text{Z}}}
+
+ is a leaf node, it is replaced by 
+
+
+ NIL
+
+
+ {\displaystyle {\text{NIL}}}
+
+ as shown in (a).
+If 
+
+
+ Z
+
+
+ {\displaystyle {\text{Z}}}
+
+ has only one child, the child node of 
+
+
+ Z
+
+
+ {\displaystyle {\text{Z}}}
+
+ gets elevated by modifying the parent node of 
+
+
+ Z
+
+
+ {\displaystyle {\text{Z}}}
+
+ to point to the child node, consequently taking 
+
+
+ Z
+
+
+ {\displaystyle {\text{Z}}}
+
+'s position in the tree, as shown in (b) and (c).
+If 
+
+
+ Z
+
+
+ {\displaystyle {\text{Z}}}
+
+ has both left and right children, the in-order successor of 
+
+
+ Z
+
+
+ {\displaystyle {\text{Z}}}
+
+, say 
+
+
+ Y
+
+
+ {\displaystyle {\text{Y}}}
+
+, displaces 
+
+
+ Z
+
+
+ {\displaystyle {\text{Z}}}
+
+ by following the two cases:
+If 
+
+
+ Y
+
+
+ {\displaystyle {\text{Y}}}
+
+ is 
+
+
+ Z
+
+
+ {\displaystyle {\text{Z}}}
+
+'s right child, as shown in (d), 
+
+
+ Y
+
+
+ {\displaystyle {\text{Y}}}
+
+ displaces 
+
+
+ Z
+
+
+ {\displaystyle {\text{Z}}}
+
+ and 
+
+
+ Y
+
+
+ {\displaystyle {\text{Y}}}
+
+'s right child remain unchanged.
+If 
+
+
+ Y
+
+
+ {\displaystyle {\text{Y}}}
+
+ lies within 
+
+
+ Z
+
+
+ {\displaystyle {\text{Z}}}
+
+'s right subtree but is not 
+
+
+ Z
+
+
+ {\displaystyle {\text{Z}}}
+
+'s right child, as shown in (e), 
+
+
+ Y
+
+
+ {\displaystyle {\text{Y}}}
+
+ first gets replaced by its own right child, and then it displaces 
+
+
+ Z
+
+
+ {\displaystyle {\text{Z}}}
+
+'s position in the tree.
+Alternatively, the in-order predecessor can also be used.
+The following pseudocode implements the deletion operation in a binary search tree.
+
+The 
+
+
+ BST-Delete
+
+
+ {\displaystyle {\text{BST-Delete}}}
+
+ procedure deals with
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Binary_search_tree — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0035 | trees > binary_search_tree > search | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Binary_search_tree
+TITLE: Wikipedia: Binary search tree — search
+CHARS: 867  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Searching in a binary search tree for a specific key can be programmed recursively or iteratively.
+Searching begins by examining the root node. If the tree is nil, the key being searched for does not exist in the tree. Otherwise, if the key equals that of the root, the search is successful and the node is returned. If the key is less than that of the root, the search proceeds by examining the left subtree. Similarly, if the key is greater than that of the root, the search proceeds by examining the right subtree. This process is repeated until the key is found or the remaining subtree is 
+
+
+ nil
+
+
+ {\displaystyle {\text{nil}}}
+
+. If the searched key is not found after a 
+
+
+ nil
+
+
+ {\displaystyle {\text{nil}}}
+
+ subtree is reached, then the key is not present in the tree.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Binary_search_tree — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0036 | trees > binary_search_tree > successor | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Binary_search_tree
+TITLE: Wikipedia: Binary search tree — successor
+CHARS: 986  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+For certain operations, given a node 
+
+
+ x
+
+
+ {\displaystyle {\text{x}}}
+
+, finding the successor or predecessor of 
+
+
+ x
+
+
+ {\displaystyle {\text{x}}}
+
+ is crucial. Assuming all the keys of a BST are distinct, the successor of a node 
+
+
+ x
+
+
+ {\displaystyle {\text{x}}}
+
+ in a BST is the node with the smallest key greater than 
+
+
+ x
+
+
+ {\displaystyle {\text{x}}}
+
+'s key. On the other hand, the predecessor of a node 
+
+
+ x
+
+
+ {\displaystyle {\text{x}}}
+
+ in a BST is the node with the largest key smaller than 
+
+
+ x
+
+
+ {\displaystyle {\text{x}}}
+
+'s key. The following pseudocode finds the successor and predecessor of a node 
+
+
+ x
+
+
+ {\displaystyle {\text{x}}}
+
+ in a BST.
+
+Operations such as finding a node in a BST whose key is the maximum or minimum are critical in certain operations, such as determining the successor and predecessor of nodes. Following is the pseudocode for the operations.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Binary_search_tree — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0037 | trees > avl_tree > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/13852870
+TITLE: SO: Red-black tree over AVL tree
+CHARS: 1243  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+What's the main reason for choosing Red black trees instead of AVL trees? Both red-black trees and AVL trees are the most commonly used balanced binary search trees and they support insertion, deletion and look-up in guaranteed . However, there are following points of comparison between the two: AVL trees are more rigidly balanced and hence provide faster look-ups. Thus for a look-up intensive task use an AVL tree. For an insert intensive tasks, use a Red-Black tree. AVL trees store the balance factor at each node. This takes extra space. However, if we know that the keys that will be inserted in the tree will always be greater than zero, we can use the sign bit of the keys to store the colour information of a red-black tree. Thus, in such cases red-black tree takes no extra space. What are the application of Red black tree? Red-black trees are more general purpose. They do relatively well on add, remove, and look-up but AVL trees have faster look-ups at the cost of slower add/remove. Red-black tree is used in the following: Java: , C++ STL (in most implementations): map, multimap, multiset Linux kernel: completely fair scheduler, linux/rbtree.h
+
+[Source: Stack Overflow — https://stackoverflow.com/q/13852870 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0038 | trees > avl_tree > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/1589556
+TITLE: SO: When to choose RB tree, B-Tree or AVL tree?
+CHARS: 401  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Take this with a pinch of salt: B-tree when you're managing more than thousands of items and you're paging them from a disk or some slow storage medium. RB tree when you're doing fairly frequent inserts, deletes and retrievals on the tree. AVL tree when your inserts and deletes are infrequent relative to your retrievals.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/1589556 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0039 | trees > avl_tree > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/16257761
+TITLE: SO: Difference between red-black trees and AVL trees
+CHARS: 527  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+AVL trees maintain a more rigid balance than red-black trees. The path from the root to the deepest leaf in an AVL tree is at most ~1.44 lg(n+2), while in red black trees it's at most ~2 lg (n+1). As a result, lookup in an AVL tree is typically faster, but this comes at the cost of slower insertion and deletion due to more rotation operations. So use an AVL tree if you expect the number of lookups to dominate the number of updates to the tree.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/16257761 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0040 | trees > avl_tree > introduction | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/AVL_tree
+TITLE: Wikipedia: AVL tree — introduction
+CHARS: 1546  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+In computer science, an AVL tree (named after inventors Adelson-Velsky and Landis) is a self-balancing binary search tree. In an AVL tree, the heights of the two child subtrees of any node differ by not more than one; if at any time they differ by more than one, rebalancing is done to restore this property. Lookup, insertion, and deletion all take O(log n) time in both the average and worst cases, where 
+
+
+ n
+
+
+ {\displaystyle n}
+
+ is the number of nodes in the tree prior to the operation. Insertions and deletions may require the tree to be rebalanced by one or more tree rotations.
+The AVL tree is named after its two Soviet inventors, Georgy Adelson-Velsky and Evgenii Landis, who published it in their 1962 paper "An algorithm for the organization of information". It is the first self-balancing binary search tree data structure to be invented.
+AVL trees are often compared with red–black trees because both support the same set of operations and take 
+
+
+ O
+
+ (
+ log
+ ⁡
+ n
+ )
+
+
+ {\displaystyle {\text{O}}(\log n)}
+
+ time for the basic operations. For lookup-intensive applications, AVL trees are faster than red–black trees because they are more strictly balanced. Similar to red–black trees, AVL trees are height-balanced. Both are, in general, neither weight-balanced nor 
+
+
+ μ
+
+
+ {\displaystyle \mu }
+
+-balanced for any 
+
+
+ μ
+ ≤
+
+
+ 1
+ 2
+
+
+ {\displaystyle \mu \leq {\tfrac {1}{2}}}
+
+; that is, sibling nodes can have hugely differing numbers of descendants.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/AVL_tree — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0041 | trees > avl_tree > balance_factor | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/AVL_tree
+TITLE: Wikipedia: AVL tree — balance_factor
+CHARS: 1004  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+In a binary tree the balance factor of a node X is defined to be the height difference
+
+
+ B
+ F
+
+ (
+ X
+ )
+ :=
+
+ H
+ e
+ i
+ g
+ h
+ t
+
+ (
+
+ R
+ i
+ g
+ h
+ t
+ S
+ u
+ b
+ t
+ r
+ e
+ e
+
+ (
+ X
+ )
+ )
+ −
+
+ H
+ e
+ i
+ g
+ h
+ t
+
+ (
+
+ L
+ e
+ f
+ t
+ S
+ u
+ b
+ t
+ r
+ e
+ e
+
+ (
+ X
+ )
+ )
+
+
+ {\displaystyle \mathrm {BF} (X):=\mathrm {Height} (\mathrm {RightSubtree} (X))-\mathrm {Height} (\mathrm {LeftSubtree} (X))}
+
+
+of its two child sub-trees rooted by node X.
+A binary tree is defined to be an AVL tree if
+
+
+ B
+ F
+
+ (
+ X
+ )
+ ∈
+ {
+ −
+ 1
+ ,
+ 0
+ ,
+ 1
+ }
+
+
+ {\displaystyle \mathrm {BF} (X)\in \{-1,0,1\}}
+
+
+holds for every node X in the tree.
+A node X with 
+
+
+ B
+ F
+
+ (
+ X
+ )
+ <
+ 0
+
+
+ {\displaystyle \mathrm {BF} (X)<0}
+
+ is called "left-heavy", one with 
+
+
+ B
+ F
+
+ (
+ X
+ )
+ >
+ 0
+
+
+ {\displaystyle \mathrm {BF} (X)>0}
+
+ is called "right-heavy", and one with 
+
+
+ B
+ F
+
+ (
+ X
+ )
+ =
+ 0
+
+
+ {\displaystyle \mathrm {BF} (X)=0}
+
+ is sometimes simply called "balanced".
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/AVL_tree — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0042 | trees > red_black_tree > introduction | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Red%E2%80%93black_tree
+TITLE: Wikipedia: Red–black tree — introduction
+CHARS: 1499  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+In computer science, a red–black tree is a self-balancing binary search tree data structure noted for fast storage and retrieval of ordered information. The nodes in a red-black tree hold an extra "color" bit, often drawn as red and black, which help ensure that the tree is always approximately balanced.
+When the tree is modified, the new tree is rearranged and "repainted" to restore the coloring properties that constrain how unbalanced the tree can become in the worst case. The properties are designed such that this rearranging and recoloring can be performed efficiently.
+The (re-)balancing is not perfect, but guarantees searching in 
+
+
+ O
+ (
+ log
+ ⁡
+ n
+ )
+
+
+ {\displaystyle O(\log n)}
+
+ time, where 
+
+
+ n
+
+
+ {\displaystyle n}
+
+ is the number of entries in the tree. The insert and delete operations, along with tree rearrangement and recoloring, also execute in 
+
+
+ O
+ (
+ log
+ ⁡
+ n
+ )
+
+
+ {\displaystyle O(\log n)}
+
+ time.
+Tracking the color of each node requires only one bit of information per node because there are only two colors (due to memory alignment present in some programming languages, the real memory consumption may differ). The tree does not contain any other data specific to it being a red–black tree, so its memory footprint is almost identical to that of a classic (uncolored) binary search tree. In some cases, the added bit of information can be stored at no added memory cost.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Red%E2%80%93black_tree — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0043 | trees > red_black_tree > properties | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Red%E2%80%93black_tree
+TITLE: Wikipedia: Red–black tree — properties
+CHARS: 2640  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+In addition to the requirements imposed on a binary search tree the following must be satisfied by a red–black tree:
+
+Every node is either red or black.
+All null nodes are considered black.
+A red node does not have a red child.
+Every path from a given node to any of its leaf nodes (that is, to any descendant null node) goes through the same number of black nodes.
+(Conclusion) If a node N has exactly one child, the child must be red. If the child were black, its leaves would sit at a different black depth than N's null node (which is considered black by rule 2), violating requirement 4.
+Some authors, e.g. Cormen & al., claim "the root is black" as fifth requirement; but not Mehlhorn & Sanders or Sedgewick & Wayne. Since the root can always be changed from red to black, this rule has little effect on analysis.
+This article also omits it, because it slightly disturbs the recursive algorithms and proofs.
+As an example, every perfect binary tree that consists only of black nodes is a red–black tree.
+The read-only operations, such as search or tree traversal, do not affect any of the requirements. In contrast, the modifying operations insert and delete easily maintain requirements 1 and 2, but with respect to the other requirements some extra effort must be made, to avoid introducing a violation of requirement 3, called a red-violation, or of requirement 4, called a black-violation.
+The requirements enforce a critical property of red–black trees: the path from the root to the farthest leaf is no more than twice as long as the path from the root to the nearest leaf. The result is that the tree is height-balanced. Since operations such as inserting, deleting, and finding values require worst-case time proportional to the height 
+
+
+ h
+
+
+ {\displaystyle h}
+
+ of the tree, this upper bound on the height allows red–black trees to be efficient in the worst case, namely logarithmic in the number 
+
+
+ n
+
+
+ {\displaystyle n}
+
+ of entries, i.e. 
+
+
+ h
+ ∈
+ O
+ (
+ log
+ ⁡
+ n
+ )
+
+
+ {\displaystyle h\in O(\log n)}
+
+ (a property which is shared by all self-balancing trees, e.g., AVL tree or B-tree, but not the ordinary binary search trees). For a mathematical proof see section Proof of bounds.
+Red–black trees, like all binary search trees, allow quite efficient sequential access (e.g. in-order traversal, that is: in the order Left–Root–Right) of their elements. But they support also asymptotically optimal direct access via a traversal from root to leaf, resulting in 
+
+
+ O
+ (
+ log
+ ⁡
+ n
+ )
+
+
+ {\displaystyle O(\log n)}
+
+ search time.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Red%E2%80%93black_tree — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0044 | trees > red_black_tree > insertion | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Red%E2%80%93black_tree
+TITLE: Wikipedia: Red–black tree — insertion
+CHARS: 2859  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+The proposal breaks down both insertion and removal (not mentioning some very simple cases) into six constellations of nodes, edges, and colors, which are called cases. The proposal contains, for both insertion and removal, exactly one case that advances one black level closer to the root and loops, the other five cases rebalance the tree of their own. The more complicated cases are pictured in a diagram.
+
+ symbolises a red node and a (non-NULL) black node (of black height ≥ 1), symbolises the color red or black of a non-NULL node, but the same color throughout the same diagram. NULL nodes are not represented in the diagrams.
+The variable N denotes the current node, which is labeled  N  or  N  in the diagrams.
+A diagram contains three columns and two to four actions. The left column shows the first iteration, the right column the higher iterations, the middle column shows the segmentation of a case into its different actions.
+The action "entry" shows the constellation of nodes with their colors which defines a case and mostly violates some of the requirements.A blue border rings the current node N and the other nodes are labeled according to their relation to N.
+If a rotation is considered useful, this is pictured in the next action, which is labeled "rotation".
+If some recoloring is considered useful, this is pictured in the next action, which is labeled "color".
+If there is still some need to repair, the cases make use of code of other cases and this after a reassignment of the current node N, which then again carries a blue ring and relative to which other nodes may have to be reassigned also. This action is labeled "reassign".For both, insert and delete, there is (exactly) one case which iterates one black level closer to the root; then the reassigned constellation satisfies the respective loop invariant.
+A possibly numbered triangle with a black circle atop represents a red–black subtree (connected to its parent according to requirement 3) with a black height equal to the iteration level minus one, i.e. zero in the first iteration. Its root may be red or black.A possibly numbered triangle represents a red–black subtree with a black height one less, i.e. its parent has black height zero in the second iteration.
+
+Remark
+For simplicity, the sample code uses the disjunction:
+U == NULL || U->color == BLACK // considered black
+and the conjunction:
+U != NULL && U->color == RED // not considered black
+Thereby, it must be kept in mind that both statements are not evaluated in total, if U == NULL. Then in both cases U->color is not touched (see Short-circuit evaluation).(The comment considered black is in accordance with requirement 2.)
+The related if-statements have to occur far less frequently if the proposal is realised.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Red%E2%80%93black_tree — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0045 | trees > trie > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/11015320
+TITLE: SO: How to create a trie in Python
+CHARS: 1623  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Unwind is essentially correct that there are many different ways to implement a trie; and for a large, scalable trie, nested dictionaries might become cumbersome -- or at least space inefficient. But since you're just getting started, I think that's the easiest approach; you could code up a simple in just a few lines. First, a function to construct the trie: If you're not familiar with , it simply looks up a key in the dictionary (here, or ). If the key is present, it returns the associated value; if not, it assigns a default value to that key and returns the value ( or ). (It's like a version of that also updates the dictionary.) Next, a function to test whether the word is in the trie: I'll leave insertion and removal to you as an exercise. Of course, Unwind's suggestion wouldn't be much harder. There might be a slight speed disadvantage in that finding the correct sub-node would require a linear search. But the search would be limited to the number of possible characters -- 27 if we include . Also, there's nothing to be gained by creating a massive list of nodes and accessing them by index as he suggests; you might as well just nest the lists. Finally, I'll add that creating a directed acyclic word graph (DAWG) would be a bit more complex, because you have to detect situations in which your current word shares a suffix with another word in the structure. In fact, this can get rather complex, depending on how you want to structure the DAWG! You may have to learn some stuff about Levenshtein distance to get it right.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/11015320 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0046 | trees > trie > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/245878
+TITLE: SO: How Do I Choose Between a Hash Table and a Trie (Prefix Tree)?
+CHARS: 1175  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Advantages of tries: The basics: Predictable O(k) lookup time where k is the size of the key Lookup can take less than k time if it's not there Supports ordered traversal No need for a hash function Deletion is straightforward New operations: You can quickly look up prefixes of keys, enumerate all entries with a given prefix, etc. Advantages of linked structure: If there are many common prefixes, the space they require is shared. Immutable tries can share structure. Instead of updating a trie in place, you can build a new one that's different only along one branch, elsewhere pointing into the old trie. This can be useful for concurrency, multiple simultaneous versions of a table, etc. An immutable trie is compressible. That is, it can share structure on the suffixes as well, by hash-consing. Advantages of hashtables: Everyone knows hashtables, right? Your system will already have a nice well-optimized implementation, faster than tries for most purposes. Your keys need not have any special structure. More space-efficient than the obvious linked trie structure ( see comments below )
+
+[Source: Stack Overflow — https://stackoverflow.com/q/245878 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0047 | trees > trie > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/13893950
+TITLE: SO: Suffix tree and Tries. What is the difference?
+CHARS: 1026  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+A suffix tree can be viewed as a data structure built on top of a trie where, instead of just adding the string itself into the trie, you would also add every possible suffix of that string. As an example, if you wanted to index the string banana in a suffix tree, you would build a trie with the following strings: Once that's done you can search for any n-gram and see if it is present in your indexed string. In other words, the n-gram search is a prefix search of all possible suffixes of your string. This is the simplest and slowest way to build a suffix tree. It turns out that there are many fancier variants on this data structure that improve on either or both space and build time. I'm not well versed enough in this domain to give an overview but you can start by looking into suffix arrays or this class advanced data structures (lecture 16 and 18). This answer also does a wonderfull job explaining a variant of this data-structure.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/13893950 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0048 | trees > trie > introduction | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Trie
+TITLE: Wikipedia: Trie — introduction
+CHARS: 1391  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+In computer science, a trie (, ), also known as a digital tree or prefix tree, is a specialized search tree data structure used to store and retrieve strings from a dictionary or set. Unlike a binary search tree, nodes in a trie do not store their associated key. Instead, each node's position within the trie determines its associated key, with the connections between nodes defined by individual characters rather than the entire key.
+Tries are particularly effective for tasks such as autocomplete, spell checking, and IP routing, offering advantages over hash tables due to their prefix-based organization and lack of hash collisions. Every child node shares a common prefix with its parent node, and the root node represents the empty string. While basic trie implementations can be memory-intensive, various optimization techniques such as compression and bitwise representations have been developed to improve their efficiency. A notable optimization is the radix tree, which provides more efficient prefix-based storage.
+While tries store character strings, they can be adapted to work with any ordered sequence of elements, such as permutations of digits or shapes. A notable variant is the bitwise trie, which uses individual bits from fixed-length binary data (such as integers or memory addresses) as keys.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Trie — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0049 | trees > trie > insertion | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Trie
+TITLE: Wikipedia: Trie — insertion
+CHARS: 601  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Insertion into a trie is guided by using the character sets as indexes to the children array until the last character of the string key is reached. Each node in the trie corresponds to one call of the radix sorting routine, as the trie structure reflects the execution pattern of the top-down radix sort.
+
+If null links are encountered before reaching the last character of the string key, new nodes are created. The input value is assigned to the value of the last node traversed, which is the node that corresponds to the key.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Trie — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0050 | trees > trie > search | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Trie
+TITLE: Wikipedia: Trie — search
+CHARS: 1337  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Searching for a value in a trie is guided by the characters in the search string key, as each node in the trie contains a corresponding link to each possible character in the given string. Thus, following the string within the trie yields the associated value for the given string key. A null link during the search indicates the inexistence of the key.
+The following pseudocode implements the search procedure for a given string key in a rooted trie x.
+
+In the above pseudocode, x and key correspond to the pointer of the trie's root node and the string key, respectively. The search operation takes 
+
+
+ O
+ (
+ m
+ )
+
+
+ {\displaystyle O(m)}
+
+ time, where 
+
+
+ m
+
+
+ {\displaystyle m}
+
+ is the size of the string parameter key. In a balanced binary search tree, on the other hand, it takes 
+
+
+ O
+ (
+ m
+ log
+ ⁡
+ n
+ )
+
+
+ {\displaystyle O(m\log n)}
+
+ time, in the worst case, since key needs to be compared with 
+
+
+ O
+ (
+ log
+ ⁡
+ n
+ )
+
+
+ {\displaystyle O(\log n)}
+
+ other keys and each comparison takes 
+
+
+ O
+ (
+ m
+ )
+
+
+ {\displaystyle O(m)}
+
+ time, in the worst case.
+The trie occupies less space, in comparison with a binary search tree, in the case of a large number of short strings, since nodes share common initial string subsequences and store the keys implicitly.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Trie — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0051 | trees > trie > deletion | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Trie
+TITLE: Wikipedia: Trie — deletion
+CHARS: 565  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Deletion of a key–value pair from a trie involves finding the node corresponding to the key, setting its value to null, and recursively removing nodes that have no children.
+
+The procedure begins by examining key; an empty string indicates arrival at the node corresponding to the (original) key, in which case its value is set to null. If the node, then, has null value and no children, it is removed from the trie by returning null; otherwise, the node is kept by returning the node itself.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Trie — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0052 | trees > segment_tree > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/17466218
+TITLE: SO: What are the differences between segment trees, interval trees, binary indexed trees and range trees?
+CHARS: 1891  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+All these data structures are used for solving different problems: Segment tree stores intervals, and optimized for " which of these intervals contains a given point " queries. Interval tree stores intervals as well, but optimized for " which of these intervals overlap with a given interval " queries. It can also be used for point queries - similar to segment tree. Range tree stores points, and optimized for " which points fall within a given interval " queries. Binary indexed tree stores items-count per index, and optimized for " how many items are there between index m and n " queries. Performance / Space consumption for one dimension: Segment tree - O(n logn) preprocessing time, O(k+logn) query time, O(n logn) space Interval tree - O(n logn) preprocessing time, O(k+logn) query time, O(n) space Range tree - O(n logn) preprocessing time, O(k+logn) query time, O(n) space Binary Indexed tree - O(n logn) preprocessing time, O(logn) query time, O(n) space (k is the number of reported results). All data structures can be dynamic, in the sense that the usage scenario includes both data changes and queries: Segment tree - interval can be added/deleted in O(logn) time (see here ) Interval tree - interval can be added/deleted in O(logn) time Range tree - new points can be added/deleted in O(logn) time (see here ) Binary Indexed tree - the items-count per index can be increased in O(logn) time Higher dimensions (d>1): Segment tree - O(n(logn)^d) preprocessing time, O(k+(logn)^d) query time, O(n(logn)^(d-1)) space Interval tree - O(n logn) preprocessing time, O(k+(logn)^d) query time, O(n logn) space Range tree - O(n(logn)^d) preprocessing time, O(k+(logn)^d) query time, O(n(logn)^(d-1))) space Binary Indexed tree - O(n(logn)^d) preprocessing time, O((logn)^d) query time, O(n(logn)^d) space
+
+[Source: Stack Overflow — https://stackoverflow.com/q/17466218 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0053 | trees > segment_tree > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/64190332
+TITLE: SO: Fenwick tree vs Segment tree
+CHARS: 1173  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+I read this on Quora . Hope you find it useful. There are things that a segment tree can do but a BIT cannot : A BIT essentially works with cumulative quantities. When the cumulative quantity for interval [i..j] is required, it is found as the difference between cumulative quantities for [1...j] and [1...i-1]. This works only because addition has an inverse operation. You cannot do this if the operation is non-invertible (such as max). On the other hand, every interval on a segment tree can be found as union of disjoint intervals and no inverse operation is required A BIT requires only half as much memory as a segment tree : In cases where you have masochistic memory constraints, you are almost stuck with using a BIT Though BIT and segment tree operations are both O(log(n)), the segment tree operations have a larger constant factor : This should not matter for most cases. But once again, if you have masochistic time constraints, you might want to switch from a segment tree to a BIT. The constant factor might become more of a problem if the BIT/Segment tree is multidimensional.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/64190332 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0054 | trees > segment_tree > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/28470692
+TITLE: SO: How is the memory of the array of segment tree 2 * 2 ^(ceil(log(n))) - 1?
+CHARS: 1462  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+What is happening here is, if you have an array of n elements, then the segment tree will have a leaf node for each of these n entries. Thus, we have (n) leaf nodes, and also (n-1) internal nodes. Total number of nodes= n + (n-1) = 2n-1 Now, we know its a full binary tree and thus the height is: ceil(Log2(n)) +1 Total no. of nodes = 2^0 + 2^1 + 2^2 + … + 2^ceil(Log2(n)) // which is a geometric progression where 2^i denotes, the number of nodes at level i. Formula of summation G.P. = a * (r^size - 1)/(r-1)
+where a=2^0 Total no. of nodes = 1*(2^(ceil(Log2(n))+1) -1)/(2-1) = 2* [2^ceil(Log2(n))] -1 (you need space in the array for each of the internal as well as leaf nodes which are this count in number), thus it is the array of size. = O(4 * n) approx.. You may also think of it this way, Let the below be the segment tree: If the above is you segment tree, then you array of segment tree will be: 10,3,7,1,2,3,4 i.e. 0th element will store the sum of 1st and 2nd entries, 1st entry will store the sum of 3rd and 4th and 2nd will store the sum of 5th and 6th entry!! Also, the better explanation is: if the array size n is a power of 2, then we have exactly n-1 internal nodes, summing up to 2n-1 total nodes. But not always, we have n as the power of 2, so we basically need the smallest power of 2 which is greater than n . That means this, You may see my same answer here
+
+[Source: Stack Overflow — https://stackoverflow.com/q/28470692 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0055 | trees > segment_tree > introduction | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Segment_tree
+TITLE: Wikipedia: Segment tree — introduction
+CHARS: 769  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+In computer science, the segment tree is a data structure used for storing information about intervals or segments. It allows querying which of the stored segments contain a given point. A similar data structure is the interval tree.
+A segment tree for a set I of n intervals uses O(n log n) storage and can be built in O(n log n) time. Segment trees support searching for all the intervals that contain a query point in time O(log n + k), k being the number of retrieved intervals or segments.
+Applications of the segment tree are in the areas of computational geometry, geographic information systems and machine learning.
+The segment tree can be generalized to higher dimension spaces.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Segment_tree — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0056 | heaps > heap > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/36991716
+TITLE: SO: What&#39;s the difference between heapq and PriorityQueue in python?
+CHARS: 992  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+is a thread-safe class, while the module makes no thread-safety guarantees. From the module documentation : The module implements multi-producer, multi-consumer queues. It is especially useful in threaded programming when information must be exchanged safely between multiple threads. The class in this module implements all the required locking semantics. It depends on the availability of thread support in Python; see the module. The module offers no locking, and operates on standard objects, which are not meant to be thread-safe. In fact, the implementation uses under the hood to do all prioritisation work, with the base class providing the locking to make this thread-safe. See the source code for details. This makes the module faster; there is no locking overhead. In addition, you are free to use the various functions in different, novel ways, the only offers the straight-up queueing functionality.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/36991716 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0057 | heaps > heap > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/18993269
+TITLE: SO: Difference between priority queue and a heap
+CHARS: 742  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Having a class with exactly the interface you need (just insert and pop-max?) has its advantages. You can exchange the implementation (list instead of heap, for example) later. Someone reading the code that uses the queue doesn't need to understand the more difficult interface of the heap data structure. I guess my question is whether having a collection of functions is
+ equivalent to storing them in some class and using them through a
+ class or just using the functions themselves. It's mostly equivalent if you just think in terms of "how does my program behave". But it's not equivalent in terms of "how easy is my program to understand by a human reader"
+
+[Source: Stack Overflow — https://stackoverflow.com/q/18993269 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0058 | heaps > heap > introduction | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Heap_(data_structure)
+TITLE: Wikipedia: Heap (data structure) — introduction
+CHARS: 2296  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+In computer science, a heap is a tree-based data structure that satisfies the heap property: In a max heap, for any given node C, if P is the parent node of C, then the key (the value) of P is greater than or equal to the key of C. In a min heap, the key of P is less than or equal to the key of C. The node at the "top" of the heap (with no parents) is called the root node.
+The heap is one maximally efficient implementation of an abstract data type called a priority queue, and in fact, priority queues are often referred to as "heaps", regardless of how they may be implemented. In a heap, the highest (or lowest) priority element is always stored at the root. However, a heap is not a sorted structure; it can be regarded as being partially ordered. A heap is a useful data structure when it is necessary to repeatedly remove the object with the highest (or lowest) priority, or when insertions need to be interspersed with removals of the root node.
+A common implementation of a heap is the binary heap, in which the tree is a complete binary tree (see figure). The heap data structure, specifically the binary heap, was introduced by J. W. J. Williams in 1964, as a data structure for the heapsort sorting algorithm. Heaps are also crucial in several efficient graph algorithms such as Dijkstra's algorithm. When a heap is a complete binary tree, it has the smallest possible height—a heap with N nodes and a branches for each node always has loga N height.
+Note that, as shown in the graphic, there is no implied ordering between siblings or cousins and no implied sequence for an in-order traversal (as there would be in, e.g., a binary search tree). The heap relation mentioned above applies only between nodes and their parents, grandparents. The maximum number of children each node can have depends on the type of heap.
+Heaps are typically constructed in-place in the same array where the elements are stored, with their structure being implicit in the access pattern of the operations. Heaps differ in this way from other data structures with similar or in some cases better theoretic bounds such as radix trees in that they require no additional memory beyond that used for storing the keys.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Heap_(data_structure) — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0059 | hashing > hash_table > introduction | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Hash_table
+TITLE: Wikipedia: Hash table — introduction
+CHARS: 2138  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+In computer science, a hash table is a data structure that implements an associative array, also called a dictionary or simply map; an associative array is an abstract data type that maps keys to values. A hash table uses a hash function to compute an index, also called a hash code, into an array of buckets or slots, from which the desired value can be found. During lookup, the key is hashed and the resulting hash indicates where the corresponding value is stored. A map implemented by a hash table is called a hash map.
+Most hash table designs employ an imperfect hash function. Hash collisions, where the hash function generates the same index for more than one key, therefore typically must be accommodated in some way. Common strategies to handle hash collisions include chaining, which stores multiple elements in the same slot using linked lists, and open addressing, which searches for the next available slot according to a probing sequence.
+In a well-dimensioned hash table, the average time complexity for each lookup is independent of the number of elements stored in the table. Many hash table designs also allow arbitrary insertions and deletions of key–value pairs, at amortized constant average cost per operation.
+Hashing is an example of a space–time tradeoff. If memory is infinite, the entire key can be used directly as an index to locate its value with a single memory access. On the other hand, if infinite time is available, values can be stored without regard for their keys, and a binary search or linear search can be used to retrieve the element.
+In many situations, hash tables turn out to be on average more efficient than search trees or any other table lookup structure. For this reason, they are widely used in many kinds of computer software, particularly for associative arrays, database indexing, caches, and sets. Many programming languages provide built-in hash table structures, such as Python's dictionaries, Java's HashMap, C++'s unordered_map, Go maps, which abstract the complexity of hashing from the programmer.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Hash_table — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0060 | hashing > hash_table > hash_function | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Hash_table
+TITLE: Wikipedia: Hash table — hash_function
+CHARS: 1179  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+A hash function 
+
+
+ h
+ :
+ U
+ →
+ {
+ 0
+ ,
+ .
+ .
+ .
+ ,
+ m
+ −
+ 1
+ }
+
+
+ {\displaystyle h:U\rightarrow \{0,...,m-1\}}
+
+ maps the universe 
+
+
+ U
+
+
+ {\displaystyle U}
+
+ of keys to indices or slots within the table, that is, 
+
+
+ h
+ (
+ x
+ )
+ ∈
+ {
+ 0
+ ,
+ .
+ .
+ .
+ ,
+ m
+ −
+ 1
+ }
+
+
+ {\displaystyle h(x)\in \{0,...,m-1\}}
+
+ for 
+
+
+ x
+ ∈
+ U
+
+
+ {\displaystyle x\in U}
+
+. The conventional implementations of hash functions are based on the integer universe assumption that all elements of the table stem from the universe 
+
+
+ U
+ =
+ {
+ 0
+ ,
+ .
+ .
+ .
+ ,
+ u
+ −
+ 1
+ }
+
+
+ {\displaystyle U=\{0,...,u-1\}}
+
+, where the bit length of 
+
+
+ u
+
+
+ {\displaystyle u}
+
+ is confined within the word size of a computer architecture.
+A hash function 
+
+
+ h
+
+
+ {\displaystyle h}
+
+ is said to be perfect for a given set 
+
+
+ S
+
+
+ {\displaystyle S}
+
+ if it is injective on 
+
+
+ S
+
+
+ {\displaystyle S}
+
+, that is, if each element 
+
+
+ x
+ ∈
+ S
+
+
+ {\displaystyle x\in S}
+
+ maps to a different value in 
+
+
+ 0
+ ,
+ .
+ .
+ .
+ ,
+ m
+ −
+ 1
+
+
+ {\displaystyle {0,...,m-1}}
+
+. A perfect hash function can be created if all the keys are known ahead of time.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Hash_table — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0061 | hashing > hash_table > collision_resolution | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Hash_table
+TITLE: Wikipedia: Hash table — collision_resolution
+CHARS: 555  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+A search algorithm that uses hashing consists of two parts. The first part is computing a hash function which transforms the search key into an array index. The ideal case is such that no two search keys hash to the same array index. However, this is not always the case and impossible to guarantee for unseen given data. Hence the second part of the algorithm is collision resolution. The two common methods for collision resolution are separate chaining and open addressing.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Hash_table — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0062 | hashing > hash_table > chaining | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Hash_table
+TITLE: Wikipedia: Hash table — chaining
+CHARS: 491  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+With separate chaining hash tables, each slot of the bucket array stores a pointer to a list or array of data.
+Separate chaining hash tables suffer gradually declining performance as the load factor grows, and no fixed point beyond which resizing is absolutely needed.
+With separate chaining, the value of 
+
+
+ α
+
+ max
+
+
+ {\displaystyle \alpha _{\max }}
+
+ that gives best performance is typically between 1 and 3.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Hash_table — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0063 | hashing > hash_table > open_addressing | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Hash_table
+TITLE: Wikipedia: Hash table — open_addressing
+CHARS: 609  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+With open addressing, each slot of the bucket array holds exactly one item. Therefore an open-addressed hash table cannot have a load factor greater than 1.
+The performance of open addressing becomes very bad when the load factor approaches 1.
+Therefore a hash table that uses open addressing must be resized or rehashed if the load factor 
+
+
+ α
+
+
+ {\displaystyle \alpha }
+
+ approaches 1.
+With open addressing, acceptable figures of max load factor 
+
+
+ α
+
+ max
+
+
+ {\displaystyle \alpha _{\max }}
+
+ should range around 0.6 to 0.75.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Hash_table — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0064 | hashing > hash_table > load_factor | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Hash_table
+TITLE: Wikipedia: Hash table — load_factor
+CHARS: 1331  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+A load factor 
+
+
+ α
+
+
+ {\displaystyle \alpha }
+
+ is a critical statistic of a hash table, and is defined as follows:
+
+
+ load factor
+
+
+ (
+ α
+ )
+ =
+
+
+ n
+ m
+
+
+ ,
+
+
+ {\displaystyle {\text{load factor}}\ (\alpha )={\frac {n}{m}},}
+
+
+where
+
+
+ n
+
+
+ {\displaystyle n}
+
+ is the number of entries occupied in the hash table.
+
+
+ m
+
+
+ {\displaystyle m}
+
+ is the number of buckets.
+The performance of the hash table deteriorates in relation to the load factor 
+
+
+ α
+
+
+ {\displaystyle \alpha }
+
+. In the limit of large 
+
+
+ m
+
+
+ {\displaystyle m}
+
+ and 
+
+
+ n
+
+
+ {\displaystyle n}
+
+, each bucket statistically has a Poisson distribution with expectation 
+
+
+ λ
+ =
+ α
+
+
+ {\displaystyle \lambda =\alpha }
+
+ for an ideally random hash function.
+The software typically ensures that the load factor 
+
+
+ α
+
+
+ {\displaystyle \alpha }
+
+ remains below a certain constant, 
+
+
+ α
+
+ max
+
+
+ {\displaystyle \alpha _{\max }}
+
+. This helps maintain good performance. Therefore, a common approach is to resize or "rehash" the hash table whenever the load factor 
+
+
+ α
+
+
+ {\displaystyle \alpha }
+
+ reaches 
+
+
+ α
+
+ max
+
+
+ {\displaystyle \alpha _{\max }}
+
+. Similarly the table may also be resized if the load factor drops below 
+
+
+ α
+
+ max
+
+
+ /
+
+ 4
+
+
+ {\displaystyle \alpha _{\max }/4}
+
+.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Hash_table — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0065 | graphs > graph_basics > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/5886274
+TITLE: SO: Comparing object graph representation to adjacency list and matrix representations
+CHARS: 1439  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+objects and pointers These are just basic datastructures like hammar said in the other answer, in you would represent this with classes like edges and vertices. For example an edge connects two vertices and can either be directed or undirected and it can contain a weight. A vertex can have an ID, name etc. Mostly both of them have additional properties. So you can construct your graph with them like This approach is commonly used for object oriented implementations, since it is more readable and convenient for object oriented users ;). matrix A matrix is just a simple 2 dimensional array. Assuming you have vertex ID's that can be represented as an int array like this: This is commonly used for dense graphs where index access is necessary. You can represent a un/directed and weighted structure with this. adjacency list This is just a simple datastructure mix, I usually implement this using a . Similar used can be the in Guava. This approach is cool, because you have O(1) (amortized) vertex lookup and it returns me a list of all adjacent vertices to this particular vertex I demanded. This is used for representing sparse graphs, if you are applying at Google, you should know that the webgraph is sparse. You can deal with them in a more scalable way using a BigTable . Oh and BTW, here is a very good summary of this post with fancy pictures ;)
+
+[Source: Stack Overflow — https://stackoverflow.com/q/5886274 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0066 | graphs > graph_basics > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/31247634
+TITLE: SO: How to keep track of depth in breadth first search?
+CHARS: 443  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+You don't need to use extra queue or do any complicated calculation to achieve what you want to do. This idea is very simple. This does not use any extra space other than queue used for BFS. The idea I am going to use is to add at the end of each level. So the number of nulls you encountered +1 is the depth you are at. (of course after termination it is just ).
+
+[Source: Stack Overflow — https://stackoverflow.com/q/31247634 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0067 | graphs > graph_basics > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/14483473
+TITLE: SO: Is there any JavaScript libraries for graph operations and algorithms?
+CHARS: 906  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Now there is a library: graphlib Graphlib is a JavaScript library that provides data structures for undirected and directed multi-graphs along with algorithms that can be used with them. Implements: directed and undirected graphs (does A -> B imply B -> A) multigraphs (multiple distinct named edges from A -> B) compound graphs (nodes can have children that form a "subgraph") Dijkstra algorithm (shortest path) Floyd-Warshall algorithm (shortest path supporting negative weights) Prim's algorithm (minimum spanning tree) Tarjan's algorithm (strongly connected components) Topological sorting (dependency sort for directed acyclic graphs) Pre- and postorder traversal (callback on every node) Finding all cycles and testing if a graph is acyclic Finding all connected components NPM, Bower and browser supported, MIT license.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/14483473 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0068 | graphs > graph_basics > introduction | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Graph_(abstract_data_type)
+TITLE: Wikipedia: Graph (abstract data type) — introduction
+CHARS: 938  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+In computer science, a graph is an abstract data type that is meant to implement the undirected graph and directed graph concepts from the field of graph theory within mathematics.
+A graph data structure consists of a finite (and possibly mutable) set of vertices (also called nodes or points), together with a set of unordered pairs of these vertices for an undirected graph or a set of ordered pairs for a directed graph. These pairs are known as edges (also called links or lines), and for a directed graph are also known as edges but also sometimes arrows or arcs. The vertices may be part of the graph structure, or may be external entities represented by integer indices or references.
+A graph data structure may also associate to each edge some edge value, such as a symbolic label or a numeric attribute (cost, capacity, length, etc.).
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Graph_(abstract_data_type) — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0069 | graphs > shortest_paths > dijkstra | so
+APPROVED: null
+URL: https://stackoverflow.com/q/13159337
+TITLE: SO: Why doesn&#39;t Dijkstra&#39;s algorithm work for negative weight edges?
+CHARS: 1152  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Recall that in Dijkstra's algorithm, once a vertex is marked as "closed" (and out of the open set) - the algorithm found the shortest path to it , and will never have to develop this node again - it assumes the path developed to this path is the shortest. But with negative weights - it might not be true. For example: Dijkstra from A will first develop C, and will later fail to find EDIT a bit deeper explanation: Note that this is important, because in each relaxation step, the algorithm assumes the "cost" to the "closed" nodes is indeed minimal, and thus the node that will next be selected is also minimal. The idea of it is: If we have a vertex in open such that its cost is minimal - by adding any positive number to any vertex - the minimality will never change. Without the constraint on positive numbers - the above assumption is not true. Since we do "know" each vertex which was "closed" is minimal - we can safely do the relaxation step - without "looking back". If we do need to "look back" - Bellman-Ford offers a recursive-like (DP) solution of doing so.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/13159337 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0070 | graphs > shortest_paths > dijkstra | so
+APPROVED: null
+URL: https://stackoverflow.com/q/6799172
+TITLE: SO: Negative weights using Dijkstra&#39;s Algorithm
+CHARS: 1479  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+The algorithm you have suggested will indeed find the shortest path in this graph, but not all graphs in general. For example, consider this graph: Let's trace through the execution of your algorithm. First, you set d( A ) to 0 and the other distances to ∞. You then expand out node A , setting d( B ) to 1, d( C ) to 0, and d( D ) to 99. Next, you expand out C , with no net changes. You then expand out B , which has no effect. Finally, you expand D , which changes d( B ) to -201. Notice that at the end of this, though, that d( C ) is still 0, even though the shortest path to C has length -200. This means that your algorithm doesn't compute the correct distances to all the nodes. Moreover, even if you were to store back pointers saying how to get from each node to the start node A , you'd end taking the wrong path back from C to A . The reason for this is that Dijkstra's algorithm (and your algorithm) are greedy algorithms that assume that once they've computed the distance to some node, the distance found must be the optimal distance. In other words, the algorithm doesn't allow itself to take the distance of a node it has expanded and change what that distance is. In the case of negative edges, your algorithm, and Dijkstra's algorithm, can be "surprised" by seeing a negative-cost edge that would indeed decrease the cost of the best path from the starting node to some other node.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/6799172 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0071 | graphs > shortest_paths > dijkstra | so
+APPROVED: null
+URL: https://stackoverflow.com/q/19482317
+TITLE: SO: Bellman-Ford vs Dijkstra: Under what circumstances is Bellman-Ford better?
+CHARS: 1312  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Bellman-Ford algorithm is a single-source shortest path algorithm, so when you have negative edge weight then it can detect negative cycles in a graph. The only difference between the two is that Bellman-Ford is also capable of handling negative weights whereas Dijkstra Algorithm can only handle positives. From wiki However, Dijkstra's algorithm greedily selects the minimum-weight node
+ that has not yet been processed, and performs this relaxation process
+ on all of its outgoing edges; in contrast, the Bellman–Ford algorithm
+ simply relaxes all the edges, and does this |V | − 1 times, where |V |
+ is the number of vertices in the graph. In each of these repetitions,
+ the number of vertices with correctly calculated distances grows, from
+ which it follows that eventually all vertices will have their correct
+ distances. This method allows the Bellman–Ford algorithm to be applied
+ to a wider class of inputs than Dijkstra. Dijkstra is however generally considered better in the absence of negative weight edges, as a typical binary heap priority queue implementation has O((|E|+|V|)log|V|) time complexity [A Fibonacci heap priority queue gives O(|V|log|V| + |E|)], while the Bellman-Ford algorithm has O(|V||E|) complexity
+
+[Source: Stack Overflow — https://stackoverflow.com/q/19482317 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0072 | graphs > shortest_paths > dijkstra | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
+TITLE: Wikipedia: Dijkstra's algorithm — dijkstra
+CHARS: 2800  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Bidirectional Dijkstra is a variant of Dijkstra's algorithm designed to efficiently compute the shortest path between a given source vertex s and target vertex t, rather than all vertices. The key idea is to run two simultaneous searches: one forward from s on the original graph and one backward from t on the graph with edges reversed. Each search maintains its own tentative distance estimates, priority queue, and set of "settled" vertices. The two frontiers advance toward each other and meet somewhere along the shortest s–t path.
+Two distance arrays are maintained: df[v] (distance from s to v) and db[v] (distance from v to t), initialized to ∞ except df[s] = 0 and db[t] = 0. Two priority queues Qf and Qb hold vertices not yet fully processed, and two sets Sf and Sb store vertices whose shortest-path distance is finalized in each direction. A variable μ stores the length of the best full s–t path found so far, initially ∞.
+The algorithm repeatedly extracts the minimum-distance vertex from whichever queue currently has the smaller key, relaxes its outgoing (or incoming) edges, and updates μ whenever it discovers a connection between the two settled sets:
+
+and symmetrically for the backward search.
+A key feature is the stopping condition: once the sum of the current minimum priorities in both queues is at least μ, no yet-unsettled path can improve upon μ. At this point μ equals the true shortest-path distance δ(s,t), and the search terminates.
+This criterion avoids a common mistake of halting as soon as the two frontiers touch, which may overlook a shorter alternative crossing elsewhere.
+Because each search only needs to explore roughly half of the search space in typical graphs, the bidirectional method often visits far fewer vertices and relaxes far fewer edges than one-directional Dijkstra on single-pair queries. In road-network–like graphs the savings can be dramatic, sometimes reducing the explored region from an exponential-size ball to two smaller half-balls.
+The method is widely used in point-to-point routing for maps and navigation software and serves as a base for many speed-up techniques such as the ALT, contraction hierarchies, and reach-based routing.
+If the actual shortest path (not just its distance) is desired, predecessor pointers can be stored in both searches. When μ is updated through some crossing vertex x, the algorithm records this meeting point and reconstructs the final route as the forward path from s to x concatenated with the backward path from x to t.
+Theoretical research shows that an optimized bidirectional approach can be instance-optimal, meaning no correct algorithm can asymptotically relax fewer edges on the same graph instance.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0073 | graphs > shortest_paths > bellman_ford | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
+TITLE: Wikipedia: Dijkstra's algorithm — bellman_ford
+CHARS: 2573  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Dijkstra's algorithm (, DYKE-strəz) is an algorithm for finding the shortest paths between nodes in a weighted graph, which may represent, for example, a road network. It was conceived by computer scientist Edsger W. Dijkstra in 1956 and published three years later.
+Dijkstra's algorithm finds the shortest path from a given source node to every other node. It can be used to find the shortest path to a specific destination node, by terminating the algorithm after determining the shortest path to that node. For example, if the nodes of the graph represent cities, and the costs of edges represent the distances between pairs of cities connected by a direct road, then Dijkstra's algorithm can be used to find the shortest route between one city and all other cities. A common application of shortest path algorithms is network routing protocols, most notably IS-IS (Intermediate System to Intermediate System) and OSPF (Open Shortest Path First). It is also employed as a subroutine in algorithms such as Johnson's algorithm.
+The algorithm uses a min-priority queue data structure for selecting the shortest paths known so far. Before more advanced priority queue structures were discovered, Dijkstra's original algorithm ran in 
+
+
+ Θ
+ (
+
+ |
+
+ V
+
+
+ |
+
+
+ 2
+
+
+ )
+
+
+ {\displaystyle \Theta (|V|^{2})}
+
+ time, where 
+
+
+ |
+
+ V
+
+ |
+
+
+ {\displaystyle |V|}
+
+ is the number of nodes. Fredman & Tarjan 1984 proposed a Fibonacci heap priority queue to optimize the running time complexity to 
+
+
+ Θ
+ (
+
+ |
+
+ E
+
+ |
+
+ +
+
+ |
+
+ V
+
+ |
+
+ log
+ ⁡
+
+ |
+
+ V
+
+ |
+
+ )
+
+
+ {\displaystyle \Theta (|E|+|V|\log |V|)}
+
+. This is asymptotically the fastest known single-source shortest-path algorithm for arbitrary directed graphs with unbounded non-negative weights. However, specialized cases (such as bounded/integer weights, directed acyclic graphs etc.) can be improved further. If preprocessing is allowed, algorithms such as contraction hierarchies can be up to seven orders of magnitude faster.
+Dijkstra's algorithm is commonly used on graphs where the edge weights are positive integers or real numbers. It can be generalized to any graph where the edge weights are partially ordered, provided the subsequent labels (a subsequent label is produced when traversing an edge) are monotonically non-decreasing.
+In many fields, particularly artificial intelligence, Dijkstra's algorithm or a variant offers a uniform cost search and is formulated as an instance of the more general idea of best-first search.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0074 | graphs > minimum_spanning_tree > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/1195872
+TITLE: SO: When should I use Kruskal as opposed to Prim (and vice versa)?
+CHARS: 545  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Use Prim's algorithm when you have a graph with lots of edges. For a graph with V vertices E edges, Kruskal's algorithm runs in O(E log V) time and Prim's algorithm can run in O(E + V log V) amortized time, if you use a Fibonacci Heap . Prim's algorithm is significantly faster in the limit when you've got a really dense graph with many more edges than vertices. Kruskal performs better in typical situations (sparse graphs) because it uses simpler data structures.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/1195872 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0075 | graphs > minimum_spanning_tree > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/14144279
+TITLE: SO: Difference between Prim&#39;s and Dijkstra&#39;s algorithms?
+CHARS: 1956  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Prim's algorithm constructs a minimum spanning tree for the graph, which is a tree that connects all nodes in the graph and has the least total cost among all trees that connect all the nodes. However, the length of a path between any two nodes in the MST might not be the shortest path between those two nodes in the original graph. MSTs are useful, for example, if you wanted to physically wire up the nodes in the graph to provide electricity to them at the least total cost. It doesn't matter that the path length between two nodes might not be optimal, since all you care about is the fact that they're connected. Dijkstra's algorithm constructs a shortest path tree starting from some source node. A shortest path tree is a tree that connects all nodes in the graph back to the source node and has the property that the length of any path from the source node to any other node in the graph is minimized. This is useful, for example, if you wanted to build a road network that made it as efficient as possible for everyone to get to some major important landmark. However, the shortest path tree is not guaranteed to be a minimum spanning tree, and the sum of the costs on the edges of a shortest-path tree can be much larger than the cost of an MST. Another important difference concerns what types of graphs the algorithms work on. Prim's algorithm works on undirected graphs only, since the concept of an MST assumes that graphs are inherently undirected. (There is something called a "minimum spanning arborescence" for directed graphs, but algorithms to find them are much more complicated). Dijkstra's algorithm will work fine on directed graphs, since shortest path trees can indeed be directed. Additionally, Dijkstra's algorithm does not necessarily yield the correct solution in graphs containing negative edge weights , while Prim's algorithm can handle this.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/14144279 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0076 | graphs > minimum_spanning_tree > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/4992664
+TITLE: SO: How to find maximum spanning tree?
+CHARS: 728  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Yes, it does. One method for computing the maximum weight spanning tree of a network G –
+ due to Kruskal – can be summarized as follows. Sort the edges of G into decreasing order by weight. Let T be the set of edges comprising the maximum weight spanning tree. Set T = ∅. Add the first edge to T. Add the next edge to T if and only if it does not form a cycle in T. If
+ there are no remaining edges exit and report G to be disconnected. If T has n−1 edges (where n is the number of vertices in G) stop and
+ output T . Otherwise go to step 3. Source: https://web.archive.org/web/20141114045919/http://www.stats.ox.ac.uk/~konis/Rcourse/exercise1.pdf .
+
+[Source: Stack Overflow — https://stackoverflow.com/q/4992664 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0077 | graphs > minimum_spanning_tree > introduction | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Minimum_spanning_tree
+TITLE: Wikipedia: Minimum spanning tree — introduction
+CHARS: 1526  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+A minimum spanning tree (MST) or minimum weight spanning tree is a subset of the edges of a connected, edge-weighted undirected graph that connects all the vertices together, without any cycles and with the minimum possible total edge weight. That is, it is a spanning tree whose sum of edge weights is as small as possible. More generally, any edge-weighted undirected graph (not necessarily connected) has a minimum spanning forest, which is a union of the minimum spanning trees for its connected components.
+There are many use cases for minimum spanning trees. One example is a telecommunications company trying to lay cable in a new neighborhood. If it is constrained to bury the cable only along certain paths (e.g. roads), then there would be a graph containing the points (e.g. houses) connected by those paths. Some of the paths might be more expensive, because they are longer, or require the cable to be buried deeper; these paths would be represented by edges with larger weights. Currency is an acceptable unit for edge weight – there is no requirement for edge lengths to obey normal rules of geometry such as the triangle inequality. A spanning tree for that graph would be a subset of those paths that has no cycles but still connects every house; there might be several spanning trees possible. A minimum spanning tree would be one with the lowest total cost, representing the least expensive path for laying the cable.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Minimum_spanning_tree — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0078 | graphs > topological_sort > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/4106862
+TITLE: SO: How to sort depended objects by dependency
+CHARS: 287  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Perfect example to use a topological sort: http://en.wikipedia.org/wiki/Topological_sorting It will give you exactly what you need. You can either use Kahn's algorithm : ...or you can use Depth-first search :
+
+[Source: Stack Overflow — https://stackoverflow.com/q/4106862 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0079 | graphs > topological_sort > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/47192626
+TITLE: SO: deceptively simple implementation of topological sorting in python
+CHARS: 2708  CODE BLOCKS: 6
+────────────────────────────────────────────────────────────────
+It's not easy to turn an iterative implementation of DFS into Topological sort, since the change that needs to be done is more natural with a recursive implementation. But you can still do it, it just requires that you implement your own stack. First off, here's a slightly improved version of your code (it's much more efficient and not much more complicated): Here's how I'd modify that code to do a topological sort: The part I commented with "new stuff here" is the part that figures out the order as you move up the stack. It checks if the new node that's been found is a child of the previous node (which is on the top of the stack). If not, it pops the top of the stack and adds the value to . While we're doing the DFS, will be in reverse topological order, starting from the last values. We reverse it at the end of the function, and concatenate it with the remaining values on the stack (which conveniently are already in the correct order). Because this code needs to check a bunch of times, it will be much more efficient if the values in the dictionary are sets, rather than lists. A graph usually doesn't care about the order its edges are saved in, so making such a change shouldn't cause problems with most other algorithms, though code that produces or updates the graph might need fixing. If you ever intend to extend your graph code to support weighted graphs, you'll probably end up changing the lists to dictionaries mapping from node to weight anyway, and that would work just as well for this code (dictionary lookups are just like set lookups). Alternatively, we could build the sets we need ourselves, if can't be modified directly. For reference, here's a recursive version of DFS, and a modification of it to do a topological sort. The modification needed is very small indeed: That's it! One line gets removed and a similar one gets added at a different location. If you care about performance, you should probably do in the second helper function too, and do in the top level function. But using is a more minimal change. Its also worth noting that if you want a topological order of the whole graph, you shouldn't need to specify a starting node. Indeed, there may not be a single node that lets you traverse the entire graph, so you may need to do several traversals to get to everything. An easy way to make that happen in the iterative topological sort is to initialize to (a list of all the graph's keys) instead of a list with only a single starting node. For the recursive version, replace the call to with a loop that calls the helper function on every node in the graph if it's not yet in .
+
+[Source: Stack Overflow — https://stackoverflow.com/q/47192626 — CC BY-SA 4.0]
+
+[CODE]
+def iterative_dfs_improved(graph, start):
+    seen = set()  # efficient set to look up nodes in
+    path = []     # there was no good reason for this to be an argument in your code
+    q = [start]
+    while q:
+        v = q.pop()   # no reason not to pop from the end, where it's fast
+        if v not in seen:
+            seen.add(v)
+            path.append(v)
+            q.extend(graph[v]) # this will add the nodes in a slightly different order
+                               # if you want the same order, use reversed(graph[v])
+
+    return path
+[/CODE]
+
+[CODE]
+def iterative_dfs_improved(graph, start):
+    seen = set()  # efficient set to look up nodes in
+    path = []     # there was no good reason for this to be an argument in your code
+    q = [start]
+    while q:
+        v = q.pop()   # no reason not to pop from the end, where it's fast
+        if v not in seen:
+            seen.add(v)
+            path.append(v)
+            q.extend(graph[v]) # this will add the nodes in a slightly different order
+                               # if you want the same order, use reversed(graph[v])
+
+    return path
+[/CODE]
+
+[CODE]
+def iterative_topological_sort(graph, start):
+    seen = set()
+    stack = []    # path variable is gone, stack and order are new
+    order = []    # order will be in reverse order at first
+    q = [start]
+    while q:
+        v = q.pop()
+        if v not in seen:
+            seen.add(v) # no need to append to path any more
+            q.extend(graph[v])
+
+            while stack and v not in graph[stack[-1]]: # new stuff here!
+                order.append(stack.pop())
+            stack.append(v)
+
+    return stack + order[::-1]   # new return value!
+[/CODE]
+
+[CODE]
+def iterative_topological_sort(graph, start):
+    seen = set()
+    stack = []    # path variable is gone, stack and order are new
+    order = []    # order will be in reverse order at first
+    q = [start]
+    while q:
+        v = q.pop()
+        if v not in seen:
+            seen.add(v) # no need to append to path any more
+            q.extend(graph[v])
+
+            while stack and v not in graph[stack[-1]]: # new stuff here!
+                order.append(stack.pop())
+            stack.append(v)
+
+    return stack + order[::-1]   # new return value!
+[/CODE]
+
+[CODE]
+def recursive_dfs(graph, node):
+    result = []
+    seen = set()
+
+    def recursive_helper(node):
+        for neighbor in graph[node]:
+            if neighbor not in seen:
+                result.append(neighbor)     # this line will be replaced below
+                seen.add(neighbor)
+                recursive_helper(neighbor)
+
+    recursive_helper(node)
+    return result
+
+def recursive_topological_sort(graph, node):
+    result = []
+    seen = set()
+
+    def recursive_helper(node):
+        for neighbor in graph[node]:
+            if neighbor not in seen:
+                seen.add(neighbor)
+                recursive_helper(neighbor)
+        result.insert(0, node)              # this line replaces the result.append line
+
+    recursive_helper(node)
+    return result
+[/CODE]
+
+[CODE]
+def recursive_dfs(graph, node):
+    result = []
+    seen = set()
+
+    def recursive_helper(node):
+        for neighbor in graph[node]:
+            if neighbor not in seen:
+                result.append(neighbor)     # this line will be replaced below
+                seen.add(neighbor)
+                recursive_helper(neighbor)
+
+    recursive_helper(node)
+    return result
+
+def recursive_topological_sort(graph, node):
+    result = []
+    seen = set()
+
+    def recursive_helper(node):
+        for neighbor in graph[node]:
+            if neighbor not in seen:
+                seen.add(neighbor)
+                recursive_helper(neighbor)
+        result.insert(0, node)              # this line replaces the result.append line
+
+    recursive_helper(node)
+    return result
+[/CODE]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0080 | graphs > topological_sort > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/20153488
+TITLE: SO: Topological sort using DFS without recursion
+CHARS: 916  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+In order to construct the list you need to know the time when your algorithm has finished processing the last child of node . One way to figure out when you have popped the last child off the stack is to put special marks on the stack to indicate spots where the children of a particular node are starting. You could change the type of your stack to . When the is set to , it indicates a parent; indicates a child. When you pop a "child pair" (i.e. one with the first member of the pair set to ) off the stack, you run the code that you currently have, i.e. push all their children onto the stack with your loop. Before entering the loop, however, you should push onto the stack to mark the beginning of all children of this . When you pop a "parent pair" off the stack, you push the parent index onto the , and move on: Demo on ideone.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/20153488 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0081 | graphs > topological_sort > introduction | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Topological_sorting
+TITLE: Wikipedia: Topological sorting — introduction
+CHARS: 1105  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+In computer science, a topological sort or topological ordering of a directed graph is a linear ordering of its vertices such that for every directed edge (u,v) from vertex u to vertex v, u comes before v in the ordering. For instance, the vertices of the graph may represent tasks to be performed, and the edges may represent constraints that one task must be performed before another; in this application, a topological ordering is just a valid sequence for the tasks. 
+Precisely, a topological sort is a graph traversal in which each node v is visited only after all its dependencies are visited. A topological ordering is possible if and only if the graph has no directed cycles, that is, if it is a directed acyclic graph (DAG). Any DAG has at least one topological ordering, and there are linear time algorithms for constructing it. Topological sorting has many applications, especially in ranking problems such as feedback arc set. Topological sorting is also possible when the DAG has disconnected components.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Topological_sorting — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0082 | sorting > comparison_sorts > bubble_sort | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Sorting_algorithm
+TITLE: Wikipedia: Sorting algorithm — bubble_sort
+CHARS: 313  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Bubble sort, and variants such as the Comb sort and cocktail sort, are simple, highly inefficient sorting algorithms. They are frequently seen in introductory texts due to ease of analysis, but they are rarely used in practice.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Sorting_algorithm — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0083 | sorting > comparison_sorts > selection_sort | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Sorting_algorithm
+TITLE: Wikipedia: Sorting algorithm — selection_sort
+CHARS: 615  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Selection sort is an in-place comparison sort. It has O(n2) complexity, making it inefficient on large lists, and generally performs worse than the similar insertion sort. Selection sort is noted for its simplicity and also has performance advantages over more complicated algorithms in certain situations.
+The algorithm finds the minimum value, swaps it with the value in the first position, and repeats these steps for the remainder of the list. It does no more than n swaps and thus is useful where swapping is very expensive.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Sorting_algorithm — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0084 | sorting > comparison_sorts > insertion_sort | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Sorting_algorithm
+TITLE: Wikipedia: Sorting algorithm — insertion_sort
+CHARS: 673  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Insertion sort is a simple sorting algorithm that is relatively efficient for small lists and mostly sorted lists, and is often used as part of more sophisticated algorithms. It works by taking elements from the list one by one and inserting them in their correct position into a new sorted list similar to how one puts money in their wallet. In arrays, the new list and the remaining elements can share the array's space, but insertion is expensive, requiring shifting all following elements over by one. Shellsort is a variant of insertion sort that is more efficient for larger lists.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Sorting_algorithm — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0085 | sorting > comparison_sorts > merge_sort | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Sorting_algorithm
+TITLE: Wikipedia: Sorting algorithm — merge_sort
+CHARS: 1378  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Merge sort takes advantage of the ease of merging already sorted lists into a new sorted list. It starts by comparing every two elements (i.e., 1 with 2, then 3 with 4...) and swapping them if the first should come after the second. It then merges each of the resulting lists of two into lists of four, then merges those lists of four, and so on; until at last two lists are merged into the final sorted list. Of the algorithms described here, this is the first that scales well to very large lists, because its worst-case running time is O(n log n). It is also easily applied to lists, not only arrays, as it only requires sequential access, not random access. When sorting arrays, it has additional O(n) space complexity, and involves a large number of copies in simple implementations; however, linked lists can be merge sorted with constant extra space, as such it is the algorithm of choice for sorting linked lists.
+Merge sort has seen a relatively recent surge in popularity for practical implementations, due to its use in the sophisticated algorithm Timsort, which is used for the standard sort routine in the programming languages Python and Java (as of JDK7). Merge sort itself is the standard routine in Perl, among others, and has been used in Java at least since 2000 in JDK1.3.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Sorting_algorithm — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0086 | sorting > comparison_sorts > quick_sort | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Sorting_algorithm
+TITLE: Wikipedia: Sorting algorithm — quick_sort
+CHARS: 1032  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+In computer science, a sorting algorithm is an algorithm that puts elements of a list into an order. The most frequently used orders are numerical order and lexicographical order, and either ascending or descending. Efficient sorting is important for optimizing the efficiency of other algorithms (such as search and merge algorithms) that require input data to be in sorted lists. Sorting is also often useful for canonicalizing data and for producing human-readable output.
+Formally, the output of any sorting algorithm must satisfy two conditions:
+
+The output is in monotonic order (each element is no smaller/larger than the previous element, according to the required order).
+The output is a permutation (a reordering, yet retaining all of the original elements) of the input.
+Although some algorithms are designed for sequential access, the highest-performing algorithms assume data is stored in a data structure which allows random access.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Sorting_algorithm — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0087 | sorting > linear_sorts > counting_sort | so
+APPROVED: null
+URL: https://stackoverflow.com/q/14368392
+TITLE: SO: Radix sort vs Counting sort vs Bucket sort. What&#39;s the difference?
+CHARS: 2096  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Let's start with some rewriting your code in C, because C more familiar for me to explain. So lets recall your code with some comments: Now lets offer to this guy some realistic data: [126, 348, 343, 432, 316, 171, 556, 223, 670, 201] On output we have [126, 171, 201, 223, 316, 343, 348, 432, 556, 670] It seems that everything is ok? Not yet. Lets look at maxVal. It is 670 (!) To sort array of 10 elements here we used array of 670 elements, primarily zeros. Awfully. To handle this problem of counting sort, we have two possible ways of generalization: 1) First way -- to make sort digit-wise. This is called radix-sort. Lets show some code, trying to make it as close to counting-sort code as possible. Again look at comments: We are trading multiplier near N for memory. Profit? Maybe. But in some cases multiplier near N is very important. Program, working a day and working a week are very different from users view even if both works 1*O(N) and 7*O(N) respectively. And so we are coming to a second generalization: 2) Second way -- to make buckets more sophisticated. This is called bucket-sort. Lets again start with some code. I prefer more code prior to philosophical arguments. Still look at comments, they are essential. So what do we have here? We are trading some sophisticated bucket structure and requirement for dynamically allocated memory but winning static memory, and multiplier near N in average. Now lets recall what did we see in code: Counting sort -- simple buckets, simple processing, memory overhead Radix sort -- simple buckets, sophisticated processing, speed overhead (and still need additional static memory) Bucket sort -- sophisticated buckets, simple processing, requires dynamic memory, good in average Radix and bucket sorts thus are two useful generalizations of counting sort. They have a lot in common with counting sort and with each other but in every case we are losing something and winning something. Software engineering is about a balance between these opportunities.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/14368392 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0088 | sorting > linear_sorts > counting_sort | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Counting_sort
+TITLE: Wikipedia: Counting sort — counting_sort
+CHARS: 1331  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+In computer science, counting sort is an algorithm for sorting a collection of objects according to keys that are small positive integers; that is, it is an integer sorting algorithm. It operates by counting the number of objects that possess distinct key values, and applying prefix sum on those counts to determine the positions of each key value in the output sequence. Its running time is linear in the number of items and the difference between the maximum key value and the minimum key value, so it is only suitable for direct use in situations where the variation in keys is not significantly greater than the number of items. It is often used as a subroutine in radix sort, another sorting algorithm, which can handle larger keys more efficiently.
+Counting sort is not a comparison sort; it uses key values as indexes into an array and the Ω(n log n) lower bound for comparison sorting will not apply. Bucket sort may be used in lieu of counting sort, and entails a similar time analysis. However, compared to counting sort, bucket sort requires linked lists, dynamic arrays, or a large amount of pre-allocated memory to hold the sets of items within each bucket, whereas counting sort stores a single number (the count of items) per bucket.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Counting_sort — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0089 | dynamic_programming > dp_fundamentals > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/6184869
+TITLE: SO: What is the difference between memoization and dynamic programming?
+CHARS: 2114  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+What is difference between memoization and dynamic programming? Memoization is a term describing an optimization technique where you cache previously computed results, and return the cached result when the same computation is needed again. Dynamic programming is a technique for solving problems of recursive nature, iteratively and is applicable when the computations of the subproblems overlap. Dynamic programming is typically implemented using tabulation, but can also be implemented using memoization. So as you can see, neither one is a "subset" of the other. A reasonable follow-up question is: What is the difference between tabulation (the typical dynamic programming technique) and memoization? When you solve a dynamic programming problem using tabulation you solve the problem " bottom up ", i.e., by solving all related sub-problems first, typically by filling up an n -dimensional table. Based on the results in the table, the solution to the "top" / original problem is then computed. If you use memoization to solve the problem you do it by maintaining a map of already solved sub problems. You do it " top down " in the sense that you solve the "top" problem first (which typically recurses down to solve the sub-problems). A good slide from here (link is now dead, slide is still good though): If all subproblems must be solved at least once, a bottom-up dynamic-programming algorithm usually outperforms a top-down memoized algorithm by a constant factor No overhead for recursion and less overhead for maintaining table There are some problems for which the regular pattern of table accesses in the dynamic-programming algorithm can be exploited to reduce the time or space requirements even further If some subproblems in the subproblem space need not be solved at all, the memoized solution has the advantage of solving only those subproblems that are definitely required Additional resources: Wikipedia: Memoization , Dynamic Programming Related SO Q/A: Memoization or Tabulation approach for Dynamic programming
+
+[Source: Stack Overflow — https://stackoverflow.com/q/6184869 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0090 | dynamic_programming > dp_fundamentals > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/1065433
+TITLE: SO: What is dynamic programming?
+CHARS: 990  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Dynamic programming is when you use past knowledge to make solving a future problem easier. A good example is solving the Fibonacci sequence for n=1,000,002. This will be a very long process, but what if I give you the results for n=1,000,000 and n=1,000,001? Suddenly the problem just became more manageable. Dynamic programming is used a lot in string problems, such as the string edit problem. You solve a subset(s) of the problem and then use that information to solve the more difficult original problem. With dynamic programming, you store your results in some sort of table generally. When you need the answer to a problem, you reference the table and see if you already know what it is. If not, you use the data in your table to give yourself a stepping stone towards the answer. The Cormen Algorithms book has a great chapter about dynamic programming. AND it's free on Google Books! Check it out here.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/1065433 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0091 | dynamic_programming > dp_fundamentals > introduction | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Dynamic_programming
+TITLE: Wikipedia: Dynamic programming — introduction
+CHARS: 1118  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Dynamic programming is both a mathematical optimization method and an algorithmic paradigm. The method was developed by Richard Bellman in the 1950s and has found applications in numerous fields, such as aerospace engineering and economics.
+In both contexts it refers to simplifying a complicated problem by breaking it down into simpler sub-problems in a recursive manner. While some decision problems cannot be taken apart this way, decisions that span several points in time do often break apart recursively. Likewise, in computer science, if a problem can be solved optimally by breaking it into sub-problems and then recursively finding the optimal solutions to the sub-problems, then it is said to have optimal substructure.
+If sub-problems can be nested recursively inside larger problems, so that dynamic programming methods are applicable, then there is a relation between the value of the larger problem and the values of the sub-problems. In the optimization literature this relationship is called the Bellman equation.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Dynamic_programming — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0092 | dynamic_programming > classic_dp > fibonacci | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Knapsack_problem
+TITLE: Wikipedia: Knapsack problem — fibonacci
+CHARS: 1192  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+The knapsack problem is the following problem in combinatorial optimization:
+
+Given a set of items, each with a weight and a value, determine which items to include in the collection so that the total weight is less than or equal to a given limit and the total value is as large as possible.
+It derives its name from the problem faced by someone who is constrained by a fixed-size knapsack and must fill it with the most valuable items. The problem often arises in resource allocation where the decision-makers have to choose from a set of non-divisible projects or tasks under a fixed budget or time constraint, respectively.
+The knapsack problem has been studied for more than a century, with early works dating as far back as 1897.
+The subset sum problem is a special case of the decision and 0-1 problems where for each kind of item, the weight equals the value: 
+
+
+ w
+
+ i
+
+
+ =
+
+ v
+
+ i
+
+
+ {\displaystyle w_{i}=v_{i}}
+
+. In the field of cryptography, the term knapsack problem is often used to refer specifically to the subset sum problem. The subset sum problem is one of Karp's 21 NP-complete problems.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Knapsack_problem — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0093 | searching > search_algorithms > linear_search | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Binary_search
+TITLE: Wikipedia: Binary search algorithm — linear_search
+CHARS: 849  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Linear search is a simple search algorithm that checks every record until it finds the target value. Linear search can be done on a linked list, which allows for faster insertion and deletion than an array. Binary search is faster than linear search for sorted arrays except if the array is short, although the array needs to be sorted beforehand. All sorting algorithms based on comparing elements, such as quicksort and merge sort, require at least 
+
+
+ O
+ (
+ n
+ log
+ ⁡
+ n
+ )
+
+
+ {\textstyle O(n\log n)}
+
+ comparisons in the worst case. Unlike linear search, binary search can be used for efficient approximate matching. There are operations such as finding the smallest and largest element that can be done efficiently on a sorted array but not on an unsorted array.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Binary_search — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0094 | searching > search_algorithms > binary_search | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Binary_search
+TITLE: Wikipedia: Binary search algorithm — binary_search
+CHARS: 1114  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Sorted arrays with binary search are a very inefficient solution when insertion and deletion operations are interleaved with retrieval, taking 
+
+
+ O
+ (
+ n
+ )
+
+
+ {\textstyle O(n)}
+
+ time for each such operation. In addition, sorted arrays can complicate memory use especially when elements are often inserted into the array. There are other data structures that support much more efficient insertion and deletion. Binary search can be used to perform exact matching and set membership (determining whether a target value is in a collection of values). There are data structures that support faster exact matching and set membership. However, unlike many other searching schemes, binary search can be used for efficient approximate matching, usually performing such matches in 
+
+
+ O
+ (
+ log
+ ⁡
+ n
+ )
+
+
+ {\textstyle O(\log n)}
+
+ time regardless of the type or structure of the values themselves. In addition, there are some operations, like finding the smallest and largest element, that can be performed efficiently on a sorted array.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Binary_search — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0095 | searching > search_algorithms > jump_search | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Binary_search
+TITLE: Wikipedia: Binary search algorithm — jump_search
+CHARS: 1791  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+In computer science, binary search, also known as half-interval search, logarithmic search, or binary chop, is a search algorithm that finds the position of a target value within a sorted array. Binary search compares the target value to the middle element of the array. If they are not equal, the half in which the target cannot lie is eliminated and the search continues on the remaining half, again taking the middle element to compare to the target value, and repeating this until the target value is found. If the search ends with the remaining half being empty, the target is not in the array.
+Binary search runs in logarithmic time in the worst case, making 
+
+
+ O
+ (
+ log
+ ⁡
+ n
+ )
+
+
+ {\displaystyle O(\log n)}
+
+ comparisons, where 
+
+
+ n
+
+
+ {\displaystyle n}
+
+ is the number of elements in the array. Binary search is faster than linear search except for small arrays. However, the array must be sorted first to be able to apply binary search. There are specialized data structures designed for fast searching, such as hash tables, that can be searched more efficiently than binary search. However, binary search can be used to solve a wider range of problems, such as finding the next-smallest or next-largest element in the array relative to the target even if it is absent from the array.
+There are numerous variations of binary search. In particular, fractional cascading speeds up binary searches for the same value in multiple arrays. Fractional cascading efficiently solves a number of search problems in computational geometry and in numerous other fields. Exponential search extends binary search to unbounded lists. The binary search tree and B-tree data structures are based on binary search.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Binary_search — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0096 | searching > search_algorithms > interpolation_search | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Binary_search
+TITLE: Wikipedia: Binary search algorithm — interpolation_search
+CHARS: 1421  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Instead of calculating the midpoint, interpolation search estimates the position of the target value, taking into account the lowest and highest elements in the array as well as length of the array. It works on the basis that the midpoint is not the best guess in many cases. For example, if the target value is close to the highest element in the array, it is likely to be located near the end of the array.
+A common interpolation function is linear interpolation. If 
+
+
+ A
+
+
+ {\displaystyle A}
+
+ is the array, 
+
+
+ L
+ ,
+ R
+
+
+ {\displaystyle L,R}
+
+ are the lower and upper bounds respectively, and 
+
+
+ T
+
+
+ {\displaystyle T}
+
+ is the target, then the target is estimated to be about 
+
+
+ (
+ T
+ −
+
+ A
+
+ L
+
+
+ )
+
+ /
+
+ (
+
+ A
+
+ R
+
+
+ −
+
+ A
+
+ L
+
+
+ )
+
+
+ {\displaystyle (T-A_{L})/(A_{R}-A_{L})}
+
+ of the way between 
+
+
+ L
+
+
+ {\displaystyle L}
+
+ and 
+
+
+ R
+
+
+ {\displaystyle R}
+
+. When linear interpolation is used, and the distribution of the array elements is uniform or near uniform, interpolation search makes 
+
+
+ O
+ (
+ log
+ ⁡
+ log
+ ⁡
+ n
+ )
+
+
+ {\textstyle O(\log \log n)}
+
+ comparisons.
+In practice, interpolation search is slower than binary search for small arrays, as interpolation search requires extra computation. Its time complexity grows more slowly than binary search, but this only compensates for the extra computation for large arrays.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Binary_search — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0097 | searching > search_algorithms > exponential_search | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Binary_search
+TITLE: Wikipedia: Binary search algorithm — exponential_search
+CHARS: 816  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Exponential search extends binary search to unbounded lists. It starts by finding the first element with an index that is both a power of two and greater than the target value. Afterwards, it sets that index as the upper bound, and switches to binary search. A search takes 
+
+
+ ⌊
+
+ log
+
+ 2
+
+
+ ⁡
+ x
+ +
+ 1
+ ⌋
+
+
+ {\textstyle \lfloor \log _{2}x+1\rfloor }
+
+ iterations before binary search is started and at most 
+
+
+ ⌊
+
+ log
+
+ 2
+
+
+ ⁡
+ x
+ ⌋
+
+
+ {\textstyle \lfloor \log _{2}x\rfloor }
+
+ iterations of the binary search, where 
+
+
+ x
+
+
+ {\textstyle x}
+
+ is the position of the target value. Exponential search works on bounded lists, but becomes an improvement over binary search only if the target value lies near the beginning of the array.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Binary_search — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0098 | greedy > greedy_algorithms > introduction | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Greedy_algorithm
+TITLE: Wikipedia: Greedy algorithm — introduction
+CHARS: 1054  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+A greedy algorithm is any algorithm that follows the problem-solving heuristic of making the locally optimal choice at each stage. In many problems, a greedy strategy does not produce an optimal solution, but a greedy heuristic can yield locally optimal solutions that approximate a globally optimal solution in a reasonable amount of time.
+For example, a greedy strategy for the travelling salesman problem (which is of high computational complexity) is the following heuristic: "At each step of the journey, visit the nearest unvisited city." This heuristic does not intend to find the best solution, but it terminates in a reasonable number of steps; finding an optimal solution to such a complex problem typically requires unreasonably many steps. 
+In mathematical optimization, greedy algorithms optimally solve combinatorial problems having the properties of matroids and give constant-factor approximations to optimization problems with the submodular structure.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Greedy_algorithm — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0099 | backtracking > backtracking > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/20049829
+TITLE: SO: How to calculate time complexity of backtracking algorithm?
+CHARS: 1013  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+In short: Hamiltonian cycle : in the worst case WordBreak and StringSegment : NQueens : Note: For WordBreak there is an O(N^2) dynamic programming solution. More details: In Hamiltonian cycle, in each recursive call one of the remaining vertices is selected in the worst case. In each recursive call the branch factor decreases by 1. Recursion in this case can be thought of as n nested loops where in each loop the number of iterations decreases by one. Hence the time complexity is given by: Similarly in NQueens, each time the branching factor decreases by 1 or more, but not much, hence the upper bound of For WordBreak it is more complicated but I can give you an approximate idea. In WordBreak each character of the string has two choices in the worst case, either to be the last letter in the previous word, or to be the first letter of a new word, hence the branching factor is 2. Therefore for both WordBreak & SegmentString
+
+[Source: Stack Overflow — https://stackoverflow.com/q/20049829 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0100 | backtracking > backtracking > introduction | so
+APPROVED: null
+URL: https://stackoverflow.com/q/26670757
+TITLE: SO: Difference between backtracking and recursion?
+CHARS: 1226  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+That question is like asking what's the difference between a car and a DeLorean . In recursion function calls itself until reaches a base case. In backtracking you use recursion in order to explore all the possibilities until you get the best result for the problem. Can be a bit hard to understand, I attach some text from here : "Conceptually, you start at the root of a tree; the tree probably has some good leaves and some bad leaves, though it may be that the leaves are all good or all bad. You want to get to a good leaf. At each node, beginning with the root, you choose one of its children to move to, and you keep this up until you get to a leaf. Suppose you get to a bad leaf. You can backtrack to continue the search for a good leaf by revoking your most recent choice, and trying out the next option in that set of options. If you run out of options, revoke the choice that got you here, and try another choice at that node. If you end up at the root with no options left, there are no good leaves to be found." This needs an example: Your piece of code is simply recursion, as you never get back if the result doesn't fit your goal.
+
+[Source: Stack Overflow — https://stackoverflow.com/q/26670757 — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════
+
+CHUNK 0101 | backtracking > backtracking > introduction | wiki
+APPROVED: null
+URL: https://en.wikipedia.org/wiki/Backtracking
+TITLE: Wikipedia: Backtracking — introduction
+CHARS: 2291  CODE BLOCKS: 0
+────────────────────────────────────────────────────────────────
+Backtracking is a class of algorithms for finding solutions to some computational problems, notably constraint satisfaction or enumeration problems, that incrementally builds candidates to the solutions, and abandons a candidate ("backtracks") as soon as it determines that the candidate cannot possibly be completed to a valid solution.
+The classic textbook example of the use of backtracking is the eight queens puzzle, that asks for all arrangements of eight chess queens on a standard chessboard so that no queen attacks any other. In the common backtracking approach, the partial candidates are arrangements of k queens in the first k rows of the board, all in different rows and columns. Any partial solution that contains two mutually attacking queens can be abandoned.
+Backtracking can be applied only for problems which admit the concept of a "partial candidate solution" and a relatively quick test of whether it can possibly be completed to a valid solution. It is useless, for example, for locating a given value in an unordered table. When it is applicable, however, backtracking is often much faster than brute-force enumeration of all complete candidates, since it can eliminate many candidates with a single test.
+Backtracking is an important tool for solving constraint satisfaction problems, such as crosswords, verbal arithmetic, Sudoku, and many other puzzles. It is often the most convenient technique for parsing, for the knapsack problem and other combinatorial optimization problems. It is also the program execution strategy used in the programming languages Icon, Planner and Prolog.
+Backtracking depends on user-given "black box procedures" that define the problem to be solved, the nature of the partial candidates, and how they are extended into complete candidates. It is therefore a metaheuristic rather than a specific algorithm – although, unlike many other meta-heuristics, it is guaranteed to find all solutions to a finite problem in a bounded amount of time.
+The term "backtrack" was coined by American mathematician D. H. Lehmer in the 1950s. The pioneer string-processing language SNOBOL (1962) may have been the first to provide a built-in general backtracking facility.
+
+[Source: Wikipedia — https://en.wikipedia.org/wiki/Backtracking — CC BY-SA 4.0]
+
+════════════════════════════════════════════════════════════════

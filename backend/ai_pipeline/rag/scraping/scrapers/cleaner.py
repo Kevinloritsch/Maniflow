@@ -138,7 +138,7 @@ def normalise_text(text: str) -> str:
     return "\n".join(result).strip()
 
 def _shingles(text: str, k: int = 5) -> set[str]:
-    t = re.sub(r"\s+", " " + text.lower())
+    t = re.sub(r"\s+", " ", text.lower())
     return set(t[i:i+k] for i in range(len(t) - k + 1))
 
 def _minhash_signature(shingles: set[str], n_hashes: int = 64) -> list[int]:

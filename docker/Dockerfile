@@ -2,24 +2,21 @@ FROM manimcommunity/manim:v0.18.0
 
 USER root
 
-COPY requirements.txt ./
+COPY docker/requirements.txt ./
 
-RUN --mount=type=cache, target=/root/.cache/pip \
-    pip install --no-cache-dir -r requirements.txt
-
-# RUN --mount=type=cache, target=/root/.cache/ms-playwright \
-#     playwright install chromium
+RUN pip install --no-cache-dir -r requirements.txt
 
 WORKDIR /app
 
-COPY server.py ./
+COPY docker/server.py ./
 #driver.py
-# Files needed for scraping and rag compilation. Uncomment during development.
-#COPY backend/ai_pipeline/rag/rag.py        ./
-#COPY backend/ai_pipeline/rag/scraping      ./
+
+# files needed for rag and scraping, uncomment during dev
+COPY backend/ai_pipeline/rag/rag.py                            ./
+COPY backend/ai_pipeline/rag/scraping/                ./scraping/
 
 
-# Google Drive credentials. Uncomment during development.
+# google drive credentials (?)
 #COPY credentials/credentials.json token.json ./
 
 EXPOSE 5000
