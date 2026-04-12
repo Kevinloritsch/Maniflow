@@ -60,8 +60,9 @@ def heading_sections(
         for heading in soup.find_all(level):
             if keyword in heading.get_text().lower():
                 texts = []
+                current_level = int(heading.name[1])
                 for sib in heading.find_next_siblings():
-                    if sib.name in heading_tags:
+                    if sib.name in heading_tags and int(sib.name[1]) <= current_level:
                         break
                     t = sib.get_text(separator=" ", strip=True)
                     if t:

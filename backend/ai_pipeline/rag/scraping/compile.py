@@ -22,8 +22,9 @@ logging.basicConfig(
     format = "%(asctime)s [%(levelname)s] %(name)s — %(message)s",
 )
 
-REVIEW_TXT       = Path("../education_training_data.txt")
-VECTOR_STORE_DIR = Path("../vector_store")
+BASE_DIR         = Path(__file__).resolve().parent.parent
+REVIEW_TXT       = BASE_DIR / "education_training_data.txt"
+VECTOR_STORE_DIR = BASE_DIR / "vector_store"
 
 # delimiters
 OUTER_SEP = "═" * 64

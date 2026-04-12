@@ -191,7 +191,7 @@ TAXONOMY: dict[str, list[Topic]] = {
                            "insertion", "deletion", "search"],
             keywords    = ["hash table", "hash map", "hashing"],
             openstax_pages = [
-                ("introduction-computer-science", "3-5-sample-alogrithms-by-problem"),
+                ("introduction-computer-science", "3-5-sample-algorithms-by-problem"),
                 ("introduction-computer-science", "3-6-computer-science-theory"),
             ],
             wiki_title  = "Hash table",

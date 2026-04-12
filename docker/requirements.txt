@@ -15,5 +15,6 @@ playwright
 wikipedia-api
 faiss_cpu
 sentence-transformers
+python-dotenv
 
 numpy
