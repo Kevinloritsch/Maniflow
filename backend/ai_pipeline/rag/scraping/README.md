@@ -7,8 +7,6 @@ Three commands:
   python compile.py stats     — print review queue statistics
 
 Review file: education_training_data.txt
-
-All chunks are written to a single human-readable .txt file.
 Each chunk is delimited like this:
 
   ════════════════════════════════════════════════════════════════
