@@ -2,9 +2,9 @@
 
 Three commands:
 
-  python run.py scrape    — scrape all sources → clean → export .txt review file
-  python run.py ingest    — parse approved chunks from .txt → build VectorStore
-  python run.py stats     — print review queue statistics
+  python compile.py scrape    — scrape all sources → clean → export .txt review file
+  python compile.py ingest    — parse approved chunks from .txt → build VectorStore
+  python compile.py stats     — print review queue statistics
 
 Review file: education_training_data.txt
 
