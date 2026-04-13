@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
   const renderDurationMs = Number(res.headers.get("x-render-duration-ms") ?? 0);
   const videoBuffer = await res.arrayBuffer();
 
-  const filename = `output_${Date.now()}.mp4`;
+  const filename = `output_${Date.now()}_${Math.random().toString(36).slice(2)}.mp4`;
   const rendersDir = path.join(process.cwd(), "public", "renders");
   const filepath = path.join(rendersDir, filename);
 

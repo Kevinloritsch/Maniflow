@@ -254,13 +254,17 @@ def render_fast():
             executor.submit(render_chunk, code, scene_name, work_dir, i, s, e): i
             for i, s, e in ranges
         }
+        failed_chunks = []
         for future in as_completed(futures):
             idx = futures[future]
             try:
                 chunk_paths[idx] = future.result()
             except RuntimeError as e:
                 print(f"[render_fast] Chunk {idx} skipped: {e}", flush=True)
+                failed_chunks.append(idx)
 
+    if failed_chunks:
+        return jsonify({"error": f"Chunks failed: {failed_chunks}"}), 500
     chunk_paths = [p for p in chunk_paths if p is not None]
     print(f"[render_fast] Chunk paths: {chunk_paths}", flush=True)
 

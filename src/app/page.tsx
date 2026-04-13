@@ -51,8 +51,8 @@ export default function Home() {
       // const url = URL.createObjectURL(blob);
       // setVideoUrl(url);
       const data = await res.json();
-      setVideoUrl(data.videoUrl); // used by <video src="">
-      setVideoPath(data.videoPath); // used by analyze
+      setVideoUrl(data.videoUrl);
+      setVideoPath(data.videoPath);
       setRenderDurationMs(data.renderDurationMs);
 
       setTimeout(() => videoRef.current?.play(), 100);
@@ -74,9 +74,6 @@ export default function Home() {
       const res = await fetch("http://localhost:8000/video_analysis", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // NOTE: replace videoUrl with a publicly accessible URL in production
-        // Local blob URLs won't work with TwelveLabs — they can't reach your machine
-        // body: JSON.stringify({ video_url: videoUrl }),
         body: JSON.stringify({ video_path: videoPath }),
       });
 
@@ -89,7 +86,7 @@ export default function Home() {
       const data = await res.json();
       setAnalysis(data);
     } catch (e) {
-      setError("Analysis request failed — is FastAPI running?");
+      setError("Analysis request failed - is FastAPI running?");
     } finally {
       setAnalyzing(false);
     }
@@ -123,15 +120,6 @@ export default function Home() {
       >
         {loading ? "Rendering…" : "Render"}
       </button>
-
-      <input
-        type="number"
-        min={1}
-        max={16}
-        value={chunks}
-        onChange={(e) => setChunks(Number(e.target.value))}
-        className="w-16 rounded border border-gray-600 bg-black px-2 py-1 font-mono text-sm text-white"
-      />
 
       <button
         onClick={() => handleRender(true)}
@@ -183,7 +171,7 @@ export default function Home() {
         <div className="space-y-3 rounded border border-gray-700 p-4">
           <div className="flex items-center gap-3">
             <span
-              className={`rounded bg-green-900 px-2 py-1 text-xs font-bold text-green-300 ${
+              className={`rounded px-2 py-1 text-xs font-bold ${
                 JSON.parse(analysis.data).passed
                   ? "bg-green-900 text-green-300"
                   : "bg-red-900 text-red-300"
@@ -198,7 +186,6 @@ export default function Home() {
                 2,
               )}
             </pre>
-            {/* <p className="text-white text-xs">{typeof JSON.parse(analysis.data).passed} — {JSON.parse(analysis.data).passed.toString()}</p> */}
             <p className="text-sm text-black">
               {JSON.parse(analysis.data).passed.toString()}
             </p>
