@@ -35,7 +35,7 @@ def render():
         cmd.append(scene_name)
 
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
         if result.returncode != 0:
             return jsonify({"error": result.stderr}), 500
     except subprocess.TimeoutExpired:

@@ -11,6 +11,10 @@
 To run backend
 - Go to `backend/dataset_pipeline` directory and run `uvicorn video_analyze:app --reload --port 8000`
 
+To run scraper (make sure you are in docker container)
+- Go to `backend/ai_pipeline/rag/scraping` directory and run `python compile.py scrape`
+- Follow documentation under `scraping/README.md`
+
 ## Env
 
 The following env variables are required for this project.
