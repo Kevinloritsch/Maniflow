@@ -1,7 +1,7 @@
 """
 Base scraper for RAG pipeline. 
 
-run.py and sites.py import from this file. Provides:
+compile.py and sites.py import from this file. Provides:
 RateLimiter         - enforces per-domain request spacing
 retry()             - backoff decorator
 RawChunk            - typed output every scraper returns

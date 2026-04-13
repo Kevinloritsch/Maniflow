@@ -82,7 +82,7 @@ def cmd_scrape() -> None:
     _export_txt(clean_chunks, existing_approvals)
     logger.info(f"\nReview file written → {REVIEW_TXT}")
     logger.info("Open it, set APPROVED: YES or NO per chunk, then run:")
-    logger.info("  python run.py ingest")
+    logger.info("  python compile.py ingest")
 
 
 def _load_existing_approvals() -> dict[str, str]:
@@ -127,7 +127,7 @@ def _export_txt(chunks: list[RawChunk], existing_approvals: dict[str, str]) -> N
         "  • Change APPROVED: null  →  APPROVED: YES   to include a chunk",
         "  • Change APPROVED: null  →  APPROVED: NO    to reject a chunk",
         "  • Do NOT edit CHUNK / URL / TITLE lines",
-        "  • Save as UTF-8 before running: python run.py ingest",
+        "  • Save as UTF-8 before running: python compile.py ingest",
         "",
         OUTER_SEP,
         "",
@@ -177,7 +177,7 @@ def _parse_approved_from_txt() -> list[RawChunk]:
     # BODY        → accumulates text lines until next OUTER_SEP
 
     if not REVIEW_TXT.exists():
-        logger.error(f"{REVIEW_TXT} not found. Run: python run.py scrape first.")
+        logger.error(f"{REVIEW_TXT} not found. Run: python compile.py scrape first.")
         return []
 
     raw_text = REVIEW_TXT.read_text(encoding="utf-8")
@@ -326,7 +326,7 @@ def _build_vector_store(chunks: list[RawChunk]) -> None:
 
 def cmd_stats() -> None:
     if not REVIEW_TXT.exists():
-        print(f"No review file found at {REVIEW_TXT}. Run: python run.py scrape")
+        print(f"No review file found at {REVIEW_TXT}. Run: python compile.py scrape")
         return
 
     total    = 0
