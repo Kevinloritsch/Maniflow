@@ -27,8 +27,16 @@ export async function POST(req: NextRequest) {
   const rendersDir = path.join(process.cwd(), "public", "renders");
   const filepath = path.join(rendersDir, filename);
 
-  fs.mkdirSync(rendersDir, { recursive: true });
-  fs.writeFileSync(filepath, Buffer.from(videoBuffer));
+  try {
+    fs.mkdirSync(rendersDir, { recursive: true });
+    fs.writeFileSync(filepath, Buffer.from(videoBuffer));
+  } catch (err) {
+    console.error("Failed to save video:", err);
+    return NextResponse.json(
+      { error: "Failed to save rendered video" },
+      { status: 500 },
+    );
+  }
 
   return NextResponse.json({
     videoUrl: `/renders/${filename}`,

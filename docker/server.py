@@ -15,7 +15,6 @@ def count_animations_ast(code: str) -> int:
     try:
         tree = ast.parse(code)
 
-        # Resolve named list lengths from assignments e.g. values = [1, 2, 6, 3, 6]
         list_lengths = {}
         for node in ast.walk(tree):
             if isinstance(node, ast.Assign):
@@ -25,62 +24,83 @@ def count_animations_ast(code: str) -> int:
                     ):
                         list_lengths[target.id] = len(node.value.elts)
 
-        inside_loop_nodes = set()  # track nodes already counted inside a loop
+        def get_loop_count(for_node: ast.For) -> int:
+            iter_ = for_node.iter
+            if isinstance(iter_, ast.Call):
+                func_name = getattr(iter_.func, "id", None)
+                if func_name == "range" and iter_.args:
+                    try:
+                        if len(iter_.args) == 1:
+                            return ast.literal_eval(iter_.args[0])
+                        elif len(iter_.args) == 2:
+                            return ast.literal_eval(iter_.args[1]) - ast.literal_eval(
+                                iter_.args[0]
+                            )
+                    except Exception:
+                        return 1
+                elif func_name == "enumerate" and iter_.args:
+                    arg = iter_.args[0]
+                    if isinstance(arg, ast.Name):
+                        return list_lengths.get(arg.id, 1)
+                    elif isinstance(arg, ast.List):
+                        return len(arg.elts)
+            elif isinstance(iter_, ast.Name):
+                return list_lengths.get(iter_.id, 1)
+            return 1
 
+        def is_self_play_wait(call_node: ast.Call) -> bool:
+            func = call_node.func
+            return (
+                isinstance(func, ast.Attribute)
+                and func.attr in ("play", "wait")
+                and isinstance(func.value, ast.Name)
+                and func.value.id == "self"
+            )
+
+        def count_in_body(stmts: list, multiplier: int, owned: set) -> int:
+            total = 0
+            for stmt in stmts:
+                if isinstance(stmt, ast.For):
+                    loop_count = get_loop_count(stmt)
+                    total += count_in_body(
+                        stmt.body + stmt.orelse, multiplier * loop_count, owned
+                    )
+
+                elif isinstance(stmt, (ast.If, ast.With, ast.Try)):
+                    sub = (
+                        stmt.body
+                        + getattr(stmt, "orelse", [])
+                        + getattr(stmt, "finalbody", [])
+                        + getattr(stmt, "handlers", [])
+                    )
+                    total += count_in_body(sub, multiplier, owned)
+
+                elif isinstance(stmt, ast.Expr) and isinstance(stmt.value, ast.Call):
+                    call = stmt.value
+                    if id(call) not in owned and is_self_play_wait(call):
+                        owned.add(id(call))
+                        total += multiplier
+                elif isinstance(stmt, ast.Try):
+                    handler_bodies = [
+                        h for handler in stmt.handlers for h in handler.body
+                    ]
+                    sub = stmt.body + stmt.orelse + stmt.finalbody + handler_bodies
+                    total += count_in_body(sub, multiplier, owned)
+
+            return total
+
+        owned: set = set()
         count = 0
         for node in ast.walk(tree):
-            if isinstance(node, ast.For):
-                iter_ = node.iter
-                loop_count = 1
-
-                if isinstance(iter_, ast.Call):
-                    func_name = getattr(iter_.func, "id", None)
-                    if func_name == "range" and iter_.args:
-                        try:
-                            if len(iter_.args) == 1:
-                                loop_count = ast.literal_eval(iter_.args[0])
-                            elif len(iter_.args) == 2:
-                                loop_count = ast.literal_eval(
-                                    iter_.args[1]
-                                ) - ast.literal_eval(iter_.args[0])
-                        except:
-                            loop_count = 1
-                    elif func_name == "enumerate" and iter_.args:
-                        arg = iter_.args[0]
-                        if isinstance(arg, ast.Name):
-                            loop_count = list_lengths.get(arg.id, 1)
-                        elif isinstance(arg, ast.List):
-                            loop_count = len(arg.elts)
-                elif isinstance(iter_, ast.Name):
-                    loop_count = list_lengths.get(iter_.id, 1)
-
-                for child in ast.walk(node):
-                    if isinstance(child, ast.Call):
-                        func = child.func
-                        if (
-                            isinstance(func, ast.Attribute)
-                            and func.attr in ("play", "wait")
-                            and isinstance(func.value, ast.Name)
-                            and func.value.id == "self"
-                        ):
-                            inside_loop_nodes.add(id(child))
-                            count += loop_count
-
-            elif isinstance(node, ast.Call) and id(node) not in inside_loop_nodes:
-                func = node.func
-                if (
-                    isinstance(func, ast.Attribute)
-                    and func.attr in ("play", "wait")
-                    and isinstance(func.value, ast.Name)
-                    and func.value.id == "self"
-                ):
-                    count += 1
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                count += count_in_body(node.body, 1, owned)
 
         print(
             f"[count_animations_ast] Found {count} play/wait calls (loop-aware)",
             flush=True,
         )
         return max(count, 1)
+
     except SyntaxError as e:
         print(f"[count_animations_ast] SyntaxError: {e}", flush=True)
         return 1
@@ -168,7 +188,7 @@ def concat_videos(video_paths: List[str], output_path: str) -> None:
         print(f"[concat] ffmpeg stderr={result.stderr}", flush=True)
         raise RuntimeError(f"ffmpeg concat failed:\n{result.stderr}")
 
-    print(f"[concat] Done.", flush=True)
+    print("[concat] Done.", flush=True)
 
 
 @app.route("/render", methods=["POST"])
@@ -240,11 +260,12 @@ def render_fast():
     total_anims = count_animations_ast(code)
     chunks = min(chunks, total_anims)
 
-    ranges = [
-        (i, (i * total_anims) // chunks, ((i + 1) * total_anims) // chunks)
-        for i in range(chunks)
-    ]
-    ranges = [(i, s, e) for i, s, e in ranges if s < e]
+    ranges = []
+    for i in range(chunks):
+        s = (i * total_anims) // chunks
+        e = ((i + 1) * total_anims) // chunks - 1
+        if s <= e:
+            ranges.append((i, s, e))
 
     print(f"[render_fast] total_anims={total_anims}, ranges={ranges}", flush=True)
 
