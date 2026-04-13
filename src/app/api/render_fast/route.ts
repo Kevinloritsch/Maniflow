@@ -5,15 +5,19 @@ import path from "path";
 export async function POST(req: NextRequest) {
   const body = await req.json();
 
-  const res = await fetch(`${process.env.MANIM_API_URL}/render`, {
+  const res = await fetch(`${process.env.MANIM_API_URL}/render_fast`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   });
 
   if (!res.ok) {
-    const err = await res.json();
-    return NextResponse.json(err, { status: res.status });
+    const text = await res.text();
+    let errMsg = text;
+    try {
+      errMsg = JSON.parse(text).error;
+    } catch {}
+    return NextResponse.json({ error: errMsg }, { status: res.status });
   }
 
   const renderDurationMs = Number(res.headers.get("x-render-duration-ms") ?? 0);

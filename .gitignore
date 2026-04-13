@@ -44,3 +44,4 @@ package-lock.json
 credentials.json
 quickstart.py
 token.json
+manim_debug

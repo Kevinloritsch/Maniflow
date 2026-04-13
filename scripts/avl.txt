@@ -1,0 +1,143 @@
+from manim import *
+
+NODE_RADIUS = 0.42
+BG_COLOR    = "#1a1a2e"
+
+
+def make_node(label, color=BLUE_D):
+    circle = Circle(radius=NODE_RADIUS, color=color, fill_opacity=1, stroke_width=3)
+    text   = Text(str(label), font_size=26, color=WHITE, weight=BOLD).move_to(circle)
+    return VGroup(circle, text)
+
+
+def make_edge(n1, n2, color=WHITE):
+    return always_redraw(lambda: Line(
+        n1.get_bottom(), n2.get_top(),
+        buff=0.1, color=color, stroke_width=3
+    ))
+
+
+def bf_badge(value, node):
+    color = RED if abs(value) > 1 else (ORANGE if abs(value) == 1 else GREEN)
+    box   = RoundedRectangle(corner_radius=0.12, width=0.7, height=0.34,
+                              color=color, fill_opacity=1, stroke_width=0)
+    txt   = Text(f"bf={value:+d}", font_size=17, color=WHITE, weight=BOLD).move_to(box)
+    grp   = VGroup(box, txt)
+    grp.add_updater(lambda m: m.next_to(node, UR, buff=0.05))
+    return grp
+
+
+class ManimScene(Scene):
+    def construct(self):
+        self.camera.background_color = BG_COLOR
+
+        title = Text("Right Rotation  (Left-Left Case)", font_size=36, color=YELLOW, weight=BOLD)
+        title.to_edge(UP, buff=0.4)
+        self.play(Write(title), run_time=0.8)
+
+        caption = Text("LL imbalance: bf(C) = +2", font_size=24, color=LIGHT_GRAY)
+        caption.next_to(title, DOWN, buff=0.2)
+        self.play(FadeIn(caption), run_time=0.5)
+
+        c_pos = UP * 1.6 + RIGHT * 0.6
+        b_pos = UP * 0.2 + LEFT * 0.8
+        a_pos = DOWN * 1.2 + LEFT * 2.2
+
+        nodeC = make_node("C", RED).move_to(c_pos)
+        nodeB = make_node("B", BLUE_D).move_to(b_pos)
+        nodeA = make_node("A", BLUE_D).move_to(a_pos)
+
+        edgeCB = make_edge(nodeC, nodeB)
+        edgeBA = make_edge(nodeB, nodeA)
+
+        bfC = bf_badge(+2, nodeC)
+        bfB = bf_badge(+1, nodeB)
+        bfA = bf_badge(0,  nodeA)
+
+        self.play(GrowFromCenter(nodeC), run_time=0.5)
+        self.play(FadeIn(bfC), run_time=0.3)
+        self.play(Create(edgeCB), GrowFromCenter(nodeB), run_time=0.6)
+        self.play(FadeIn(bfB), run_time=0.3)
+        self.play(Create(edgeBA), GrowFromCenter(nodeA), run_time=0.6)
+        self.play(FadeIn(bfA), run_time=0.3)
+        self.wait(0.8)
+
+        pivot_arrow = Arrow(
+            nodeC.get_right() + RIGHT * 0.5, nodeC.get_right() + RIGHT * 0.05,
+            color=YELLOW, buff=0, stroke_width=4, max_tip_length_to_length_ratio=0.3
+        )
+        pivot_lbl = Text("pivot", font_size=20, color=YELLOW, weight=BOLD)
+        pivot_lbl.next_to(pivot_arrow, RIGHT, buff=0.1)
+        self.play(GrowArrow(pivot_arrow), FadeIn(pivot_lbl), run_time=0.5)
+        self.wait(0.5)
+
+        rot_arc = CurvedArrow(
+            c_pos + UP * 0.55, b_pos + UP * 0.55,
+            angle=TAU / 4.5, color=ORANGE, stroke_width=5
+        )
+        rot_txt = Text("rotate right", font_size=22, color=ORANGE, weight=BOLD)
+        rot_txt.next_to(rot_arc, UP, buff=0.15)
+        self.play(Create(rot_arc), Write(rot_txt), run_time=0.7)
+        self.wait(0.6)
+
+        self.play(
+            FadeOut(caption), FadeOut(bfC), FadeOut(bfB), FadeOut(bfA),
+            FadeOut(pivot_arrow), FadeOut(pivot_lbl),
+            FadeOut(rot_arc), FadeOut(rot_txt),
+            FadeOut(edgeCB), FadeOut(edgeBA),
+            run_time=0.4
+        )
+
+        b2_pos = UP * 1.2
+        a2_pos = LEFT * 1.6
+        c2_pos = RIGHT * 1.6
+
+        self.play(
+            nodeB.animate.move_to(b2_pos),
+            nodeA.animate.move_to(a2_pos),
+            nodeC.animate.move_to(c2_pos),
+            run_time=1.2, rate_func=smooth
+        )
+
+        nodeC[0].set_color(GREEN)
+        nodeB[0].set_color(GREEN)
+        nodeA[0].set_color(GREEN)
+
+        edge_ba2 = Line(nodeB.get_bottom(), nodeA.get_top(), buff=0.1, color=GREEN, stroke_width=3)
+        edge_bc2 = Line(nodeB.get_bottom(), nodeC.get_top(), buff=0.1, color=GREEN, stroke_width=3)
+        self.play(Create(edge_ba2), Create(edge_bc2), run_time=0.6)
+
+        bfB2 = VGroup(
+            RoundedRectangle(corner_radius=0.12, width=0.7, height=0.34,
+                              color=GREEN, fill_opacity=1, stroke_width=0),
+        )
+        bfB2.add(Text("bf=+0", font_size=17, color=WHITE, weight=BOLD).move_to(bfB2[0]))
+        bfB2.next_to(nodeB, UR, buff=0.05)
+
+        bfA2 = VGroup(
+            RoundedRectangle(corner_radius=0.12, width=0.7, height=0.34,
+                              color=GREEN, fill_opacity=1, stroke_width=0),
+        )
+        bfA2.add(Text("bf=+0", font_size=17, color=WHITE, weight=BOLD).move_to(bfA2[0]))
+        bfA2.next_to(nodeA, UR, buff=0.05)
+
+        bfC2 = VGroup(
+            RoundedRectangle(corner_radius=0.12, width=0.7, height=0.34,
+                              color=GREEN, fill_opacity=1, stroke_width=0),
+        )
+        bfC2.add(Text("bf=+0", font_size=17, color=WHITE, weight=BOLD).move_to(bfC2[0]))
+        bfC2.next_to(nodeC, UR, buff=0.05)
+
+        self.play(FadeIn(bfB2), FadeIn(bfA2), FadeIn(bfC2), run_time=0.5)
+
+        after_lbl = Text("Balanced!  bf = 0 for all nodes", font_size=24, color=GREEN, weight=BOLD)
+        after_lbl.next_to(title, DOWN, buff=0.2)
+        self.play(FadeIn(after_lbl), run_time=0.5)
+        self.wait(0.8)
+
+        summary = Text(
+            "B becomes new root\nC becomes B's right child\nB's old right subtree → C's left child",
+            font_size=19, color=WHITE, line_spacing=1.4
+        ).to_edge(DOWN, buff=0.45)
+        self.play(FadeIn(summary), run_time=0.6)
+        self.wait(3)

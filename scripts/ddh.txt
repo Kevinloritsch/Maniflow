@@ -1,0 +1,293 @@
+from manim import *
+
+BG     = "#000000"
+PANEL  = "#0d0d1a"
+C_C    = "#66bb6a"
+C_B    = "#ffb74d"
+C_A    = "#4fc3f7"
+C_KEY  = "#ce93d8"
+C_GRAY = "#90a4ae"
+C_BAD  = "#ef5350"
+C_GOOD = "#66bb6a"
+
+
+def lifeline(x, top, bot, color):
+    return DashedLine(RIGHT * x + UP * top, RIGHT * x + UP * bot,
+                      stroke_color=color, stroke_width=1.8, dash_length=0.18)
+
+
+def actor_label(name, role, color, x, top):
+    nm = Text(name, font_size=24, color=color, weight=BOLD)
+    rl = Text(role, font_size=14, color=C_GRAY)
+    grp = VGroup(nm, rl).arrange(DOWN, buff=0.1)
+    grp.move_to(RIGHT * x + UP * top)
+    return grp
+
+
+def thought(lines, color, x, y, width=3.4):
+    """Rounded thought box pinned near column x at height y."""
+    texts = VGroup(*[
+        Text(l, font_size=14, color=color) for l in lines
+    ]).arrange(DOWN, buff=0.1, aligned_edge=LEFT)
+    box = RoundedRectangle(corner_radius=0.15,
+                           width=max(texts.width + 0.4, width),
+                           height=texts.height + 0.32,
+                           fill_color=PANEL, fill_opacity=1,
+                           stroke_color=color, stroke_width=1.4)
+    texts.move_to(box)
+    grp = VGroup(box, texts)
+    grp.move_to(RIGHT * x + UP * y)
+    return grp
+
+
+def msg_arrow(y, x0, x1, label, color, ldir=UP):
+    arr = Arrow(RIGHT * x0 + UP * y, RIGHT * x1 + UP * y,
+                buff=0, stroke_width=2.6,
+                max_tip_length_to_length_ratio=0.15, color=color)
+    lbl = MathTex(label, color=color).scale(0.52).next_to(arr, ldir, buff=0.08)
+    return arr, lbl
+
+
+class ManimScene(MovingCameraScene):
+    def construct(self):
+        self.camera.background_color = BG
+
+        # ── TITLE ─────────────────────────────────────────────────────────
+        t1 = Text("ElGamal is Semantically Secure", font_size=36, color=WHITE, weight=BOLD)
+        t2 = Text("...if the DDH problem is hard.", font_size=22, color=C_GRAY)
+        t2.next_to(t1, DOWN, buff=0.25)
+        t3 = Text("Let's understand WHY — by following what each player is thinking.",
+                  font_size=18, color=C_GRAY)
+        t3.next_to(t2, DOWN, buff=0.2)
+        self.play(Write(t1), run_time=0.8)
+        self.play(FadeIn(t2), FadeIn(t3), run_time=0.6)
+        self.wait(1.0)
+        self.play(FadeOut(VGroup(t1, t2, t3)), run_time=0.5)
+
+        # ── WHO ARE THESE PEOPLE? ─────────────────────────────────────────
+        who_title = Text("First: who are the three players?", font_size=30, color=WHITE, weight=BOLD)
+        who_title.to_edge(UP, buff=0.4)
+        self.play(Write(who_title), run_time=0.6)
+
+        cards = VGroup(
+            self._card("C", "DDH Challenger", C_C,
+                       ["Runs the DDH hardness game.",
+                        "Sends a tuple — either (g^x, g^y, g^xy)",
+                        "or (g^x, g^y, random).",
+                        "B must guess which one."]),
+            self._card("B", "The Reduction", C_B,
+                       ["Sits in the MIDDLE.",
+                        "Pretends to be an ElGamal challenger",
+                        "for A, while secretly using A's",
+                        "answers to beat C's DDH game."]),
+            self._card("A", "Semantic Adversary", C_A,
+                       ["Tries to break ElGamal.",
+                        "Picks two messages, gets a ciphertext,",
+                        "guesses which message was encrypted.",
+                        "Thinks it's playing a normal crypto game."]),
+        ).arrange(RIGHT, buff=0.5).move_to(DOWN * 0.3)
+
+        self.play(LaggedStart(*[FadeIn(c, shift=UP * 0.1) for c in cards], lag_ratio=0.2), run_time=1.0)
+        self.wait(1.8)
+        self.play(FadeOut(VGroup(who_title, cards)), run_time=0.5)
+
+        # ── SET UP LIFELINES ──────────────────────────────────────────────
+        x_C, x_B, x_A = -5.0, 0.0, 5.0
+        TOP, BOT = 3.4, -3.8
+
+        ll_C = lifeline(x_C, TOP - 0.5, BOT, C_C)
+        ll_B = lifeline(x_B, TOP - 0.5, BOT, C_B)
+        ll_A = lifeline(x_A, TOP - 0.5, BOT, C_A)
+
+        al_C = actor_label("C", "DDH Challenger", C_C, x_C, TOP)
+        al_B = actor_label("B", "Reduction", C_B, x_B, TOP)
+        al_A = actor_label("A", "Sem. Adversary", C_A, x_A, TOP)
+
+        self.play(
+            FadeIn(ll_C), FadeIn(ll_B), FadeIn(ll_A),
+            FadeIn(al_C), FadeIn(al_B), FadeIn(al_A),
+            run_time=0.7,
+        )
+
+        # ── STEP 1: C samples DDH tuple ───────────────────────────────────
+        y = 2.5
+        th_C1 = thought(
+            ['"I sample x,y randomly.',
+             ' If b=0: h = g^xy (real DH)',
+             ' If b=1: h = random.',
+             ' B must figure out which."'],
+            C_C, x_C - 0.1, y - 0.62, width=3.2,
+        )
+        self.play(FadeIn(th_C1), run_time=0.5)
+        self.wait(0.8)
+
+        a1, l1 = msg_arrow(y - 1.5, x_C + 0.12, x_B - 0.12,
+                           r"(g^x,\, g^y,\, h)", C_C)
+        self.play(GrowArrow(a1), FadeIn(l1), run_time=0.6)
+        self.play(FadeOut(th_C1), run_time=0.3)
+
+        # B receives, thinks
+        th_B1 = thought(
+            ['"I don\'t know if h = g^xy or random.',
+             ' But I can use A to find out!',
+             ' g^x looks like an ElGamal public key.",'],
+            C_B, x_B, y - 1.9, width=3.5,
+        )
+        self.play(FadeIn(th_B1), run_time=0.5)
+        self.wait(0.9)
+
+        # ── STEP 2: B sends g^x as ElGamal pk to A ───────────────────────
+        y = 1.1
+        a2, l2 = msg_arrow(y, x_B + 0.12, x_A - 0.12,
+                           r"g^x\ \text{(ElGamal public key)}", C_B)
+        self.play(GrowArrow(a2), FadeIn(l2), run_time=0.6)
+        self.play(FadeOut(th_B1), run_time=0.3)
+
+        th_A1 = thought(
+            ['"Great, I have the public key g^x.',
+             ' Now I pick two messages and',
+             ' try to distinguish their ciphertexts."'],
+            C_A, x_A, y - 0.6, width=3.3,
+        )
+        self.play(FadeIn(th_A1), run_time=0.5)
+        self.wait(0.9)
+
+        # ── STEP 3: A sends msg0, msg1 ────────────────────────────────────
+        y = 0.0
+        a3, l3 = msg_arrow(y, x_A - 0.12, x_B + 0.12,
+                           r"\mathsf{msg}_0,\ \mathsf{msg}_1", C_A, DOWN)
+        self.play(GrowArrow(a3), FadeIn(l3), run_time=0.6)
+        self.play(FadeOut(th_A1), run_time=0.3)
+
+        th_B2 = thought(
+            ['"A gave me two messages.',
+             ' I pick a random b* ∈ {0,1}.',
+             ' Now I encrypt msg_{b*} using',
+             ' the DDH tuple: ct = (g^y, h·msg_{b*})',
+             ' If h=g^xy: this IS valid ElGamal.',
+             ' If h=random: the ciphertext is junk."'],
+            C_B, x_B, y - 1.1, width=3.6,
+        )
+        self.play(FadeIn(th_B2), run_time=0.5)
+        self.wait(1.3)
+
+        # ── STEP 4: B sends challenge ciphertext ──────────────────────────
+        y = -1.55
+        a4, l4 = msg_arrow(y, x_B + 0.12, x_A - 0.12,
+                           r"(g^y,\ h \cdot \mathsf{msg}_{b^*})", C_B)
+        self.play(GrowArrow(a4), FadeIn(l4), run_time=0.6)
+        self.play(FadeOut(th_B2), run_time=0.3)
+
+        th_A2 = thought(
+            ['"I see ciphertext (g^y, c).',
+             ' I try my best to guess b*."'],
+            C_A, x_A, y - 0.55, width=3.0,
+        )
+        self.play(FadeIn(th_A2), run_time=0.5)
+        self.wait(0.8)
+
+        # ── STEP 5: A outputs b' ──────────────────────────────────────────
+        y = -2.35
+        a5, l5 = msg_arrow(y, x_A - 0.12, x_B + 0.12,
+                           r"b' \in \{0,1\}", C_A, DOWN)
+        self.play(GrowArrow(a5), FadeIn(l5), run_time=0.6)
+        self.play(FadeOut(th_A2), run_time=0.3)
+
+        th_B3 = thought(
+            ['"If b\'=b*: A thinks h was real → set b̂=0 (real DH)',
+             ' If b\'≠b*: A was confused → set b̂=1 (random)"'],
+            C_B, x_B, y - 0.62, width=3.8,
+        )
+        self.play(FadeIn(th_B3), run_time=0.5)
+        self.wait(1.0)
+
+        # ── STEP 6: B sends b_hat to C ────────────────────────────────────
+        y = -3.1
+        a6, l6 = msg_arrow(y, x_B - 0.12, x_C + 0.12,
+                           r"\hat{b} \in \{0,1\}", C_B, DOWN)
+        self.play(GrowArrow(a6), FadeIn(l6), run_time=0.6)
+        self.play(FadeOut(th_B3), run_time=0.3)
+        self.wait(0.6)
+
+        # ── FADE TO ANALYSIS ──────────────────────────────────────────────
+        self.play(FadeOut(Group(*self.mobjects)), run_time=0.7)
+
+        # ── WHY DOES THE RANDOMNESS MATTER? ──────────────────────────────
+        title2 = Text("Why does randomness prove security?", font_size=30, color=WHITE, weight=BOLD)
+        title2.to_edge(UP, buff=0.38)
+        self.play(Write(title2), run_time=0.7)
+
+        case_box = lambda lines, color, pos: self._case_card(lines, color, pos)
+
+        c0 = case_box(
+            ["b = 0  →  h = g^xy  (real ElGamal)",
+             "Ciphertext (g^y, g^xy · msg_b*) is VALID.",
+             "A has a real advantage ε.",
+             "So Pr[b'= b*] = 1/2 + ε/2",
+             "→ B correctly guesses b̂ = 0 with prob 1/2 + ε/2"],
+            C_C, UP * 0.9 + LEFT * 3.1,
+        )
+        c1 = case_box(
+            ["b = 1  →  h = random  (fake ElGamal)",
+             "Ciphertext (g^y, random · msg_b*) is JUNK.",
+             "msg_b* is perfectly hidden — A learns nothing.",
+             "So Pr[b'= b*] = exactly 1/2",
+             "→ B guesses b̂ = 0 with prob exactly 1/2"],
+            C_A, UP * 0.9 + RIGHT * 3.1,
+        )
+
+        self.play(FadeIn(c0, shift=RIGHT * 0.1), FadeIn(c1, shift=LEFT * 0.1), run_time=0.8)
+        self.wait(1.0)
+
+        sep = Line(LEFT * 5.5, RIGHT * 5.5, stroke_color=C_GRAY, stroke_width=1)
+        sep.next_to(c0, DOWN, buff=0.35)
+        self.play(Create(sep), run_time=0.3)
+
+        adv_eq = MathTex(
+            r"\mathbf{Adv}_\text{DDH}[\mathcal{B}]",
+            r"\ =\ \left|\Pr[\hat{b}=b] - \tfrac{1}{2}\right|",
+            r"\ =\ \tfrac{1}{2}\ \mathbf{Adv}_\text{SS}[\mathcal{A}]",
+            color=WHITE,
+        ).scale(0.68)
+        adv_eq[0].set_color(C_B)
+        adv_eq[2].set_color(C_A)
+        adv_eq.next_to(sep, DOWN, buff=0.32)
+        self.play(Write(adv_eq), run_time=1.0)
+        self.wait(0.4)
+
+        punchline = Text(
+            "If A can break ElGamal, B can solve DDH — contradiction!",
+            font_size=19, color=WHITE,
+        )
+        punchline.next_to(adv_eq, DOWN, buff=0.3)
+        box = SurroundingRectangle(punchline, color=C_GOOD, stroke_width=1.6,
+                                   buff=0.16, corner_radius=0.12)
+        self.play(FadeIn(punchline), Create(box), run_time=0.7)
+        self.wait(1.8)
+
+        self.play(FadeOut(Group(*self.mobjects)), run_time=0.8)
+
+    # ── helpers ──────────────────────────────────────────────────────────
+
+    def _card(self, name, role, color, lines):
+        nm  = Text(name, font_size=28, color=color, weight=BOLD)
+        rl  = Text(role, font_size=15, color=color)
+        sep = Line(LEFT * 1.3, RIGHT * 1.3, stroke_color=color, stroke_width=1)
+        body = VGroup(*[Text(l, font_size=13, color=C_GRAY) for l in lines]).arrange(DOWN, buff=0.08, aligned_edge=LEFT)
+        inner = VGroup(nm, rl, sep, body).arrange(DOWN, buff=0.14)
+        box = RoundedRectangle(corner_radius=0.18, width=inner.width + 0.5, height=inner.height + 0.4,
+                               fill_color=PANEL, fill_opacity=1,
+                               stroke_color=color, stroke_width=2.0)
+        inner.move_to(box)
+        return VGroup(box, inner)
+
+    def _case_card(self, lines, color, pos):
+        body = VGroup(*[Text(l, font_size=14, color=WHITE if i == 0 else C_GRAY)
+                        for i, l in enumerate(lines)]).arrange(DOWN, buff=0.1, aligned_edge=LEFT)
+        box = RoundedRectangle(corner_radius=0.15, width=body.width + 0.5, height=body.height + 0.4,
+                               fill_color=PANEL, fill_opacity=1,
+                               stroke_color=color, stroke_width=1.8)
+        body.move_to(box)
+        grp = VGroup(box, body)
+        grp.move_to(pos)
+        return grp
