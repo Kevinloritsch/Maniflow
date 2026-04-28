@@ -12,6 +12,7 @@ Evaluate the following visual aspects:
 5. **Visual Clutter** — Is the screen ever too busy or crowded, making it hard to know where to focus?
 6. **Pointers & Indicators** — Are arrows, highlights, or indicators clearly visible and pointing to the right things?
 7. **Overall Cleanliness** — Does the video look polished and professional, or are there visual artifacts, glitches, or jarring transitions?
+8. **Accuracy** — Is the content accurate and correct? Does every arrow drawn point in the correct direction of the animated action? Are the animations and transitions logical and consistent? Are highlighted areas/objects correctly identified and labeled?
 
 Return your response as JSON in this exact format:
 {
@@ -20,7 +21,7 @@ Return your response as JSON in this exact format:
   "errors": [
     {
       "severity": "critical" | "major" | "minor",
-      "category": "Layout & Bounds" | "Text & Labels" | "Color & Contrast" | "Animation & Timing" | "Visual Clutter" | "Pointers & Indicators" | "Overall Cleanliness",
+      "category": "Layout & Bounds" | "Text & Labels" | "Color & Contrast" | "Animation & Timing" | "Visual Clutter" | "Pointers & Indicators" | "Overall Cleanliness" | "Accuracy",
       "timestamp": "approximate time in video e.g. 0:03",
       "description": "what is wrong visually. BE VERY SPECIFIC AND DETAILED ABOUT WHAT EXACTLY ABOUT THE VIDEO IS WRONG",
       "suggested_fix": "how to fix it. BE VERY SPECIFIC AND DETAILED ABOUT HOW TO FIX IT."

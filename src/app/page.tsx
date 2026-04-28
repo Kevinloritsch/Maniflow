@@ -19,11 +19,12 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const [analyzingTL, setAnalyzingTL] = useState(false);
-  const [analysisTL, setAnalysisTL] = useState<any>(null);
+  const [analyzing, setAnalyzing] = useState(false);
+  const [analysis, setAnalysis] = useState<any>(null);
+  const [input, setInput] = useState("");
 
-  const [analyzingG, setAnalyzingG] = useState(false);
-  const [analysisG, setAnalysisG] = useState<any>(null);
+  // const [analyzingG, setAnalyzingG] = useState(false);
+  // const [analysisG, setAnalysisG] = useState<any>(null);
 
   const [videoPath, setVideoPath] = useState<string | null>(null);
 
@@ -47,9 +48,6 @@ export default function Home() {
         return;
       }
 
-      // const blob = await res.blob();
-      // const url = URL.createObjectURL(blob);
-      // setVideoUrl(url);
       const data = await res.json();
       setVideoUrl(data.videoUrl);   // used by <video src="">
       setVideoPath(data.videoPath); // used by analyze
@@ -62,21 +60,18 @@ export default function Home() {
     }
   }
 
-  async function handleAnalyzeTL() {
+  async function handleAnalyze() {
     if (!videoPath) return;
 
-    setAnalyzingTL(true);
-    setAnalysisTL(null);
+    setAnalyzing(true);
+    setAnalysis(null);
     setError(null); 
 
     try {
-      const res = await fetch("http://localhost:8000/tl_analysis", {
+      const res = await fetch("http://localhost:8000/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // NOTE: replace videoUrl with a publicly accessible URL in production
-        // Local blob URLs won't work with TwelveLabs — they can't reach your machine
-        // body: JSON.stringify({ video_url: videoUrl }),
-        body: JSON.stringify({ video_path: videoPath }),
+        body: JSON.stringify({ video_path: videoPath, code: code }),
       });
 
       if (!res.ok) {
@@ -86,48 +81,61 @@ export default function Home() {
       }
 
       const data = await res.json();
-      setAnalysisTL(data);
+      setAnalysis(data);
     } catch (e) {
       setError("Analysis request failed — is FastAPI running?");
     } finally {
-      setAnalyzingTL(false);
+      setAnalyzing(false);
     }
   }
 
-  async function handleAnalyzeG() {
-    if (!videoPath) return;
 
-    setAnalyzingG(true);
-    setAnalysisG(null);
-    setError(null); 
-
+  async function handleSend() {
+    if (!input) return;
     try {
-      const res = await fetch("http://localhost:8000/gemini_analysis", {
+      const res = await fetch("http://localhost:8000/gemini_code", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // NOTE: replace videoUrl with a publicly accessible URL in production
-        // Local blob URLs won't work with TwelveLabs — they can't reach your machine
-        // body: JSON.stringify({ video_url: videoUrl }),
-        body: JSON.stringify({ video_path: videoPath }),
+        body: JSON.stringify({ algorithm: input }),
       });
 
-      if (!res.ok) {
-        const err = await res.json();
-        setError(err.detail || "Analysis failed");
-        return;
-      }
+      // if (!res.ok) {
+      //   const err = await res.json();
+      //   setError(err.detail || "prompt input failed");
+      //   return;
+      // }
 
-      const data = await res.json();
-      setAnalysisG(data);
+      // const data = await res.json();
+      // setCode(data.text);
     } catch (e) {
-      setError("Analysis request failed — is FastAPI running?");
-    } finally {
-      setAnalyzingG(false);
+      setError("i can't get the user's prompt grrrrr");
     }
   }
 
   return (
     <div className="mx-auto max-w-5xl space-y-6 p-8">
+
+
+      <div className="rounded-xl border border-zinc-700 bg-zinc-900/60 p-3">
+        <label className="mb-2 block text-sm text-zinc-300">Prompt</label>
+        <div className="flex items-center gap-2">
+          <input
+            type="text"
+            className="w-full rounded-full border border-zinc-600 bg-zinc-950 px-4 py-2 text-sm text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-400"
+            placeholder="Type a message..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+          />
+          <button
+            onClick={handleSend}
+            type="button"
+            className="rounded-full bg-zinc-100 px-4 py-2 text-sm font-medium text-zinc-900 transition hover:bg-zinc-300"
+          >
+            Send
+          </button>
+        </div>
+      </div>
+
       <div className="space-y-2">
         <label className="text-sm">Scene class name</label>
         <input
@@ -171,72 +179,13 @@ export default function Home() {
             className="w-full max-h-[50vh] object-contain rounded border bg-black"
           />
 
-        <button
-          onClick={handleAnalyzeTL}
-          disabled={analyzingTL}
-          className="rounded bg-blue-600 px-6 py-2 font-semibold text-white hover:bg-blue-700 disabled:opacity-40"
-        >
-          {analyzingTL ? "Analyzing…" : "Analyze with TwelveLabs"}
-        </button>
-        <button
-          onClick={handleAnalyzeG}
-          disabled={analyzingG}
-          className="rounded bg-blue-600 px-6 py-2 font-semibold text-white hover:bg-blue-700 disabled:opacity-40"
-        >
-          {analyzingG ? "Analyzing…" : "Analyze with Gemini"}
-        </button>
-          </div>
-      )}
-
-      {/* Analysis results */}
-      {analysisTL && (
-        <div className="space-y-3 rounded border border-gray-700 p-4">
-          <div className="flex items-center gap-3">
-            <span
-              className={`rounded px-2 py-1 text-xs font-bold bg-green-900 text-green-300 ${
-                JSON.parse(analysisTL.data).passed
-                  ? "bg-green-900 text-green-300"
-                  : "bg-red-900 text-red-300"
-              }`}
-            >
-              {JSON.parse(analysisTL.data).passed ? "PASSED" : "FAILED"}
-            </span>
-            <pre className="text-sm text-gray-300">{JSON.stringify({ ...analysisTL, data: JSON.parse(analysisTL.data) }, null, 2)}</pre>
-            {/* <p className="text-white text-xs">{typeof JSON.parse(analysis.data).passed} — {JSON.parse(analysis.data).passed.toString()}</p> */}
-            <p className="text-sm text-black">{JSON.parse(analysisTL.data).passed.toString()}</p>
-          </div>
-
-          {analysisTL.errors?.length > 0 && (
-            <div className="space-y-2">
-              <p className="text-sm font-semibold text-red-400">Errors</p>
-              {analysisTL.errors.map((err: any, i: number) => (
-                <div key={i} className="rounded border border-gray-700 p-3 text-xs space-y-1">
-                  <div className="flex gap-2">
-                    <span className={`font-bold uppercase ${
-                      err.severity === "critical" ? "text-red-400" :
-                      err.severity === "major" ? "text-orange-400" : "text-yellow-400"
-                    }`}>
-                      {err.severity}
-                    </span>
-                    <span className="text-gray-400">{err.category}</span>
-                    <span className="text-gray-500">{err.timestamp}</span>
-                  </div>
-                  <p className="text-gray-300">{err.description}</p>
-                  <p className="text-blue-400">Fix: {err.suggested_fix}</p>
-                </div>
-              ))}
-            </div>
-          )}
-
-          <p className="text-xs text-gray-500">
-            Recommendation: <span className="font-bold text-white">{analysisTL.iteration_recommendation}</span>
-          </p>
-          {analysisG && (
-            <div className="space-y-3 rounded border border-gray-700 p-4">
-              <pre className="text-sm text-gray-300">{JSON.stringify({ ...analysisG, data: JSON.parse(analysisG.data) }, null, 2)}</pre>
-              <p className="text-sm text-black">{JSON.parse(analysisG.data).passed.toString()}</p>
-            </div>
-          )}
+          <button
+            onClick={handleAnalyze}
+            disabled={analyzing}
+            className="rounded bg-blue-600 px-6 py-2 font-semibold text-white hover:bg-blue-700 disabled:opacity-40"
+          >
+            {analyzing ? "Analyzing…" : "Analyze"}
+          </button>
         </div>
       )}
     </div>

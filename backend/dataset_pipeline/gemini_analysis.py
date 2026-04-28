@@ -74,7 +74,11 @@ analysis_prompt = '''
     - Does the video reach a clear finished state (e.g. fully sorted array, all nodes visited)?
     - Is there a success message or final state indicator visible at the end?
     - Does the video end abruptly before the algorithm completes?
-
+    
+    VISUAL LOGIC
+    - Is the content accurate and correct? Does every arrow drawn point in the correct direction of the animated action? 
+    - Are the animations and transitions logical and consistent? 
+    - Are highlighted areas/objects correctly identified and labeled?
     ---
 
     Respond in this exact JSON format:
