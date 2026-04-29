@@ -68,7 +68,7 @@ export default function Home() {
     setError(null); 
 
     try {
-      const res = await fetch("http://localhost:8000/analyze", {
+      const res = await fetch("http://localhost:8000/analysis", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ video_path: videoPath, code: code }),
@@ -88,7 +88,6 @@ export default function Home() {
       setAnalyzing(false);
     }
   }
-
 
   async function handleSend() {
     if (!input) return;
@@ -179,13 +178,59 @@ export default function Home() {
             className="w-full max-h-[50vh] object-contain rounded border bg-black"
           />
 
-          <button
-            onClick={handleAnalyze}
-            disabled={analyzing}
-            className="rounded bg-blue-600 px-6 py-2 font-semibold text-white hover:bg-blue-700 disabled:opacity-40"
-          >
-            {analyzing ? "Analyzing…" : "Analyze"}
-          </button>
+        <button
+          onClick={handleAnalyze}
+          disabled={analyzing}
+          className="rounded bg-blue-600 px-6 py-2 font-semibold text-white hover:bg-blue-700 disabled:opacity-40"
+        >
+          {analyzing ? "Analyzing…" : "Analyze with TwelveLabs"}
+        </button>
+          </div>
+      )}
+
+      {/* Analysis results */}
+      {analysis && (
+        <div className="space-y-3 rounded border border-gray-700 p-4">
+          <div className="flex items-center gap-3">
+            <span
+              className={`rounded px-2 py-1 text-xs font-bold bg-green-900 text-green-300 ${
+                JSON.parse(analysis.data).passed
+                  ? "bg-green-900 text-green-300"
+                  : "bg-red-900 text-red-300"
+              }`}
+            >
+              {JSON.parse(analysis.data).passed ? "PASSED" : "FAILED"}
+            </span>
+            <pre className="text-sm text-gray-300">{JSON.stringify({ ...analysis, data: JSON.parse(analysis.data) }, null, 2)}</pre>
+            {/* <p className="text-white text-xs">{typeof JSON.parse(analysis.data).passed} — {JSON.parse(analysis.data).passed.toString()}</p> */}
+            <p className="text-sm text-black">{JSON.parse(analysis.data).passed.toString()}</p>
+          </div>
+
+          {analysis.errors?.length > 0 && (
+            <div className="space-y-2">
+              <p className="text-sm font-semibold text-red-400">Errors</p>
+              {analysis.errors.map((err: any, i: number) => (
+                <div key={i} className="rounded border border-gray-700 p-3 text-xs space-y-1">
+                  <div className="flex gap-2">
+                    <span className={`font-bold uppercase ${
+                      err.severity === "critical" ? "text-red-400" :
+                      err.severity === "major" ? "text-orange-400" : "text-yellow-400"
+                    }`}>
+                      {err.severity}
+                    </span>
+                    <span className="text-gray-400">{err.category}</span>
+                    <span className="text-gray-500">{err.timestamp}</span>
+                  </div>
+                  <p className="text-gray-300">{err.description}</p>
+                  <p className="text-blue-400">Fix: {err.suggested_fix}</p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <p className="text-xs text-gray-500">
+            Recommendation: <span className="font-bold text-white">{analysis.iteration_recommendation}</span>
+          </p>
         </div>
       )}
     </div>
