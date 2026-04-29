@@ -78,6 +78,7 @@ async def gemini_analysis(video_path: str):
     
 class GeminiCodeRequest(BaseModel):
     algorithm: str
+    model: str
     
 @app.post("/gemini_code")
 def gemini_code(request: GeminiCodeRequest):
@@ -86,7 +87,7 @@ def gemini_code(request: GeminiCodeRequest):
     client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
     
     response = client.models.generate_content(
-        model="gemini-3-flash-preview", contents=Prompts.GEMINI_CODE_PROMPT.format(algorithm=request.algorithm)
+        model=request.model, contents=Prompts.GEMINI_CODE_PROMPT.format(algorithm=request.algorithm)
     )
     print(response.text)
     return response.text
