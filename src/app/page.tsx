@@ -21,6 +21,12 @@ export default function Home() {
 
   const [analyzing, setAnalyzing] = useState(false);
   const [analysis, setAnalysis] = useState<any>(null);
+  const [input, setInput] = useState("");
+  const [model, setModel] = useState("gemini-3-flash-preview");
+
+  // const [analyzingG, setAnalyzingG] = useState(false);
+  // const [analysisG, setAnalysisG] = useState<any>(null);
+
   const [videoPath, setVideoPath] = useState<string | null>(null);
 
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -43,9 +49,6 @@ export default function Home() {
         return;
       }
 
-      // const blob = await res.blob();
-      // const url = URL.createObjectURL(blob);
-      // setVideoUrl(url);
       const data = await res.json();
       setVideoUrl(data.videoUrl);   // used by <video src="">
       setVideoPath(data.videoPath); // used by analyze
@@ -66,13 +69,10 @@ export default function Home() {
     setError(null); 
 
     try {
-      const res = await fetch("http://localhost:8000/video_analysis", {
+      const res = await fetch("http://localhost:8000/analysis", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // NOTE: replace videoUrl with a publicly accessible URL in production
-        // Local blob URLs won't work with TwelveLabs — they can't reach your machine
-        // body: JSON.stringify({ video_url: videoUrl }),
-        body: JSON.stringify({ video_path: videoPath }),
+        body: JSON.stringify({ video_path: videoPath, code: code }),
       });
 
       if (!res.ok) {
@@ -90,8 +90,62 @@ export default function Home() {
     }
   }
 
+  async function handleSend() {
+    if (!input) return;
+    try {
+      const res = await fetch("http://localhost:8000/gemini_code", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ algorithm: input, model }),
+      });
+
+      // if (!res.ok) {
+      //   const err = await res.json();
+      //   setError(err.detail || "prompt input failed");
+      //   return;
+      // }
+
+      // const data = await res.json();
+      // setCode(data.text);
+    } catch (e) {
+      setError("i can't get the user's prompt grrrrr");
+    }
+  }
+
   return (
     <div className="mx-auto max-w-5xl space-y-6 p-8">
+      <div className="space-y-2">
+        <label className="text-sm">Model</label>
+        <select
+          className="w-full rounded border border-black bg-white px-3 py-2 text-sm text-black focus:outline-none focus:ring-1 focus:ring-black"
+          value={model}
+          onChange={(e) => setModel(e.target.value)}
+        >
+          <option value="gemini-3-flash-preview">gemini-3-flash-preview</option>
+          <option value="gemini2.5-flash">gemini2.5-flash</option>
+        </select>
+      </div>
+
+      <div className="rounded-xl border border-zinc-700 bg-zinc-900/60 p-3">
+        <label className="mb-2 block text-sm text-zinc-300">Prompt</label>
+        <div className="flex items-center gap-2">
+          <input
+            type="text"
+            className="w-full rounded-full border border-zinc-600 bg-zinc-950 px-4 py-2 text-sm text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-400"
+            placeholder="Type a message..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+          />
+          <button
+            onClick={handleSend}
+            type="button"
+            className="rounded-full bg-zinc-100 px-4 py-2 text-sm font-medium text-zinc-900 transition hover:bg-zinc-300"
+          >
+            Send
+          </button>
+        </div>
+      </div>
+
       <div className="space-y-2">
         <label className="text-sm">Scene class name</label>
         <input
